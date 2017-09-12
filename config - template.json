@@ -1,0 +1,11 @@
+{
+  "token": "",
+  "channels" : {
+    "logs": "",
+    "mentions": ""
+  },
+  "password": "",
+  "prefix": "",
+  "oxfordTokens": [
+  ]
+}
