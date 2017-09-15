@@ -17,7 +17,7 @@ exports.run = async (client, message, args) => {
         .setTitle(`Role Distribution in ${guild.name}.`)
         .setDescription('Here\'s all the roles with the amount of members that have said role.');
 
-    await guild.fetchMembers();
+    await guild.members.fetch();
 
     guild.roles.array().sort(function (a, b) {
         return b.position - a.position;
