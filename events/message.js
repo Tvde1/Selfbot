@@ -1,5 +1,7 @@
 const imageUrl = 'config.imageurl';
 const urlExists = require('url-exists');
+const distance = require('jaro-winkler');
+
 const keys = [
     ['lenny', '( ͡° ͜ʖ ͡°)'],
     ['ele', ':eye: :lips: :eye:'],
@@ -28,10 +30,23 @@ exports.run = async (client, message) => {
 
     const [commandName, ...args] = message.content.slice(client.config.prefix.length).trim().split(' ');
 
-    if (!client.commands.has(commandName)) return;
+    let command = client.commands.get(commandName);
+
+    if (!command) {
+        const closest = closestCommand(commandName, client.commands.keyArray());
+        console.log(closest.distance);
+        if (closest.distance >= 0.8) {
+            console.log('ok');
+            command = client.commands.get(closest.command);
+        }
+    }
+
+    console.log(command);
+
+    if (!command) return;
 
     try {
-        await client.commands.get(commandName).run(client, message, args);
+        await command.run(client, message, args);
     }
     catch (err) {
         message.EmbedEdit('Error', `❌ ${err.message}`);
@@ -62,3 +77,15 @@ editEmoji = (message) => {
         });
     }
 };
+
+function closestCommand(target, list) {
+    let highest = 0, best;
+    for (const key of list) {
+        const dist = distance(target, key);
+        if (dist > highest) {
+            best = key;
+            highest = dist;
+        }
+    }
+    return { command: best, distance: highest };
+}
