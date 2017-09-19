@@ -34,14 +34,11 @@ exports.run = async (client, message) => {
 
     if (!command) {
         const closest = closestCommand(commandName, client.commands.keyArray());
-        console.log(closest.distance);
-        if (closest.distance >= 0.8) {
-            console.log('ok');
+        if (closest.distance > 0.8) {
+            client.log('console', 'Corrected a command attempt.', '');
             command = client.commands.get(closest.command);
         }
     }
-
-    console.log(command);
 
     if (!command) return;
 
