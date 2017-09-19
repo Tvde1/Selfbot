@@ -37,7 +37,7 @@ module.exports = (client) => {
         const time = moment().format('YYYY-MM-DD HH:mm:ss');
         switch (type) {
             case 'console': {
-                console.log(`${time} | ${title} ${message}`);
+                console.log(`${time} | ${title}${message ? ' ' + message : ''}`);
                 break;
             }
             case 'mention': {
@@ -87,32 +87,24 @@ module.exports = (client) => {
         });
     };
 
-    client.tools.GetUser = (client, channel, search) => {
+    client.tools.GetUser = async (client, channel, search) => {
         search = search.toLowerCase();
-        return new Promise((resolve, reject) => {
-            switch (channel.type) {
-                case 'text': {
-                    channel.guild.fetchMembers().then(() => {
-                        const returnObject = channel.guild.members.find(x => x.displayName.toLowerCase().includes(search) || x.user.username.toLowerCase().includes(search));
-                        if (returnObject) resolve(returnObject);
-                        else resolve(null);
-                    });
-                    break;
-                }
-                case 'dm': {
-                    if (channel.recipient.username.toLowerCase().includes(search)) resolve(channel.recipient);
-                    else if (client.user.username.toLowerCase().includes(search)) resolve(client.user);
-                    else resolve(null);
-                    break;
-                }
-                case 'group': {
-                    if (channel.recipients.toLowerCase().includes(search)) resolve(channel.recipients.find(x => x.username.toLowerCase().includes(search)));
-                    else if (client.user.username.toLowerCase().includes(search)) resolve(client.user);
-                    else resolve(null);
-                    break;
-                }
+        switch (channel.type) {
+            case 'text': {
+                await channel.guild.members.fetch();
+                return channel.guild.members.find(x => x.displayName.toLowerCase().includes(search) || x.user.username.toLowerCase().includes(search));
             }
-        });
+            case 'dm': {
+                if (channel.recipient.username.toLowerCase().includes(search)) return channel.recipient;
+                else if (client.user.username.toLowerCase().includes(search)) return client.user;
+                return null;
+            }
+            case 'group': {
+                if (channel.recipients.toLowerCase().includes(search)) return channel.recipients.find(x => x.username.toLowerCase().includes(search));
+                else if (client.user.username.toLowerCase().includes(search)) return client.user;
+                return null;
+            }
+        }
     };
 
     client.tools.NiceBool = (cond) => {
