@@ -4,17 +4,11 @@ const moment = require('moment');
 
 exports.run = async (client, message, args) => {
     if (args.length === 0) throw new Error('Please specify a username.');
-    if (message.mentions.users.size > 0) showInfo(client, message, message.mentions.members.first());
-    else {
+    if (message.mentions.users.size > 0) return showInfo(client, message, message.mentions.members.first());
 
-        try {
-            const user = client.tools.GetUser(client, message.channel, args.join());
-            showInfo(client, message, user);
-        }
-        catch (err) {
-            throw new Error('Could not find user.');
-        }
-    }
+    const user = await client.tools.GetUser(client, message.channel, args.join());
+    if (user) showInfo(client, message, user);
+    else throw new Error('Could not find user.');
 };
 
 function showInfo(client, message, user) {
