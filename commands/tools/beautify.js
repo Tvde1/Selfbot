@@ -38,9 +38,8 @@ const getCode = async (channel) => {
     await channel.messages.fetch({limit: 100});
     const codeRegex = /```(?:js|json|javascript)?\n?((?:\n|.)+?)\n?```/ig;
 
-    for (let m = 0; m < channel.messages.length; m++) {
-        const message = channel.messages[m];
-        const groups = codeRegex.exec(message.content);
+    for (const m of channel.messages) {
+        const groups = codeRegex.exec(m[1].content);
 
         if (groups && groups[1].length) {
             return groups[1];
