@@ -1,16 +1,27 @@
 const {js_beautify} = require("js-beautify");
+const Emojify = require("emojify");
 
 exports.run = async (client, msg, args) => {
-    const code = await getCode(msg.channel);
+    let code = await getCode(msg.channel);
     if (!code) throw new Error('No Javascript codeblock found.');
-    const betterCode = format(code);
-    msg.edit(msg.content + '\n==========\n' + betterCode);
+
+    console.log(code);
+
+    code = Emojify.minify(code, {fromString: true}).code;
+
+    console.log('=============================');
+
+    console.log(code);
+
+    code = format(code);
+
+    msg.edit(msg.content + '\n==========\n' + code);
 };
 
 exports.help = {
-    name: 'beautify',
-    description: 'Get the last JS code block and makes it *readable*',
-    usage: 'beautify <id>'
+    name: 'emojicode',
+    description: 'Get the last JS code block and makes it *cooler*',
+    usage: 'emojicode'
 };
 
 const reduceIndentation = (string) => {
@@ -31,15 +42,15 @@ const format = (code) => {
 
     str = str.replace(/^(\s*\r?\n){2,}/, '\n');
 
-    return (`${"```js"}\n${str}\n${"```"}`);
+    return `${"```js"}\n${str}\n${"```"}`;
 };
 
 const getCode = async (channel) => {
     await channel.messages.fetch({limit: 100});
     const codeRegex = /```(?:js|json|javascript)?\n?((?:\n|.)+?)\n?```/ig;
 
-    for (const m of channel.messages) {
-        const groups = codeRegex.exec(m[1].content);
+    for (const m of channel.messages.array()) {
+        const groups = codeRegex.exec(m.content);
 
         if (groups && groups[1].length) {
             return groups[1];
