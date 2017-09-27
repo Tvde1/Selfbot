@@ -268,7 +268,7 @@ module.exports = (client) => {
     };
 
     client.tools.getCode = async (messages) => {
-        messages = messages.sort((a,b) => { return a.createdTimestamp - b.createdTimestamp ; } );
+        messages = messages.sort((a,b) => b.createdTimestamp - a.createdTimestamp);
 
         const codeRegex = /```(?:js|json|javascript)?\n?((?:\n|.)+?)\n?```/ig;
         // const codeRegex = /(([ \t]*`{3,4})([^\n]*)([\s\S]+?)(^[ \t]*\2))/gm;
