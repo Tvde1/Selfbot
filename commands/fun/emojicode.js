@@ -34,18 +34,3 @@ const format = (code) => {
 
     return (`${"```js"}\n${str}\n${"```"}`);
 };
-
-const getCode = async (channel) => {
-    // await channel.messages.fetch({limit: 100});
-    const codeRegex = /```(?:js|json|javascript)?\n?((?:\n|.)+?)\n?```/ig;
-
-    for (const m of channel.messages.array()) {
-        const groups = codeRegex.exec(m.content);
-
-        if (groups && groups[1].length) {
-            return groups[1];
-        }
-    }
-};
-
-
