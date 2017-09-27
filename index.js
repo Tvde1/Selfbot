@@ -6,9 +6,6 @@ client.config = require('./config.json');
 require('./modules/clientaddons.js')(client);
 process.on('unhandledRejection', err => console.error(`Uncaught Promise Error: \n${err && err.stack || err}`));
 
-//Command Loading
-client.reloadCommands();
-
 //Event loading
 fs.readdir('./events/', (err, files) => {
     if (err) return console.error(err);
@@ -20,5 +17,8 @@ fs.readdir('./events/', (err, files) => {
         client.on(eventName, (...args) => eventFunction.run(client, ...args));
     });
 });
+
+//Command Loading
+client.reloadCommands();
 
 client.login(client.config.token).catch(console.err);
