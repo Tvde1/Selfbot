@@ -64,8 +64,8 @@ editEmoji = (message) => {
     const regex = /^:(.+):$/;
     const solution = regex.exec(message.content);
     const extentionarray = ['.png', '.gif', '.jpg', '.jpeg'];
-    for (let index in extentionarray) {
-        const emoji = imageUrl + solution[1] + extentionarray[index];
+    for (const index of extentionarray) {
+        const emoji = imageUrl + solution[1] + index;
         urlExists(emoji, function(err, exists) {
             if (!exists) return;
             message.delete();
