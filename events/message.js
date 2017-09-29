@@ -61,7 +61,7 @@ editTag = (message) => {
 };
 
 editEmoji = (message) => {
-    const regex = /:(.+):/;
+    const regex = /^:(.+):$/;
     const solution = regex.exec(message.content);
     const extentionarray = ['.png', '.gif', '.jpg', '.jpeg'];
     for (let index in extentionarray) {
