@@ -24,7 +24,7 @@ exports.run = async (client, message) => {
     if (message.author.id !== client.user.id) return;
 
     if (/{.+}/.test(message.content)) editTag(message);
-    if (/:.+:/.test(message.content)) editEmoji(message);
+    if (/^:.+:$/.test(message.content)) editEmoji(message);
 
     if (!message.content.startsWith(client.config.prefix)) return;
 
@@ -63,7 +63,6 @@ editTag = (message) => {
 editEmoji = (message) => {
     const regex = /^:(.+):$/;
     const solution = regex.exec(message.content);
-    if(!solution) return;
     const extentionarray = ['.png', '.gif', '.jpg', '.jpeg'];
     for (let index in extentionarray) {
         const emoji = imageUrl + solution[1] + extentionarray[index];
