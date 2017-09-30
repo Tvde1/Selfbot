@@ -1,4 +1,17 @@
+const games = require('../games.json');
+
 exports.run = (client) => {
 	client.log('console', 'Bot is ready.');
 	delete client.user.email;
+
+	setInterval(() => {
+        client.log('console', 'Changing game.');
+        const game = games[Math.round(Math.random() * games.length)];
+        client.user.setPresence({
+            activity: {
+                type: game[0],
+                name: game[1]
+            }
+        });
+    }, 1000 * 60 * 60);
 };
