@@ -6,7 +6,7 @@ exports.run = (client) => {
 
 	setInterval(() => {
         client.log('console', 'Changing game.');
-        const game = games[Math.round(Math.random() * games.length)];
+        const game = games[Math.floor(Math.random() * games.length)];
         client.user.setPresence({
             activity: {
                 type: game[0],
