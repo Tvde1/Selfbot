@@ -1,4 +1,4 @@
-const {js_beautify} = require("js-beautify");
+const {js_beautify} = require('js-beautify');
 
 exports.run = async (client, message) => {
     await message.channel.messages.fetch({limit:100});
@@ -19,7 +19,7 @@ const reduceIndentation = (string) => {
     if (!whitespace) return string;
 
     whitespace = whitespace[0].replace('\n', '');
-    return string.split("\n").map(line => line.replace(whitespace, '')).join("\n");
+    return string.split('\n').map(line => line.replace(whitespace, '')).join('\n');
 };
 
 const format = (code) => {
@@ -32,5 +32,5 @@ const format = (code) => {
 
     str = str.replace(/^(\s*\r?\n){2,}/, '\n');
 
-    return `${"```js"}\n${str}\n${"```"}`;
+    return `${'```js'}\n${str}\n${'```'}`;
 };
