@@ -11,17 +11,42 @@ module.exports = (client) => {
 
     client.tools = {};
     client.commands = new discord.Collection();
+    client.settings = {};
 
-    function reloadCommands() {
+    client.tools.saveSettings = () => {
+        fs.writeFile('./settings.json', JSON.stringify(client.settings), (error) => {
+            if (error) client.log('console', 'Error');
+        });
+    };
+
+    client.tools.loadSettings = () => {
+        fs.readFile('./settings.json', (err, data) => {
+            if (err) {
+                client.log('console', 'Could not find settings file so generated a new one.');
+
+                const settings = ['logmessages', 'logmentions'];
+
+                for (const s of settings) {
+                    client.settings[s] = false;
+                    client.settings[`${s}_guild`] = [];
+                }
+                
+                client.tools.saveSettings();
+                return;
+            }
+            client.settings = JSON.parse(data);
+        });
+    };
+    client.tools.loadSettings();
+
+    client.reloadCommands = () => {
         readDirR('commands').forEach(command => {
             delete require.cache[require.resolve(`../${command}`)];
             let props = require(`../${command}`);
             client.commands.set(props.help.name, props);
             client.log('console', `Loaded command ${props.help.name}`);
         });
-    }
-
-    client.reloadCommands = reloadCommands;
+    };
 
     function readDirR(dir) {
         return fs.statSync(dir).isDirectory()
@@ -29,7 +54,7 @@ module.exports = (client) => {
             : dir;
     }
 
-    function log(type, title, message, user) {
+    client.log = (type, title, message, user) => {
         if (!message) {
             message = title;
             title = '';
@@ -42,7 +67,7 @@ module.exports = (client) => {
             }
             case 'mention': {
                 const mentionChannel = client.channels.get(client.config.channels.mentions);
-                if (!mentionChannel) return log('console', `[Mention] ${message.cleanContent}`);
+                if (!mentionChannel) return client.log('console', `[Mention] ${message.cleanContent}`);
                 if (!user) user = client.user;
                 const embed = new discord.MessageEmbed()
                     .setColor(embedColor)
@@ -54,7 +79,7 @@ module.exports = (client) => {
             }
             case 'log': {
                 const logChannel = client.channels.get(client.config.channels.logs);
-                if (!logChannel) return log('console', `[Log] ${message}`);
+                if (!logChannel) return client.log('console', `[Log] ${message}`);
                 const embed = new discord.MessageEmbed()
                     .setColor(embedColor)
                     .setAuthor(`${client.user.username} (${client.user.id})`, client.user.avatarURL())
@@ -64,9 +89,7 @@ module.exports = (client) => {
                 break;
             }
         }
-    }
-
-    client.log = log;
+    };
 
     client.tools.CapitaliseFirstLetter = (text) => {
         const textArray = (text).split('');
@@ -120,17 +143,9 @@ module.exports = (client) => {
         return str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
     };
 
-    client.tools.Download = function (uri, filename, callback) {
-        request.head(uri, function (err, res) {
-            console.log('content-type:', res.headers['content-type']);
-            console.log('content-length:', res.headers['content-length']);
-
-            request(uri).pipe(window.fs.createWriteStream(filename)).on('close', callback);
-        });
-    };
-
-    const urlRegex = /((?:https?:\/\/)?(?:[a-z\d\-]+\.)+[a-z]{2,6}\/[^\s]+\.(?:png|jpe?g|gif))/gi;
-    client.tools.UrlRegex = urlRegex;
+    // const urlRegex = /((?:https?:\/\/)?(?:[a-z\d\-]+\.)+[a-z]{2,6}\/[^\s]+\.(?:png|jpe?g|gif))/gi;
+    // const urlRegex = /((?:https?:\/\/)?(?:[a-z\d-]+\.)+[a-z]{2,6}\/[^\s]+\.(?:png|jpe?g|gif))/gi;
+    // client.tools.UrlRegex = urlRegex;
 
     client.tools.getImagesFromMessage = async (message, args) => {
         let imageURLs = [];
@@ -177,37 +192,38 @@ module.exports = (client) => {
     };
 
     const isURL = (value) => {
-        return /^(https?:\/\/)?.+(\..+)?\.\w+(\/[^\/]*)*$/.test(value);
+        return /^(https?:\/\/)?.+(\..+)?\.\w+(\/[^/]*)*$/.test(value);
+        // return /^(https?:\/\/)?.+(\..+)?\.\w+(\/[^\/]*)*$/.test(value);
     };
 
-    const getLastImage = (messages) => {
-        messages = messages.array().slice(-100);
-        let filteredMessages = messages.filter(x => x.attachments.size > 0 || urlRegex.test(x.content));
-        filteredMessages = filteredMessages.sort(function (a, b) {
-            return a.createdAt - b.createdAt;
-        });
-        if (filteredMessages.length === 0) {
-            return null;
-        }
-        const message = filteredMessages[filteredMessages.length - 1];
-        if (message.attachments.size !== 0) {
-            return message.attachments.first().url;
-        }
-        const url = urlRegex.exec(message.content);
-        return url[1];
-    };
+    // const getLastImage = (messages) => {
+    //     messages = messages.array().slice(-100);
+    //     let filteredMessages = messages.filter(x => x.attachments.size > 0 || urlRegex.test(x.content));
+    //     filteredMessages = filteredMessages.sort(function (a, b) {
+    //         return a.createdAt - b.createdAt;
+    //     });
+    //     if (filteredMessages.length === 0) {
+    //         return null;
+    //     }
+    //     const message = filteredMessages[filteredMessages.length - 1];
+    //     if (message.attachments.size !== 0) {
+    //         return message.attachments.first().url;
+    //     }
+    //     const url = urlRegex.exec(message.content);
+    //     return url[1];
+    // };
 
-    client.tools.GetImageFromChannel = async (channel) => {
-        const url = getLastImage(channel.messages);
-        if (url) return url;
+    // client.tools.GetImageFromChannel = async (channel) => {
+    //     const url = getLastImage(channel.messages);
+    //     if (url) return url;
 
-        if (channel.messages.size >= 100) {
-            return null;
-        }
+    //     if (channel.messages.size >= 100) {
+    //         return null;
+    //     }
 
-        await channel.messages.fetch({limit: 100});
-        return getLastImage(channel.messages);
-    };
+    //     await channel.messages.fetch({limit: 100});
+    //     return getLastImage(channel.messages);
+    // };
 
     client.tools.getBufferFromJimp = (img, mime) => {
         return new Promise(async (resolve, reject) => {
