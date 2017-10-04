@@ -14,11 +14,17 @@ const keys = [
 
 exports.run = async (client, message) => {
 
-    if (message.mentions.has(client.user), false) {
-        const text =  message.guild
-            ? `${message.guild.name} #${message.channel.name}`
-            : message.author.username;
-        client.log('mention', text, message.cleanContent, message.author);
+    if (client.db && client.settings['logmessages'] && (message.channel.type === 'dm' || client.settings['logmessages_guild'].includes(message.channel.guild.id))) {
+        client.db.addMessage(message);
+    }
+
+    if (!message.mentions.has(client.user)) {
+        if (client.settings['logmentions'] && (message.channel.type === 'dm' || !client.settings.logmentions.includes(message.guild.id))) {
+            const text =  message.guild
+                ? `${message.guild.name} #${message.channel.name}`
+                : message.author.username;
+            client.log('mention', text, message.cleanContent, message.author);
+        }
     }
 
     if (message.author.id !== client.user.id) return;

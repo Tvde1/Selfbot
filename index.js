@@ -1,10 +1,23 @@
-const discord = require('discord.js');
-const fs = require('fs');
-const client = new discord.Client();
-client.config = require('./config.json');
+const discord  = require('discord.js');
+const fs       = require('fs');
+const mongoose = require('mongoose');
+const client   = new discord.Client();
+client.config  = require('./config.json');
 
-require('./modules/clientaddons.js')(client);
 process.on('unhandledRejection', err => console.error(`Uncaught Promise Error: \n${err && err.stack || err}`));
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://i deleted xd/logs', { useMongoClient: true });
+
+var db = mongoose.connection;
+db.on('error', x => client.log('console', `Mongoose connection error: ${x}`));
+db.once('open', () => {
+    client.db = mongoose.connection;
+    client.log('console', 'Connected to database.');
+    require('./tools/mongooseStuff.js')(client.db);
+});
+
+require('./tools/clientaddons.js')(client);
 
 //Event loading
 fs.readdir('./events/', (err, files) => {
