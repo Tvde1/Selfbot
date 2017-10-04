@@ -2,10 +2,10 @@ const table = require('markdown-table');
 
 exports.run = (client, message) => {
     switch (message.channel.type) {
-        case 'dm':
-            throw new Error('This is a DM and has no emoji.');
-        case 'group':
-            throw new Error('This is a Group DM and has no emoji.');
+    case 'dm':
+        throw new Error('This is a DM and has no emoji.');
+    case 'group':
+        throw new Error('This is a Group DM and has no emoji.');
     }
     const emojis = message.guild.emojis;
 

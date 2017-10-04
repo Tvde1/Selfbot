@@ -56,7 +56,7 @@ exports.run = async (client, message) => {
     }
 };
 
-editTag = (message) => {
+const editTag = (message) => {
     let editString = message.content;
     keys.forEach(x => {
         const regex = new RegExp(`{${x[0]}}`,'gi');
@@ -66,7 +66,7 @@ editTag = (message) => {
     if (editString !== message.content) message.edit(editString);
 };
 
-editEmoji = (message) => {
+const editEmoji = (message) => {
     const regex = /^:(.+):$/;
     const solution = regex.exec(message.content);
     const extentionarray = ['.png', '.gif', '.jpg', '.jpeg'];
