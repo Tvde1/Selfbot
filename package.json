@@ -4,7 +4,7 @@
   "description": "A selfbot made by Tvde1",
   "engines": {
     "node": "8.6.0",
-    "npm": "latest"
+    "npm": "5.4.2"
   },
   "main": "server.js",
   "scripts": {
