@@ -67,6 +67,7 @@ const evalSync = async (_client, _message, match) => {
                     promiseResult = util.inspect(promiseResult, {depth: 0});
                 }
                 catch (err) {
+                    //Ignored
                 }
             }
             _message.edit(`**Eval:**\n**:speech_balloon: Input:**\n\`\`\`js\n${match}\n\`\`\`\n**:white_check_mark: Output:**\n\`\`\`js\n${response}\n\`\`\`\n**:white_check_mark: Promise:**\n\`\`\`xl\n${promiseResult}\n\`\`\`\n**Type:** \`${type}\` | **Time Taken:** \`${diff[0] * 1e9 + diff[1]}\` nanoseconds.`);
@@ -119,6 +120,7 @@ const evalAsync = async (_client, _message, match) => {
                     promiseResult = util.inspect(promiseResult, {depth: 0});
                 }
                 catch (err) {
+                    //Ignored
                 }
             }
             _message.edit(`**Eval:**\n**:speech_balloon: Input:**\n\`\`\`js\n${match}\n\`\`\`\n**:white_check_mark: Output:**\n\`\`\`js\n${response}\n\`\`\`\n**:white_check_mark: Promise:**\n\`\`\`xl\n${promiseResult}\n\`\`\`\n**Type:** \`${type}\` | **Time Taken:** \`${diff[0] * 1e9 + diff[1]}\` nanoseconds.`);

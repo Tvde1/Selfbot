@@ -2,9 +2,13 @@
   "name": "tvde1s-new-selfbot",
   "version": "1.0.0",
   "description": "A selfbot made by Tvde1",
-  "main": "index.js",
+  "engines": {
+    "node": "latest",
+    "npm": "5.3.0"
+  },
+  "main": "server.js",
   "scripts": {
-    "test": "??"
+    "start": "node server.js",
   },
   "keywords": [
     "Discord",

@@ -70,7 +70,7 @@ module.exports = (client) => {
                 if (!mentionChannel) return client.log('console', `[Mention] ${message.cleanContent}`);
                 if (!user) user = client.user;
                 const embed = new discord.MessageEmbed()
-                    .setColor(embedColor)
+                    .setColor(client.tools.EmbedColor)
                     .setAuthor(`${user.username} (${user.id})`, user.avatarURL())
                     .setTitle(title)
                     .setDescription(message);
@@ -81,7 +81,7 @@ module.exports = (client) => {
                 const logChannel = client.channels.get(client.config.channels.logs);
                 if (!logChannel) return client.log('console', `[Log] ${message}`);
                 const embed = new discord.MessageEmbed()
-                    .setColor(embedColor)
+                    .setColor(client.tools.EmbedColor)
                     .setAuthor(`${client.user.username} (${client.user.id})`, client.user.avatarURL())
                     .setTitle(title)
                     .setDescription(message);
@@ -100,8 +100,7 @@ module.exports = (client) => {
         return '!,.?'.includes(text[text.length - 1]) ? text : text + '.';
     };
 
-    const embedColor = 'RANDOM'; //'ff0000';
-    client.tools.EmbedColor = embedColor;
+    client.tools.EmbedColor = 'RANDOM';
 
     client.tools.DeleteMyMessages = (client, channel, number) => {
         channel.messages.fetch({limit: 100}).then(messages => {
@@ -142,10 +141,6 @@ module.exports = (client) => {
     client.tools.EscapeStringRegExp = (str) => {
         return str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
     };
-
-    // const urlRegex = /((?:https?:\/\/)?(?:[a-z\d\-]+\.)+[a-z]{2,6}\/[^\s]+\.(?:png|jpe?g|gif))/gi;
-    // const urlRegex = /((?:https?:\/\/)?(?:[a-z\d-]+\.)+[a-z]{2,6}\/[^\s]+\.(?:png|jpe?g|gif))/gi;
-    // client.tools.UrlRegex = urlRegex;
 
     client.tools.getImagesFromMessage = async (message, args) => {
         let imageURLs = [];
@@ -193,37 +188,7 @@ module.exports = (client) => {
 
     const isURL = (value) => {
         return /^(https?:\/\/)?.+(\..+)?\.\w+(\/[^/]*)*$/.test(value);
-        // return /^(https?:\/\/)?.+(\..+)?\.\w+(\/[^\/]*)*$/.test(value);
     };
-
-    // const getLastImage = (messages) => {
-    //     messages = messages.array().slice(-100);
-    //     let filteredMessages = messages.filter(x => x.attachments.size > 0 || urlRegex.test(x.content));
-    //     filteredMessages = filteredMessages.sort(function (a, b) {
-    //         return a.createdAt - b.createdAt;
-    //     });
-    //     if (filteredMessages.length === 0) {
-    //         return null;
-    //     }
-    //     const message = filteredMessages[filteredMessages.length - 1];
-    //     if (message.attachments.size !== 0) {
-    //         return message.attachments.first().url;
-    //     }
-    //     const url = urlRegex.exec(message.content);
-    //     return url[1];
-    // };
-
-    // client.tools.GetImageFromChannel = async (channel) => {
-    //     const url = getLastImage(channel.messages);
-    //     if (url) return url;
-
-    //     if (channel.messages.size >= 100) {
-    //         return null;
-    //     }
-
-    //     await channel.messages.fetch({limit: 100});
-    //     return getLastImage(channel.messages);
-    // };
 
     client.tools.getBufferFromJimp = (img, mime) => {
         return new Promise(async (resolve, reject) => {
@@ -276,7 +241,7 @@ module.exports = (client) => {
 
     Message.prototype.EmbedEdit = async function(title, description) {
         const embed = new discord.MessageEmbed()
-            .setColor(embedColor)
+            .setColor(client.tools.EmbedColor)
             .setTitle(title)
             .setDescription(description);
 
@@ -287,7 +252,6 @@ module.exports = (client) => {
         messages = messages.sort((a,b) => b.createdTimestamp - a.createdTimestamp);
 
         const codeRegex = /```(?:js|json|javascript)?\n?((?:\n|.)+?)\n?```/ig;
-        // const codeRegex = /(([ \t]*`{3,4})([^\n]*)([\s\S]+?)(^[ \t]*\2))/gm;
 
         for (const m of messages) {
             const groups = codeRegex.exec(m.content);
@@ -295,6 +259,44 @@ module.exports = (client) => {
             if (groups && groups[1].length) {
                 return groups[1];
             }
+        }
+    };
+
+    client.tools.fetchFromAPI = async (endpoint, options) => {
+        const https = require('https');
+        const agent = new https.Agent({
+            rejectUnauthorized: false
+        });
+
+        const requestOptions = {
+            agent,
+            headers: {
+                'Authorization': `Bearer ${client.config.fbotApiKey}`
+            }
+        };
+        
+        if (options) {
+            requestOptions.method = 'POST';
+            requestOptions.headers['Content-Type'] = 'application/json';
+
+            requestOptions.body = JSON.stringify({
+                images: options.images,
+                args: options.args
+            });
+        }
+
+        const result = await this.bot.fetch(`https://185.162.249.160:3000/${endpoint}`, requestOptions);
+
+        if (!result.ok) {
+            const body = await result.json();
+
+            let error = new Error('Could not fetch result from API');
+            if (body && body.meta && body.meta.error) error = new Error(body.meta.error.message);
+
+            return Promise.reject(error);
+        } else {
+            const buffer = await result.buffer();
+            return buffer;
         }
     };
 };
