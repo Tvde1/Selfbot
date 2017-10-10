@@ -6,7 +6,7 @@ exports.run = async (client, message, args) => {
 
     captionbot(image, (err, result) => {
         if (err) throw err;
-        message.EmbedEdit('🤖 Result:', 'I think ' + result);
+        message.EmbedEdit('🤖 Result:', `I think ${result}`);
     });
 };
 
