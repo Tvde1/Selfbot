@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A selfbot made by Tvde1",
   "engines": {
-    "node": "latest",
+    "node": "8.6.0",
     "npm": "latest"
   },
   "main": "server.js",
