@@ -8,7 +8,7 @@
   },
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node server.js"
   },
   "keywords": [
     "Discord",
