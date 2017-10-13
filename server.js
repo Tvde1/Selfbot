@@ -2,7 +2,8 @@ const discord  = require('discord.js');
 const fs       = require('fs');
 const mongoose = require('mongoose');
 const client   = new discord.Client();
-client.config  = require('./config.json');
+
+client.config  = process.env.SELFBOT_CONFIG ? JSON.parse(process.env.SELFBOT_CONFIG) : require('./config.json');
 
 process.on('unhandledRejection', err => console.error(`Uncaught Promise Error: \n${err && err.stack || err}`));
 
