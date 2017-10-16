@@ -1,9 +1,6 @@
-const discord  = require('discord.js');
-const fs       = require('fs');
-const mongoose = require('mongoose');
-const client   = new discord.Client();
-
-client.config  = process.env.SELFBOT_CONFIG ? JSON.parse(process.env.SELFBOT_CONFIG) : require('./config.json');
+const ExtendedClient = require('./extendedClient.js');
+const client         = new ExtendedClient();
+const mongoose       = require('mongoose');
 
 process.on('unhandledRejection', err => console.error(`Uncaught Promise Error: \n${err && err.stack || err}`));
 
@@ -18,21 +15,4 @@ db.once('open', () => {
     require('./tools/mongooseStuff.js')(client.db);
 });
 
-require('./tools/clientaddons.js')(client);
-
-//Event loading
-fs.readdir('./events/', (err, files) => {
-    if (err) return console.error(err);
-    files.forEach(file => {
-        const eventName = file.split('.')[0];
-        client.log('console', `Loading event ${eventName}.`);
-        const eventFunction = require(`./events/${file}`);
-
-        client.on(eventName, (...args) => eventFunction.run(client, ...args));
-    });
-});
-
-//Command Loading
-client.reloadCommands();
-
-client.login(client.config.token).catch(console.err);
+client.login(client.config.token).catch(client.logger.error);

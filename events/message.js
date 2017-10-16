@@ -1,6 +1,7 @@
-const imageUrl = 'config.imageurl';
-const urlExists = require('url-exists');
-const distance = require('jaro-winkler');
+const imageUrl       = 'config.imageurl';
+const urlExists      = require('url-exists');
+const { Message }    = require('discord.js');
+const ExtendedClient = require('../extendedClient');
 
 const keys = [
     ['lenny', '( ͡° ͜ʖ ͡°)'],
@@ -12,6 +13,10 @@ const keys = [
     ['xd', '😂                      😂        😂  😂\r\n    😂              😂            😂        😂\r\n        😂      😂                😂          😂\r\n                😂                        😂          😂\r\n        😂      😂                😂          😂\r\n    😂              😂            😂        😂\r\n😂                      😂        😂  😂']
 ];
 
+/**
+ * @param {ExtendedClient} client
+ * @param {Message} message
+ */
 exports.run = async (client, message) => {
 
     if (client.db && client.settings['logmessages'] && (message.channel.type === 'dm' || client.settings['logmessages_guild'].includes(message.channel.guild.id))) {
@@ -30,29 +35,21 @@ exports.run = async (client, message) => {
     if (message.author.id !== client.user.id) return;
 
     if (/{.+}/.test(message.content)) editTag(message);
-    if (/^:.+:$/.test(message.content)) editEmoji(message);
+    if (/^:.+:$/.test(message.content)) editEmoji(client, message);
 
     if (!message.content.startsWith(client.config.prefix)) return;
 
     const [commandName, ...args] = message.content.slice(client.config.prefix.length).trim().split(' ');
 
     let command = client.commands.get(commandName);
-
-    if (!command) {
-        const closest = closestCommand(commandName, client.commands.keyArray());
-        if (closest.distance > 0.8) {
-            client.log('console', 'Corrected a command attempt.', '');
-            command = client.commands.get(closest.command);
-        }
-    }
-
     if (!command) return;
 
     try {
         await command.run(client, message, args);
     }
     catch (err) {
-        message.EmbedEdit('Error', `❌ ${err.message}`);
+        const msg = client.utils.NiceBool(err.message);
+        message.EmbedEdit('Error', `❌ ${msg}`);
     }
 };
 
@@ -66,7 +63,7 @@ const editTag = (message) => {
     if (editString !== message.content) message.edit(editString);
 };
 
-const editEmoji = (message) => {
+const editEmoji = (client, message) => {
     const regex = /^:(.+):$/;
     const solution = regex.exec(message.content);
     const extentionarray = ['.png', '.gif', '.jpg', '.jpeg'];
@@ -76,19 +73,7 @@ const editEmoji = (message) => {
             if (!exists) return;
             message.delete();
             message.channel.send({files:[emoji]});
-            console.log('Swapped emoji for image.');
+            client.logger.log('MessageEvent', 'Swapped emoji for image.');
         });
     }
 };
-
-function closestCommand(target, list) {
-    let highest = 0, best;
-    for (const key of list) {
-        const dist = distance(target, key);
-        if (dist > highest) {
-            best = key;
-            highest = dist;
-        }
-    }
-    return { command: best, distance: highest };
-}
