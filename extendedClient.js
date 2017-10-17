@@ -1,7 +1,6 @@
 const Logger         = require('./tools/logger');
 const Settings       = require('./tools/settings.js');
 const Utils          = require('./tools/utils.js');
-const DiscordUtils   = require('./tools/discordUtils.js');
 const CommandStore  = require('./tools/commandStore.js');
 const EventLoader    = require('./tools/eventLoader.js');
 const { Client, Collection } = require('discord.js');
@@ -13,7 +12,6 @@ class ExtendedClient extends Client {
         this._config       = readConfig();
 
         this._utils        = new Utils();
-        this._discordUtils = new DiscordUtils(this.utils);
         this._logger       = new Logger(this.config.channels, this.utils);
         this._settings     = new Settings(this.logger);
 
@@ -36,13 +34,6 @@ class ExtendedClient extends Client {
      */
     get utils() {
         return this._utils;
-    }
-
-    /**
-     * @returns {DiscordUtils}
-     */
-    get discordUtils() {
-        return this._discordUtils;
     }
 
     /**

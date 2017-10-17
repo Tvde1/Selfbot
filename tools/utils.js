@@ -1,10 +1,13 @@
-const fetch = require('node-fetch');
-const jimp  = require('jimp');
+const fetch                        = require('node-fetch');
+const jimp                         = require('jimp');
+const discord                      = require('discord.js');
+const { Channel, Client, Message } = require('discord.js');
 
 class Utils {
 
     constructor(config) {
         this.config = config;
+        this.addToPrototypes();
     }
 
     /**
@@ -112,6 +115,149 @@ class Utils {
                 resolve(buffer);
             });
         });
+    }
+
+    /**
+     * Adds functions to prototypes.
+     */
+    addToPrototypes() {
+        Message.prototype.EmbedEdit = async function(title, description) {
+            const embed = new discord.MessageEmbed()
+                .setColor(this.EmbedColor)
+                .setTitle(title)
+                .setDescription(description);
+    
+            await this.edit(this.content, {embed});
+        };
+    }
+    
+    /**
+     * The selected color for embeds.
+     */
+    get embedColor() {
+        return 'RANDOM';
+    }
+    
+    /**
+     * Deletes an amount of messages from this channel.
+     * @param {Client} client 
+     * @param {Channel} channel 
+     * @param {number} number 
+     */
+    async deleteMyMessages(client, channel, number) {
+        const msgs = await channel.messages.fetch({limit: 100});
+        const myMessages = msgs.filterArray(x => x.author.id === client.user.id);
+        myMessages.slice(0, number).forEach(x => x.delete());
+    }
+    
+    /**
+     * Gets an user in a guild/dm.
+     * @param {Client} client 
+     * @param {Channel} channel 
+     * @param {string} search 
+     */
+    async getUser(client, channel, search) {
+        search = search.toLowerCase();
+        switch (channel.type) {
+            case 'text': {
+                await channel.guild.members.fetch();
+                return channel.guild.members.find(x => x.displayName.toLowerCase().includes(search) || x.user.username.toLowerCase().includes(search));
+            }
+            case 'dm': {
+                if (channel.recipient.username.toLowerCase().includes(search)) return channel.recipient;
+                else if (client.user.username.toLowerCase().includes(search)) return client.user;
+                return null;
+            }
+            case 'group': {
+                if (channel.recipients.toLowerCase().includes(search)) return channel.recipients.find(x => x.username.toLowerCase().includes(search));
+                else if (client.user.username.toLowerCase().includes(search)) return client.user;
+                return null;
+            }
+        }
+    }
+    
+    /**
+     * Gets an url from a message.
+     * Copied from matmen's fbot.
+     * @param {Message} message 
+     * @param {string[]} args 
+     */
+    async getImagesFromMessage(message, args) {
+        let imageURLs = [];
+    
+        for (const attachment of message.attachments.values()) imageURLs.push(attachment.url);
+        if (args[0] !== '^')
+            for (const value of args) {
+                if (this.isURL(value)) imageURLs.push(value);
+    
+                if (/^<:.+:\d+>$/.test(value)) {
+                    imageURLs.push(`https://cdn.discordapp.com/emojis/${value.match(/^<:.+:(\d+)>$/)[1]}.png`);
+                }
+    
+                if (/^:.+:$/.test(value)) {
+                    imageURLs.push(`https://cdn.discordapp.com/emojis/${value.match(/^:(.+):$/)[1]}.png`);
+                }
+            }
+    
+        if (imageURLs.length === 0) {
+            const messages = await message.channel.messages.fetch({
+                limit: 20
+            });
+    
+            const messageAttachments = messages.filter(m => m.attachments.size > 0 && m.attachments.first().height && m.attachments.first().width);
+            const messageEmbeds = messages.filter(m => m.embeds.length > 0 && m.embeds[0].type === 'image');
+            let images = [];
+    
+            for (const messageAttachment of messageAttachments.array()) images.push({
+                url: messageAttachment.attachments.first().url,
+                createdTimestamp: messageAttachment.createdTimestamp
+            });
+    
+            for (const messageEmbed of messageEmbeds.array()) images.push({
+                url: messageEmbed.embeds[0].url,
+                createdTimestamp: messageEmbed.createdTimestamp
+            });
+    
+            images = images.sort((m1, m2) => m2.createdTimestamp - m1.createdTimestamp);
+    
+            imageURLs = images.map(i => i.url);
+        }
+    
+        return imageURLs[0];
+    }
+    
+    /**
+     * Gets the last sent codeblock.
+     * @param {Message[]} messages 
+     */
+    async getCode(messages) {
+        messages = messages.sort((a,b) => b.createdTimestamp - a.createdTimestamp);
+    
+        const codeRegex = /```(?:js|json|javascript)?\n?((?:\n|.)+?)\n?```/ig;
+    
+        for (const m of messages) {
+            const groups = codeRegex.exec(m.content);
+    
+            if (groups && groups[1].length) {
+                return groups[1];
+            }
+        }
+    }
+
+    /**
+     * Gets an image and opens it with jimp.
+     * @param {Message} message The message that requested the image.
+     * @param {string[]} args The message's args.
+     */
+    async getImageFromMessageAndOpen(message, args) {
+        let image = await this.getImagesFromMessage(message, args);
+        if (!image) throw new Error('Could not find an image in the last 100 messages.');
+
+        image = await jimp.read(image);
+        if (!image) throw new Error('An error occurred while loading the image.');
+
+        if (image.bitmap.width * image.bitmap.height > 5000 * 5000) throw new Error('This image is too big.');
+        return image;
     }
 }
 
