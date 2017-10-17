@@ -37,7 +37,6 @@ class CommandStore {
         for (const command of this.readDirR('commands')) {
             delete require.cache[require.resolve(`../${command}`)];
             const commandConstructor = require(`../${command}`);
-            this.logger.log('Tryna get command: ' + command);
             const comm = new commandConstructor();
             this.commands.set(comm.help.name, comm);
             this.logger.log('CommandLoader', `Loaded command ${comm.help.name}`);

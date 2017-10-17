@@ -1,6 +1,6 @@
 module.exports = (client) => {
 
-    client.tools.fetchFromAPI = async (endpoint, options) => {
+    const fetchFromAPI = async (endpoint, options) => {
         const https = require('https');
         const agent = new https.Agent({
             rejectUnauthorized: false

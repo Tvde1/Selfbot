@@ -1,9 +1,5 @@
-const discord = require('discord.js');
-
 exports.run = async (client, reaction, user) => {
     if (user.id !== client.user.id) return;
-
-    // console.log(reaction.emoji);
 
     if (reaction.emoji.name === '📤') {
         reaction.remove();

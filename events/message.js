@@ -25,10 +25,10 @@ exports.run = async (client, message) => {
 
     if (!message.mentions.has(client.user)) {
         if (client.settings['logmentions'] && (message.channel.type === 'dm' || !client.settings.logmentions.includes(message.guild.id))) {
-            const text =  message.guild
-                ? `${message.guild.name} #${message.channel.name}`
-                : message.author.username;
-            client.log('mention', text, message.cleanContent, message.author);
+            // const text =  message.guild
+            //     ? `${message.guild.name} #${message.channel.name}`
+            //     : message.author.username;
+            client.logger.logMention(message);
         }
     }
 

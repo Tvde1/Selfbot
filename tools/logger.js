@@ -48,7 +48,7 @@ class Logger {
             .setTitle(title)
             .setDescription(description)
             .setAuthor(this.client.author)
-            .setColor(this.client.tools.EmbedColor);
+            .setColor(this.embedColor);
 
         logChannel.send(embed);
     }
@@ -67,7 +67,7 @@ class Logger {
             .setAuthor(message.author.tag, message.author.displayAvatarURL)
             .setTitle(`${message.member.tag} mentioned me in ${message.guild ? `$${message.channel.name} (${message.guild.name})` : 'DMs'}.`)
             .setDescription(message.cleanContent)
-            .setColor(this.client.tools.EmbedColor);
+            .setColor(this.embedColor);
 
         mentionChannel.send(embed);
     }

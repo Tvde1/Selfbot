@@ -8,10 +8,10 @@ mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://i deleted xd/logs', { useMongoClient: true });
 
 var db = mongoose.connection;
-db.on('error', x => client.log('console', `Mongoose connection error: ${x}`));
+db.on('error', x => client.logger.error('Database', `Mongoose connection error: ${x}`));
 db.once('open', () => {
     client.db = mongoose.connection;
-    client.log('console', 'Connected to database.');
+    client.logger.log('Database', 'Connected to database.');
     require('./tools/mongooseStuff.js')(client.db);
 });
 
