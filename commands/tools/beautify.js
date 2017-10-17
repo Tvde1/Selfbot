@@ -1,18 +1,28 @@
 const {js_beautify} = require('js-beautify');
+const Command = require('../../command');
 
-exports.run = async (client, message) => {
-    await message.channel.messages.fetch({limit:100});
-    const code = await client.tools.getCode(message.channel.messages.array());
-    if (!code) throw new Error('No Javascript codeblock found.');
-    const betterCode = format(code);
-    message.edit(message.content + '\n==========\n' + betterCode);
-};
+class BeautifyCommand extends Command {
 
-exports.help = {
-    name: 'beautify',
-    description: 'Get the last JS code block and makes it *prettier*.',
-    usage: 'beautify'
-};
+    constructor() {
+        super();
+ 
+        this.help = {
+            name: 'beautify',
+            description: 'Get the last JS code block and makes it *prettier*.',
+            usage: 'beautify'
+        };
+    }
+
+    async run (client, message) {
+        await message.channel.messages.fetch({limit:100});
+        const code = await client.utils.getCode(message.channel.messages.array());
+        if (!code) throw new Error('No Javascript codeblock found.');
+        const betterCode = format(code);
+        message.edit(message.content + '\n==========\n' + betterCode);
+    }
+}
+
+module.exports = BeautifyCommand;
 
 const reduceIndentation = (string) => {
     let whitespace = string.match(/^(\s+)/);

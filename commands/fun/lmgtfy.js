@@ -1,10 +1,21 @@
-exports.run = (client, message, args) => {
-    if (args.length === 0) args = ['how', 'to', 'add', 'arguments'];
-    message.edit('http://lmgtfy.com/?q=' + args.join('+'));
-};
+const Command = require('../../command');
 
-exports.help = {
-    name: 'lmgtfy',
-    description: 'For stupid questions.',
-    usage: 'lmgtfy [args]'
-};
+class LmgtfyCommand extends Command {
+
+    constructor() {
+        super();
+ 
+        this.help = {
+            name: 'lmgtfy',
+            description: 'For stupid questions.',
+            usage: 'lmgtfy [args]'
+        };
+    }
+
+    async run (client, message, args) {
+        if (args.length === 0) args = ['how', 'to', 'add', 'arguments'];
+        message.edit('http://lmgtfy.com/?q=' + args.join('+'));
+    }
+}
+
+module.exports = LmgtfyCommand;

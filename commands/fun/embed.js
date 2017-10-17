@@ -1,15 +1,20 @@
-const discord = require('discord.js');
+const Command = require('../../command');
 
-exports.run = function (client, message, args) {
-    const embed = new discord.MessageEmbed()
-        .setDescription(args.join(' '))
-        .setColor(client.tools.EmbedColor);
+class EmbedCommand extends Command {
 
-    message.edit({embed});
-};
+    constructor() {
+        super();
+ 
+        this.help = {
+            name: 'embed',
+            description: 'Embeds text.',
+            usage: 'embed [text]'
+        };
+    }
 
-exports.help = {
-    name: 'embed',
-    description: 'Embeds text.',
-    usage: 'embed [text]'
-};
+    async run (client, message, args) {
+        message.EmbedEdit(null, args.join(' '));
+    }
+}
+
+module.exports = EmbedCommand;

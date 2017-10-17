@@ -20,25 +20,36 @@ const russian = {
     },
     random: function (len) {
         if (len === 1) return 0;
-        return !!len ? Math.floor(Math.random() * len + 1) - 1 : Math.random();
+        return len ? Math.floor(Math.random() * len + 1) - 1 : Math.random();
     },
     generate: function (str) {
         const strArr = str.toUpperCase().split(''),
             output = strArr.map(function (a) {
-                if (!russian.alpha.hasOwnProperty(a) && a !== "R") return a;
+                if (!russian.alpha.hasOwnProperty(a) && a !== 'R') return a;
                 return russian.alpha[a][russian.random(russian.alpha[a].length)];
             });
         return output.join('');
     }
 };
 
-exports.run = (client, message, args) => {
-    if (!args || args.length < 1) throw new Error('Give something to convert xd');
-    message.edit(russian.generate(args.join(' ')));
-};
+const Command = require('../../command');
 
-exports.help = {
-    name: 'russian',
-    description: 'Generates fake russian text.',
-    usage: 'russian [text]'
-};
+class RussianCommand extends Command {
+
+    constructor() {
+        super();
+ 
+        this.help = {
+            name: 'russian',
+            description: 'Generates fake russian text.',
+            usage: 'russian [text]'
+        };
+    }
+
+    async run (client, message, args) {
+        if (!args || args.length < 1) throw new Error('Give something to convert xd');
+        message.edit(russian.generate(args.join(' ')));
+    }
+}
+
+module.exports = RussianCommand;

@@ -1,31 +1,40 @@
 const jimp = require('jimp');
+const Command = require('../../command');
 
-exports.run = async (client, message, args) => {
+class VotekickCommand extends Command {
 
-    const user = message.author.username;
+    constructor() {
+        super();
+ 
+        this.help = {
+            name: 'votekick',
+            description: 'Start a votekick.',
+            usage: 'votekick [text]'
+        };
+    }
 
-    const title = args.join(' ');
-    if (title === '') throw new Error('Give it a title!');
+    async run (client, message, args) {
+        const user = message.author.username;
 
-    let image = await jimp.read('./files/votekick/votekick.png');
-    const verdana = await jimp.loadFont('./files/votekick/Verdana.fnt');
-    const tf2secondary = await jimp.loadFont('./files/votekick/TF2secondary.fnt');
+        const title = args.join(' ');
+        if (title === '') throw new Error('Give it a title!');
 
-    console.log('test');
-    image.print(verdana, 10, 5, `${user} wants to call a vote:`, 1000, 1000);
+        let image = await jimp.read('./files/votekick/votekick.png');
+        const verdana = await jimp.loadFont('./files/votekick/Verdana.fnt');
+        const tf2secondary = await jimp.loadFont('./files/votekick/TF2secondary.fnt');
 
-    image = await client.tools.getBufferFromJimp(image);
+        console.log('test');
+        image.print(verdana, 10, 5, `${user} wants to call a vote:`, 1000, 1000);
 
-    message.channel.send({
-        files: [{
-            attachment: image,
-            name: 'votekick.png'
-        }]
-    });
-};
+        image = await client.utils.getBufferFromJimp(image);
 
-exports.help = {
-    name: 'votekick',
-    description: 'Start a votekick.',
-    usage: 'votekick [text]'
-};
+        message.channel.send({
+            files: [{
+                attachment: image,
+                name: 'votekick.png'
+            }]
+        });
+    }
+}
+
+module.exports = VotekickCommand;

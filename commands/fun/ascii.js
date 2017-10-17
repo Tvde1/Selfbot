@@ -1,16 +1,25 @@
 const request = require('request');
+const Command = require('../../command');
 
-exports.run = (client, message, args) => {
+class AsciiCommand extends Command {
 
-    if (args.length === 0) throw new Error('You need to tell me what to say...')
+    constructor() {
+        super();
+ 
+        this.help = {   
+            name: 'ascii',
+            description: 'Edits the message with a code block with the text in ascii-art.',
+            usage: 'ascii [text]'
+        };
+    }
 
-    request('http://artii.herokuapp.com/make?text=' + args.join(' '), function (error, response, body) {
-        message.edit(body, { code: true });
-    });
-};
+    async run (client, message, args) {
+        if (args.length === 0) throw new Error('You need to tell me what to say...');
 
-exports.help = {
-    name: 'ascii',
-    description: 'Edits the message with a code block with the text in ascii-art.',
-    usage: 'ascii [text]'
-};
+        request('http://artii.herokuapp.com/make?text=' + args.join(' '), function (error, response, body) {
+            message.edit(body, { code: true });
+        });
+    }
+}
+
+module.exports = AsciiCommand;

@@ -1,11 +1,20 @@
-const discord = require('discord.js');
+const Command = require('../../command');
 
-exports.run = function (client, message, args) {
-    message.edit(args.join('👏'));
-};
+class ClapCommand extends Command {
 
-exports.help = {
-    name: 'clap',
-    description: 'Swaps spaces with 👏 emojis.',
-    usage: 'clap [text]'
-};
+    constructor() {
+        super();
+ 
+        this.help = {
+            name: 'clap',
+            description: 'Swaps spaces with 👏 emojis.',
+            usage: 'clap [text]'
+        };
+    }
+
+    async run (client, message, args) {
+        message.edit(args.join('👏'));
+    }
+}
+
+module.exports = ClapCommand;

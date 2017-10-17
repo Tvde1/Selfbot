@@ -1,18 +1,32 @@
 const Nraw = require('nraw');
 const reddit = new Nraw('Discord Selfbot by /u/Tvde1 (for emojipastas)');
+const Command = require('../../command');
 
-exports.run = async (client, message) => {
+class EmojipastaCommand extends Command {
 
-    let text = await getPost();
-    while (!text || text === '' || text.length > 2000) {
-        text = await getPost();
+    constructor() {
+        super();
+ 
+        this.help = {
+            name: 'emojipasta',
+            description: 'Sends an embed with emojipasta.',
+            usage: 'emojipasta'
+        };
     }
 
-    message.EmbedEdit('Emojipasta', text);
-    // client.EmbedEdit(message, 'Error', 'emojipasta\uD83D\uDC4C failed\uD83D\uDE14\uD83D\uDE21\uD83D\uDEAB to \u274Cload\u274C!! \uD83D\uDE2D try again \uD83D\uDD50 later \u2705 please \uD83D\uDC4B');
-};
+    async run (client, message) {
+        let text = await getPost();
+        while (!text || text === '' || text.length > 2000) {
+            text = await getPost();
+        }
 
-async function getPost() {
+        message.EmbedEdit('Emojipasta', text);
+    }
+}
+
+module.exports = EmojipastaCommand;
+
+const getPost = async () => {
     return new Promise(resolve => {
         try {
             reddit.subreddit('emojipasta').random().exec(function (data) {
@@ -23,10 +37,4 @@ async function getPost() {
             resolve(null);
         }
     });
-}
-
-exports.help = {
-    name: 'emojipasta',
-    description: 'Sends an embed with emojipasta.',
-    usage: 'emojipasta'
 };

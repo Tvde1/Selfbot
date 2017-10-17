@@ -1,10 +1,21 @@
-exports.run = async (client, msg) => {
-    let message = await msg.channel.send("Ping?");
-    message.EmbedEdit('Pong!', `Latency is ${message.createdTimestamp - msg.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
-};
+const Command = require('../../command');
 
-exports.help = {
-    name: 'ping',
-    description: 'It... like... pings. Then Pongs. And it\'s not Ping Pong.',
-    usage: 'ping'
-};
+class PingCommand extends Command {
+
+    constructor() {
+        super();
+ 
+        this.help = {
+            name: 'ping',
+            description: 'It... like... pings. Then Pongs. And it\'s not Ping Pong.',
+            usage: 'ping'
+        };
+    }
+
+    async run (client, message) {
+        let msg = await msg.channel.send('Ping?');
+        msg.EmbedEdit('Pong!', `Latency is ${message.createdTimestamp - msg.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
+    }
+}
+
+module.exports = PingCommand;

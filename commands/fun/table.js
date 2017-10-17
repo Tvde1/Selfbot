@@ -1,4 +1,43 @@
 const wrap = require('wordwrap');
+const Command = require('../../command');
+
+class TableCommand extends Command {
+
+    constructor() {
+        super();
+ 
+        this.help = {
+            name: 'table',
+            description: 'Makes a table.',
+            usage: '[title]<|[text]<|[width]>>'
+        };
+    }
+
+    async run (client, message, args) {
+        if (args.length === 0) return client.EmbedEdit(message, 'Error', 'Needs atleast one argument.');
+        const newArgs = args.join(' ').split('|');
+
+        let res = {};
+
+        /*
+    Arg[0]: Message,
+    Arg[1]: Title,
+    Arg[2]: Width,
+    Arg[3]: softCorners
+    */
+
+        let skipper = 'skip';
+
+        if (newArgs[0] !== undefined && newArgs[0] !== skipper) res.message = newArgs[0];
+        if (newArgs[1] !== undefined && newArgs[1] !== skipper) res.title = newArgs[1];
+        if (newArgs[2] !== undefined && newArgs[2] !== skipper) res.width = parseInt(newArgs[2]);
+
+
+        message.edit(`\`\`\`\n${prettyfy(res)}\`\`\``);
+    }
+}
+
+module.exports = TableCommand;
 
 // ReSharper disable once InconsistentNaming
 const _default = {
@@ -100,30 +139,8 @@ function prettyfy(s) {
 }
 
 exports.run = (client, message, args) => {
-    if (args.length === 0) return client.EmbedEdit(message, 'Error', 'Needs atleast one argument.');
-    const newArgs = args.join(' ').split('|');
-
-    let res = {};
-
-    /*
-    Arg[0]: Message,
-    Arg[1]: Title,
-    Arg[2]: Width,
-    Arg[3]: softCorners
-    */
-
-    let skipper = 'skip';
-
-    if (newArgs[0] !== undefined && newArgs[0] !== skipper) res.message = newArgs[0];
-    if (newArgs[1] !== undefined && newArgs[1] !== skipper) res.title = newArgs[1];
-    if (newArgs[2] !== undefined && newArgs[2] !== skipper) res.width = parseInt(newArgs[2]);
-
-
-    message.edit(`\`\`\`\n${prettyfy(res)}\`\`\``);
+    
 };
 
 exports.help = {
-    name: 'table',
-    description: 'Makes a table.',
-    usage: '[title]<|[text]<|[width]>>'
 };

@@ -1,53 +1,63 @@
 const discord = require('discord.js');
+const Command = require('../../command');
 
-exports.run = (client, message, args) => {
-    let delMessage;
-    if (!client.deletedMessages) client.deletedMessages = {};
+class UndelCommand extends Command {
 
-    if (args.length === 0) {
-        let channelId = message.channel.id;
-        delMessage = client.deletedMessages[channelId];
-        if (!delMessage) throw new Error('Could not find any deleted messages of this channel.');
-    }
-    else if (args.length === 1) {
-        if (isNaN(args[0])) throw new Error('Your channel id seems to be incorrect.');
-
-        let channelId = args[0];
-        delMessage = client.deletedMessages[channelId];
-        if (!delMessage) throw new Error('Could not find any deleted messages of this channel.');
-    }
-    else if (args.length >= 2 && args[0] === 'user') {
-        if (isNaN(args[1])) throw new Error('Your user id doesn\'t seem to be a number.');
-
-        delMessage = client.deletedMessages[args[2]];
-        if (!delMessage) throw new Error('Could not find any deleted messages of this user.');
-    } else {
-        throw new Error('Wrong parameters.');
+    constructor() {
+        super();
+ 
+        this.help = {
+            name: 'undel',
+            description: 'Sends the last deleted message from the channel/user.',
+            usage: 'undel <[channel id] | user [user id]>'
+        };
     }
 
-    const info = delMessage.guild
-        ? `${delMessage.guild.name} (${delMessage.channel.name})`
-        : (delMessage.channel.name
-            ? `#${delMessage.channel.name}`
-            : `PM with ${delMessage.channel.recipient.username}`);
+    async run (client, message, args) {
+        let delMessage;
+        if (!client.deletedMessages) client.deletedMessages = {};
 
-    let embed = new discord.MessageEmbed()
-        .setAuthor((delMessage.member ? delMessage.member.displayName : delMessage.author.username), delMessage.author.avatarURL('png'))
-        .setTitle(info)
-        .setDescription(delMessage.content)
-        .setColor(client.tools.EmbedColor);
+        if (args.length === 0) {
+            let channelId = message.channel.id;
+            delMessage = client.deletedMessages[channelId];
+            if (!delMessage) throw new Error('Could not find any deleted messages of this channel.');
+        }
+        else if (args.length === 1) {
+            if (isNaN(args[0])) throw new Error('Your channel id seems to be incorrect.');
 
-    if (delMessage.attachments.size > 0) {
-        embed.setImage(delMessage.attachments.first().proxyURL);
+            let channelId = args[0];
+            delMessage = client.deletedMessages[channelId];
+            if (!delMessage) throw new Error('Could not find any deleted messages of this channel.');
+        }
+        else if (args.length >= 2 && args[0] === 'user') {
+            if (isNaN(args[1])) throw new Error('Your user id doesn\'t seem to be a number.');
+
+            delMessage = client.deletedMessages[args[2]];
+            if (!delMessage) throw new Error('Could not find any deleted messages of this user.');
+        } else {
+            throw new Error('Wrong parameters.');
+        }
+
+        const info = delMessage.guild
+            ? `${delMessage.guild.name} (${delMessage.channel.name})`
+            : (delMessage.channel.name
+                ? `#${delMessage.channel.name}`
+                : `PM with ${delMessage.channel.recipient.username}`);
+
+        let embed = new discord.MessageEmbed()
+            .setAuthor((delMessage.member ? delMessage.member.displayName : delMessage.author.username), delMessage.author.avatarURL('png'))
+            .setTitle(info)
+            .setDescription(delMessage.content)
+            .setColor(client.utilsembedColor);
+
+        if (delMessage.attachments.size > 0) {
+            embed.setImage(delMessage.attachments.first().proxyURL);
+        }
+        embed.setFooter(`By @${delMessage.author.username}`)
+            .setTimestamp(delMessage.createdAt);
+
+        message.edit(message.content, {embed});
     }
-    embed.setFooter(`By @${delMessage.author.username}`)
-        .setTimestamp(delMessage.createdAt);
+}
 
-    message.edit(message.content, {embed});
-};
-
-exports.help = {
-    name: 'undel',
-    description: 'Sends the last deleted message from the channel/user.',
-    usage: 'undel <[channel id] | user [user id]>'
-};
+module.exports = UndelCommand;

@@ -1,11 +1,21 @@
 const catFacts = require('cat-facts');
+const Command = require('../../command');
 
-exports.run = (client, message) => {
-    message.EmbedEdit('🐱 Catfact:', client.tools.AddDot(catFacts.random()));
-};
+class CatfactCommand extends Command {
 
-exports.help = {
-    name: 'catfact',
-    description: 'Sends a nice catfact.',
-    usage: 'catfact'
-};
+    constructor() {
+        super();
+ 
+        this.help = {
+            name: 'catfact',
+            description: 'Sends a nice catfact.',
+            usage: 'catfact'            
+        };
+    }
+
+    async run (client, message) {
+        message.EmbedEdit('🐱 Catfact:', client.utils.addDot(catFacts.random()));
+    }
+}
+
+module.exports = CatfactCommand;
