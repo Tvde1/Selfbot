@@ -51,6 +51,7 @@ class Utils {
      * @param {string} text 
      */
     addDot(text) {
+        text = text.trim();
         return '!.?~'.includes(text[text.length - 1]) ? text : `${text}.`;
     }
 
@@ -101,7 +102,7 @@ class Utils {
 
     /**
      * Gets a buffer from a jimp image.
-     * @param {*} img 
+     * @param {Jimp.Jimp} img 
      * @param {string} mime 
      * @returns {buffer}
      */
@@ -121,9 +122,12 @@ class Utils {
      * Adds functions to prototypes.
      */
     addToPrototypes() {
+
+        const utils = this;
+
         Message.prototype.EmbedEdit = async function(title, description) {
             const embed = new discord.MessageEmbed()
-                .setColor(this.EmbedColor)
+                .setColor(utils.embedColor)
                 .setTitle(title)
                 .setDescription(description);
     

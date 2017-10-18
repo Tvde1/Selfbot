@@ -13,7 +13,7 @@ class PingCommand extends Command {
     }
 
     async run (client, message) {
-        let msg = await msg.channel.send('Ping?');
+        let msg = await message.channel.send('Ping?');
         msg.EmbedEdit('Pong!', `Latency is ${message.createdTimestamp - msg.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
     }
 }

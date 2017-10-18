@@ -23,13 +23,8 @@ exports.run = async (client, message) => {
         client.db.addMessage(message);
     }
 
-    if (!message.mentions.has(client.user)) {
-        if (client.settings['logmentions'] && (message.channel.type === 'dm' || !client.settings.logmentions.includes(message.guild.id))) {
-            // const text =  message.guild
-            //     ? `${message.guild.name} #${message.channel.name}`
-            //     : message.author.username;
-            client.logger.logMention(message);
-        }
+    if (!message.mentions.has(client.user) && client.settings['logmentions'] && (message.channel.type === 'dm' || !client.settings.logmentions.includes(message.guild.id))) {
+        client.logger.logMention(message);
     }
 
     if (message.author.id !== client.user.id) return;
@@ -48,8 +43,8 @@ exports.run = async (client, message) => {
         await command.run(client, message, args);
     }
     catch (err) {
-        const msg = client.utils.NiceBool(err.message);
-        message.EmbedEdit('Error', `❌ ${msg}`);
+        // client.logger.error(err);
+        message.EmbedEdit('Error', `❌ ${err.message}`);
     }
 };
 

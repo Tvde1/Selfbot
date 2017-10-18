@@ -19,7 +19,7 @@ class CaptionCommand extends Command {
 
         captionbot(image, (err, result) => {
             if (err) throw err;
-            message.EmbedEdit('🤖 Result:', `I think ${result}`);
+            message.EmbedEdit('🤖 Result:', client.utils.addDot(result));
         });
     }
 }

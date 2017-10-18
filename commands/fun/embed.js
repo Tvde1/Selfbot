@@ -1,3 +1,4 @@
+const { MessageEmbed } = require('discord.js');
 const Command = require('../../command');
 
 class EmbedCommand extends Command {
@@ -13,7 +14,12 @@ class EmbedCommand extends Command {
     }
 
     async run (client, message, args) {
-        message.EmbedEdit(null, args.join(' '));
+
+        const embed = new MessageEmbed()
+            .setColor(client.utils.embedColor)
+            .setDescription(args.join(' '));
+
+        message.edit({ embed });
     }
 }
 
