@@ -1,10 +1,9 @@
 const fs             = require('fs');
-const ExtendedClient = require('../extendedClient.js');
+const ExtendedClient = require('../extendedClient.js'); //eslint-disable-line no-unused-vars
 
 class EventLoader {
 
     /**
-     * 
      * @param {ExtendedClient} client The client in use.
      */
     constructor(client) {
