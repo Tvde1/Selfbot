@@ -23,7 +23,7 @@ class Logger {
     log(title, description) {
         const logTime = !process.env.DONTLOGTIME;
         const time = moment().format('YYYY-MM-DD HH:mm:ss');
-        console.log(`${logTime ? `${time} || ` : ''} ${'LOG'.green}  ${title}${description ? ' | ' + description : ''}`);
+        console.log(`${logTime ? `${time} || ` : ''} ${'LOG'.green}  || ${title}${description ? ' | ' + description : ''}`);
     }
 
     /**
