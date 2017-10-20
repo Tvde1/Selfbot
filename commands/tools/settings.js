@@ -16,7 +16,7 @@ class SettingsCommand extends Command {
         let guild = false;
 
         if (args[0] === 'view') {
-            message.EmbedEdit('Alright', JSON.stringify(client.settings));
+            message.EmbedEdit('Alright', client.settings.serialize());
         } else if (args[0] === 'set') {
             args.splice(0, 1);
 

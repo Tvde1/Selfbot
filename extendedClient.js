@@ -11,7 +11,7 @@ class ExtendedClient extends Client {
 
         this._config       = readConfig();
 
-        this._utils        = new Utils(this._config);
+        this._utils        = new Utils(this._config );
         this._logger       = new Logger(this.config.channels, this.utils);
         this._settings     = new Settings(this.logger);
 

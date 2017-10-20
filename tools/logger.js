@@ -1,6 +1,7 @@
-const { Message, MessageEmbed } = require('discord.js');
+                                  require('colors');     //eslint-disable-line indent
+const Utils                     = require('./utils.js'); //eslint-disable-line no-unused-vars
 const moment                    = require('moment');
-const Utils                     = require('./utils.js');
+const { Message, MessageEmbed } = require('discord.js'); //eslint-disable-line no-unused-vars
 
 class Logger {
     
@@ -20,8 +21,9 @@ class Logger {
      * @param {string} description The description of the log message.
      */
     log(title, description) {
+        const logTime = !process.env.DONTLOGTIME;
         const time = moment().format('YYYY-MM-DD HH:mm:ss');
-        console.log(`${time} || ${title}${description ? ' | ' + description : ''}`);
+        console.log(`${logTime ? `${time} || ` : ''} ${'LOG'.green}  ${title}${description ? ' | ' + description : ''}`);
     }
 
     /**
@@ -30,8 +32,9 @@ class Logger {
      * @param {string} description The description of the error message.
      */
     error(title, description) {
+        const logTime = !process.env.DONTLOGTIME;
         const time = moment().format('YYYY-MM-DD HH:mm:ss');
-        console.error(`${time} || ERROR || ${title}${description ? ' | ' + description : ''}`);
+        console.error(`${logTime ? `${time} || ` : ''}${time}${'ERROR'.red} || ${title}${description ? ' | ' + description : ''}`);
     }
 
     /**
