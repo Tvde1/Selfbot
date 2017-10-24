@@ -70,9 +70,9 @@ class SayCommand extends Command {
                 text = text.substring(1);
                 continue;
             }
-            for (const letter of letters) {
+            for (const letter of Object.getOwnPropertyNames(letters)) {
                 if (text.startsWith(letter)) {
-                    replacedText += letter + '‌‌​';
+                    replacedText += letters[letter] + '‌‌​';
                     text = text.substring(letter.length);
                     break;
                 }
