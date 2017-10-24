@@ -64,6 +64,10 @@ class CommandStore {
             this.logger.log('CommandLoader', `Loaded command ${comm.help.name}`);
         }
     }
+
+    getAll() {
+        return this.commands;
+    }
 }
 
 module.exports = CommandStore;

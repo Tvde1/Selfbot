@@ -23,9 +23,9 @@ class HelpCommand extends Command {
                 });
             }
         } else {
-            const commandNames = Array.from(client.commands.keys());
+            const commandNames = Array.from(client.commands.getAll().keys());
             const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
-            message.channel.send(`= Command List =\n\nPrefix: "${client.config.prefix}"\n\n[Use ${client.config.prefix}help <commandname> for details]\n\n${client.commands.map(c => `${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`).join('\n')}`, {
+            message.channel.send(`= Command List =\n\nPrefix: "${client.config.prefix}"\n\n[Use ${client.config.prefix}help <commandname> for details]\n\n${client.commands.getAll().map(c => `${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`).join('\n')}`, {
                 code: 'asciidoc',
                 split: {prepend: '```asciidoc\n', append: '```'}
             });
