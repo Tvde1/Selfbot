@@ -8,7 +8,7 @@ class WhsayCommand extends Command {
  
         this.help = {
             name: 'whsay',
-            description: '',
+            description: 'Uses a webhook to impersonate a person',
             usage: 'whsay [user | @user] [test...]'
         };
     }
