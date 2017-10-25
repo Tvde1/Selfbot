@@ -19,9 +19,9 @@ const keys = [
  */
 exports.run = async (client, message) => {
 
-    if (client.db && client.settings['logmessages'] && (message.channel.type === 'dm' || client.settings['logmessages_guild'].includes(message.channel.guild.id))) {
-        client.db.addMessage(message);
-    }
+    // if (client.db && client.settings['logmessages'] && (message.channel.type === 'dm' || client.settings['logmessages_guild'].includes(message.channel.guild.id))) {
+    //     client.db.addMessage(message);
+    // }
 
     if (!message.mentions.has(client.user) && client.settings['logmentions'] && (message.channel.type === 'dm' || !client.settings.logmentions.includes(message.guild.id))) {
         client.logger.logMention(message);
