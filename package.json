@@ -1,6 +1,6 @@
 {
-  "name": "tvde1s-new-selfbot",
-  "version": "1.0.0",
+  "name": "tvde1-selfbot",
+  "version": "2.0.0",
   "description": "A selfbot made by Tvde1",
   "engines": {
     "node": "8.6.0",
