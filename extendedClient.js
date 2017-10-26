@@ -1,9 +1,9 @@
-const Logger                 = require('./tools/extendedLogger');
-const Settings               = require('./tools/settings.js');
-const Utils                  = require('./tools/utils.js');
+const { Client, Collection } = require('discord.js');              //eslint-disable-line no-unused-vars
 const CommandStore           = require('./tools/commandStore.js');
 const EventLoader            = require('./tools/eventLoader.js');
-const { Client, Collection } = require('discord.js');
+const Settings               = require('./tools/settings.js');
+const Logger                 = require('./tools/extendedLogger');
+const Utils                  = require('./tools/utils.js');
 
 class ExtendedClient extends Client {
     constructor() {
@@ -69,5 +69,5 @@ class ExtendedClient extends Client {
 module.exports = ExtendedClient;
 
 const readConfig = () => {
-    return process.env.SELFBOT_CONFIG ? JSON.parse(process.env.SELFBOT_CONFIG) : require('./config.json');
+    return process.env.CONFIG_SELFBOT ? JSON.parse(process.env.CONFIG_SELFBOT) : require('./config.json');
 };
