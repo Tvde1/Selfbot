@@ -1,9 +1,9 @@
                                   require('colors');     //eslint-disable-line indent
 const Utils                     = require('./utils.js'); //eslint-disable-line no-unused-vars
-const moment                    = require('moment');
+const tvde1logger               = require('tvde1logger');
 const { Message, MessageEmbed } = require('discord.js'); //eslint-disable-line no-unused-vars
 
-class Logger {
+class Logger extends tvde1logger {
     
     /**
      * 
@@ -11,30 +11,9 @@ class Logger {
      * @param {Utils} utils Utils.
      */
     constructor(channels, utils) {
+        super('Selfbot', !process.env.DONTLOGTIME);
         this.channels = channels;
         this.utils = utils;
-    }
-
-    /**
-     * Logs in the console.
-     * @param {string} title The title of the log message. 
-     * @param {string} description The description of the log message.
-     */
-    log(title, description) {
-        const logTime = !process.env.DONTLOGTIME;
-        const time = moment().format('YYYY-MM-DD HH:mm:ss');
-        console.log(`${logTime ? `${time} || ` : ''} ${'LOG'.green}  || ${title}${description ? ' | ' + description : ''}`);
-    }
-
-    /**
-     * Logs an error in the console.
-     * @param {string} title The title of the error message.
-     * @param {string} description The description of the error message.
-     */
-    error(title, description) {
-        const logTime = !process.env.DONTLOGTIME;
-        const time = moment().format('YYYY-MM-DD HH:mm:ss');
-        console.error(`${logTime ? `${time} || ` : ''}${time}${'ERROR'.red} || ${title}${description ? ' | ' + description : ''}`);
     }
 
     /**
