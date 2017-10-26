@@ -34,7 +34,7 @@ class UneditCommand extends Command {
             .setAuthor((editedMessage.member ? editedMessage.member.displayName : editedMessage.author.username), editedMessage.author.avatarURL('png'))
             .setColor(client.utils.embedColor)
             .setDescription(`Displaying all edits for ${editedMessage.member ? editedMessage.member.displayName : editedMessage.author.username}`)
-            .addField('Original Message:', edits[0].content)
+            .addField('Original Message:', edits[0].content ? edits[0].content : 'EMPTY')
             .setFooter(`By @${editedMessage.author.username}`)
             .setTimestamp(editedMessage.createdAt);
 
@@ -42,7 +42,7 @@ class UneditCommand extends Command {
         edits = edits.splice(1);
         let i = 0;
         for (i = 0; i < message.edits.length; i++)
-            embed.addField(`Edit ${i + 1}:`, edits[i].content);
+            embed.addField(`Edit ${i + 1}:`, edits[i].content ? edits[i].content : 'EMPTY');
 
         message.edit(message.content, {embed});
     }
