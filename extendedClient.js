@@ -1,4 +1,4 @@
-const Logger                 = require('./tools/logger');
+const Logger                 = require('./tools/extendedLogger');
 const Settings               = require('./tools/settings.js');
 const Utils                  = require('./tools/utils.js');
 const CommandStore           = require('./tools/commandStore.js');
