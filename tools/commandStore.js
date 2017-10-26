@@ -1,6 +1,5 @@
 const fs             = require('fs');
 const path           = require('path');
-const Logger         = require('./logger.js');   //eslint-disable-line no-unused-vars
 const Command        = require('../command.js'); //eslint-disable-line no-unused-vars
 const distance       = require('jaro-winkler');
 const { Collection } = require('discord.js');
