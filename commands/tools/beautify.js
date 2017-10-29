@@ -8,7 +8,7 @@ class BeautifyCommand extends Command {
         super(client, new CommandInfo('beautify', 'Get the last JS code block and makes it *prettier*.', 'beautify'));
     }
 
-    async run (client, message) {
+    async run(, message) {
         await message.channel.messages.fetch({limit:100});
         const code = await this.client.utils.getCode(message.channel.messages.array());
         if (!code) throw new Error('No Javascript codeblock found.');

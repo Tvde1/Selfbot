@@ -7,7 +7,7 @@ class RandomcatCommand extends Command {
         super(client, new CommandInfo('randomcat', 'Sends a random cat.', 'randomcat'));
     }
 
-    async run (client, message) {
+    async run(, message) {
         message.channel.send({
             files: [{
                 attachment: 'http://thecatapi.com/api/images/get?format=src&type=png',

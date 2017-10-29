@@ -7,7 +7,7 @@ class ReloadCommand extends Command {
         super(client, new CommandInfo('reload', 'Reloads a command that\'s been modified.', 'reload [command]'));
     }
 
-    async run (client, message) {
+    async run(, message) {
         this.client.commands.load();
         message.EmbedEdit('Done!', 'All commands reloaded.');
     }

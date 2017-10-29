@@ -7,7 +7,7 @@ class AdminsCommand extends Command {
         super(client, new CommandInfo('admins', 'Gets a list of all administrators.', 'admins'));
     }
 
-    async run (client, message) {
+    async run(, message) {
         const newGuild = await message.guild.members.fetch();
 
         const admins = newGuild.members.filter(x => x.hasPermission('ADMINISTRATOR'));

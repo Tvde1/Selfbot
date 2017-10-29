@@ -8,7 +8,7 @@ class NitroCommand extends Command {
         super(client, new CommandInfo('nitro', 'Sends a message only Nitro™ users can see.', 'nitro'));
     }
 
-    async run (client, message) {
+    async run(, message) {
         const embed = new discord.MessageEmbed()
             .setColor(5267072)
             .setAuthor('Discord Nitro Message', 'https://cdn.Discordapp.com/emojis/264287569687216129.png')

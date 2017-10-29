@@ -7,7 +7,7 @@ class NotkickableCommand extends Command {
         super(client, new CommandInfo('notkickable', 'Returns a list of users you can not kick.', 'notkickable'));
     }
 
-    async run (client, message) {
+    async run(, message) {
         if (message.channel.type !== 'text') throw new Error('You aren\'t in a guild.');
         await message.guild.members.fetch();
         const kickMemberList = message.guild.members.filter(x => !x.kickable);

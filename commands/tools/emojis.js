@@ -8,7 +8,7 @@ class EmojisCommand extends Command {
         super(client, new CommandInfo('emojis', 'Sends a list of all emojis with their name.', 'emojis'));
     }
 
-    async run (client, message) {
+    async run(, message) {
 
         if (message.channel.type !== 'text') {
             throw new Error('You need to be in a guild to execute this command.');
