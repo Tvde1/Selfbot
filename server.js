@@ -1,4 +1,4 @@
-const ExtendedClient = require('./extendedClient.js');
+const ExtendedClient = require('./extendedClient');
 const client         = new ExtendedClient();
 const mongoose       = require('mongoose');
 

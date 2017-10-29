@@ -18,7 +18,7 @@ class StatsCommand extends Command {
 
     async run (client, message) {
         const duration = moment.duration(client.uptime).format(' D [days], H [hrs], m [mins], s [secs]');
-        message.edit(`${client.content}\n\`\`\`asciidoc\n= STATISTICS =
+        message.edit(`${message.content}\n\`\`\`asciidoc\n= STATISTICS =
 • Mem Usage  :: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
 • Uptime     :: ${duration}
 • Users      :: ${client.users.size.toLocaleString()}

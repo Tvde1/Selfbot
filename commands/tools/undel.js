@@ -19,20 +19,20 @@ class UndelCommand extends Command {
 
         if (args.length === 0) {
             let channelId = message.channel.id;
-            delMessage = client.deletedMessages[channelId];
+            delMessage = client.deletedMessages.get(channelId);
             if (!delMessage) throw new Error('Could not find any deleted messages of this channel.');
         }
         else if (args.length === 1) {
             if (isNaN(args[0])) throw new Error('Your channel id seems to be incorrect.');
 
             let channelId = args[0];
-            delMessage = client.deletedMessages[channelId];
+            delMessage = client.deletedMessages.get(channelId);
             if (!delMessage) throw new Error('Could not find any deleted messages of this channel.');
         }
         else if (args.length >= 2 && args[0] === 'user') {
             if (isNaN(args[1])) throw new Error('Your user id doesn\'t seem to be a number.');
 
-            delMessage = client.deletedMessages[args[2]];
+            delMessage = client.deletedMessages.get(args[2]);
             if (!delMessage) throw new Error('Could not find any deleted messages of this user.');
         } else {
             throw new Error('Wrong parameters.');
