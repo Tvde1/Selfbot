@@ -1,6 +1,6 @@
+const ExtendedClient = require('../extendedClient'); //eslint-disable-line no-unused-vars
 const urlExists      = require('url-exists');
-const { Message }    = require('discord.js');
-const ExtendedClient = require('../extendedClient');
+const { Message }    = require('discord.js');        //eslint-disable-line no-unused-vars
 
 const keys = [
     ['lenny', '( ͡° ͜ʖ ͡°)'],
@@ -16,8 +16,8 @@ const keys = [
  * @param {ExtendedClient} client
  * @param {Message} message
  */
-exports.run = async (client, message) => {
-    if (!message.mentions.has(client.user)) {
+module.exports = async (client, message) => {
+    if (message.mentions.has(client.user)) {
         client.logger.logMention(message);
     }
 
@@ -28,18 +28,7 @@ exports.run = async (client, message) => {
 
     if (!message.content.startsWith(client.config.prefix)) return;
 
-    const [commandName, ...args] = message.content.slice(client.config.prefix.length).trim().split(' ');
-
-    let command = client.commands.get(commandName);
-    if (!command) return;
-
-    try {
-        await command.run(message, args);
-    }
-    catch (err) {
-        // client.logger.error(err);
-        message.EmbedEdit('Error', `❌ ${err.message}`);
-    }
+    client.commandHandler.execute(message, true);
 };
 
 const editTag = (message) => {
@@ -58,7 +47,7 @@ const editEmoji = (client, message) => {
     const extentionarray = ['.png', '.gif', '.jpg', '.jpeg'];
     for (const index of extentionarray) {
         const emoji = client.config.imageUrl + solution[1] + index;
-        urlExists(emoji, function(err, exists) {
+        urlExists(emoji, (err, exists) => {
             if (!exists) return;
             message.delete();
             message.channel.send({files:[emoji]});

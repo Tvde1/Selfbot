@@ -6,11 +6,11 @@ class Command {
 
     /**
      * Creates a new command. Must supply info.
+     * @param {ExtendedClient} client The current client.
      * @param {CommandInfo} info The command's info. 
      */
     constructor(client, info) {
-
-        if (!(client instanceof ExtendedClient)) {
+        if (!client || !(client instanceof Object)) { //TODO: This instanceof doesn't seem to work.
             throw new Error('You need to initialise a command with the ExtendedClient class.');
         }
 

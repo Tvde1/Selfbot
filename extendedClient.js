@@ -1,8 +1,8 @@
-const { Client, Collection } = require('discord.js');              //eslint-disable-line no-unused-vars
-const CommandStore           = require('./tools/commandStore.js');
-const EventLoader            = require('./tools/eventLoader.js');
-const Logger                 = require('./tools/extendedLogger');
-const Utils                  = require('./tools/utils.js');
+const CommandHandler = require('./helpers/commandHandler.js');
+const ExtendedLogger = require('./helpers/extendedLogger');
+const EventHandler   = require('./helpers/eventHandler');
+const { Client }     = require('discord.js');
+const Utils          = require('./helpers/utils');
 
 class ExtendedClient extends Client {
     constructor() {
@@ -10,17 +10,17 @@ class ExtendedClient extends Client {
         this._config       = readConfig();
 
         this._utils        = new Utils(this._config );
-        this._logger       = new Logger(this.config.channels, this.utils);
+        this._logger       = new ExtendedLogger(this.config.channels, this.utils);
 
-        const eventLoader = new EventLoader(this);
+        const eventLoader = new EventHandler(this);
         eventLoader.load();
 
-        this._commandStore = new CommandStore(this.logger);
-        this._commandStore.load();
+        this._commandHandler = new CommandHandler(this);
+        this._commandHandler.load();
     }
 
     /**
-     * @returns {Logger}
+     * @returns {ExtendedLogger}
      */
     get logger() {
         return this._logger;
@@ -41,10 +41,10 @@ class ExtendedClient extends Client {
     }
 
     /**
-     * @returns {CommandStore}
+     * @returns {CommandHandler}
      */
-    get commands() {
-        return this._commandStore;
+    get commandHandler() {
+        return this._commandHandler;
     }
 
 }

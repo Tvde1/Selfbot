@@ -6,13 +6,7 @@ const Command     = require('../../templates/command');
 class EmojiCodeCommand extends Command {
 
     constructor(client) {
-        super(client, new CommandInfo(
- 
-        this.help = {
-            name: 'emojicode',
-            description: 'Get the last JS code block and makes it *readable*',
-            usage: 'emojicode'
-        };
+        super(client, new CommandInfo('emojicode', 'Get the last JS code block and makes it *readable*', 'emojicode'));
     }
 
     async run (client, message) {

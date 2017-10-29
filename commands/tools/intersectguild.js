@@ -32,9 +32,7 @@ class IntersectguildsCommand extends Command {
         let guild1Ids = guild1.members.map(x => x.user.id);
         let guild2Ids = guild2.members.map(x => x.user.id);
 
-        let intersectedList = guild1Ids.filter(function (n) {
-            return guild2Ids.includes(n);
-        });
+        let intersectedList = guild1Ids.filter(n => guild2Ids.includes(n));
         let memberList = intersectedList.map(x => guild2.members.get(x).user.username);
 
         const embed = new discord.MessageEmbed()

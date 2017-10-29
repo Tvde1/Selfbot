@@ -65,7 +65,7 @@ class GuildCommand extends Command {
 
         if (emojisArr.size > 0) {
             if (bigEmojiArray.length > 1) {
-                bigEmojiArray.forEach(function callback(tempEmojiString, index) {
+                bigEmojiArray.forEach((tempEmojiString, index) => {
                     embed.addField('🤔 Custom Emojis no. ' + (index + 1) + ':', tempEmojiString, false);
                 });
             }

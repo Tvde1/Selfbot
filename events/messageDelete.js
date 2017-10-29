@@ -1,4 +1,4 @@
-exports.run = (client, message) => {
+module.exports = (client, message) => {
     if (client.db)
         client.db.saveDeletedMessage(message);
         

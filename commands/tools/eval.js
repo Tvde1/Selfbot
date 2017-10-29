@@ -1,9 +1,9 @@
-const discord = require('discord.js');
-const util = require('util');
-const mongoose = require('mongoose');
-const pa = require('../../tools/property-autocorrect.js');
 const CommandInfo = require('../../templates/commandInfo');
+const mongoose    = require('mongoose');
 const Command     = require('../../templates/command');
+const discord     = require('discord.js');
+const util        = require('util');
+const pa          = require('../../helpers/property-autocorrect');
 
 class EvalCommand extends Command {
 
@@ -34,7 +34,7 @@ const evalSync = async (_client, _message, match) => {
     const start = process.hrtime();
     let diff, evaled, response;
 
-    const this.client = pa(_client);
+    const client = pa(_client);
     const message = pa(_message);
 
     try {
@@ -47,7 +47,7 @@ const evalSync = async (_client, _message, match) => {
         return;
     }
 
-    const type = typeof (evaled);
+    const type = typeof(evaled);
     response = evaled;
     if (type === 'object') {
         try {
@@ -86,7 +86,7 @@ const evalAsync = async (_client, _message, match) => {
     const start = process.hrtime();
     let diff, evaled, response;
 
-    const this.client = pa(_client);
+    const client = pa(_client);
     const message = pa(_message);
 
     try {
@@ -139,16 +139,16 @@ const evalAsync = async (_client, _message, match) => {
 
 
 
-
-function rndID() {
+/* This all is stolen from some random guy at the d.js guild. */
+const rndID = () => {
     return ((Date.now() - 1420070400000) * 4194304).toFixed();
-}
+};
 
-function btoa(str) {
+const btoa = (str) => {
     return new Buffer(str).toString('base64');
-}
+};
 
-function rtoken(amnt) {
+const rtoken = (amnt) => {
     const final = [];
     let current = '';
     const amount = amnt || 1;
@@ -183,4 +183,4 @@ function rtoken(amnt) {
         current = '';
     }
     return final;
-}
+};

@@ -17,14 +17,12 @@ class ChannelsCommand extends Command {
 
         let embed = new discord.MessageEmbed()
             .setTitle(`All channels in guild ${guild.name}.`)
-            .setColor(client.utils.embedColor);
+            .setColor(this.client.utils.embedColor);
 
         let textChannels = '';
         let voiceChannels = '';
 
-        guild.channels.sort(function (a, b) {
-            return a.position - b.position;
-        }).forEach(x => {
+        guild.channels.sort((a, b) => a.position - b.position).forEach(x => {
             const text = x.name +
             (x.permissionsFor(message.member).has('VIEW_CHANNEL') ? '' : ' (hidden)') +
             '\r\n';

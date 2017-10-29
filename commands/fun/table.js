@@ -42,7 +42,7 @@ const _default = {
     soft: true // if false it will not have rounded corners.
 };
 
-function prettyfy(s) {
+const prettyfy = (s) => {
     let result = '';
     let i;
 

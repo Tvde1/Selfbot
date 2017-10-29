@@ -21,7 +21,7 @@ class UserCommand extends Command {
 
 module.exports = UserCommand;
 
-function showInfo(client, message, user) {
+const showInfo = (client, message, user) => {
     if (user instanceof GuildMember) {
 
         const embed = new discord.MessageEmbed()

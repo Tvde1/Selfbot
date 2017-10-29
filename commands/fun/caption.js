@@ -1,5 +1,5 @@
 const CommandInfo = require('../../templates/commandInfo');
-const captionbot  = require('../../tools/captionbot.js');
+const captionbot  = require('../../helpers/captionbot');
 const Command     = require('../../templates/command');
 
 class CaptionCommand extends Command {

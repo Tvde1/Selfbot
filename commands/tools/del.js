@@ -8,7 +8,7 @@ class DelCommand extends Command {
     }
 
     async run(message, args) {
-        if (isNaN(args[0]) || args[0] === ' ') throw new Error(`The correct syntax is ${this.client.config.prefix}${this.help.usage}`);
+        if (isNaN(args[0]) || args[0] === ' ') throw new Error(`The correct syntax is ${this.client.config.prefix}${this.info.usage}`);
         const number = parseInt(args[0]);
 
         this.client.utils.deleteMyMessages(this.client, message.channel, number + 1);

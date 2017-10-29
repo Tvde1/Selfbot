@@ -12,7 +12,7 @@ class HelpCommand extends Command {
             let command = args[0];
             if (this.client.commands.has(command)) {
                 command = this.client.commands.get(command);
-                message.channel.send(`= ${command.help.name} = \ndescription :: ${command.help.description}\nusage       :: ${command.help.usage}`, {
+                message.channel.send(`= ${command.info.name} = \ndescription :: ${command.info.description}\nusage       :: ${command.info.usage}`, {
                     code: 'asciidoc',
                     split: {prepend: '```asciidoc\n', append: '```'}
                 });
@@ -20,7 +20,7 @@ class HelpCommand extends Command {
         } else {
             const commandNames = Array.from(this.client.commands.getAll().keys());
             const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
-            message.channel.send(`= Command List =\n\nPrefix: "${this.client.config.prefix}"\n\n[Use ${this.client.config.prefix}help <commandname> for details]\n\n${client.commands.getAll().map(c => `${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`).join('\n')}`, {
+            message.channel.send(`= Command List =\n\nPrefix: "${this.client.config.prefix}"\n\n[Use ${this.client.config.prefix}help <commandname> for details]\n\n${this.client.commands.getAll().map(c => `${c.info.name}${' '.repeat(longest - c.info.name.length)} :: ${c.info.description}`).join('\n')}`, {
                 code: 'asciidoc',
                 split: {prepend: '```asciidoc\n', append: '```'}
             });

@@ -1,6 +1,6 @@
 const games = require('../games.json');
 
-exports.run = (client) => {
+module.exports = client => {
     client.logger.log('Bot is ready.');
     delete client.user.email;
 

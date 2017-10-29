@@ -1,4 +1,4 @@
-exports.run = async (client, reaction, user) => {
+module.exports = async (client, reaction, user) => {
     if (user.id !== client.user.id) return;
 
     if (reaction.emoji.name === '📤') {

@@ -12,7 +12,7 @@ db.on('error', x => client.logger.error('Database', `Mongoose connection error: 
 db.once('open', () => {
     client.db = mongoose.connection;
     client.logger.log('Database', 'Connected to database.');
-    require('./tools/mongooseStuff.js')(client.db);
-});
+    require('./helpers/mongooseStuff.js')(client.db);
+}); //TODO: Move this shit code
 
 client.login(client.config.token).catch(client.logger.error);

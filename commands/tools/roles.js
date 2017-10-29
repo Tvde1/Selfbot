@@ -27,9 +27,7 @@ class RolesCommand extends Command {
 
         await guild.members.fetch();
 
-        guild.roles.array().sort(function (a, b) {
-            return b.position - a.position;
-        }).forEach(x => {
+        guild.roles.array().sort((a, b) => b.position - a.position).forEach(x => {
             const memberList = x.members.size > 20 ? '> 20 members.' : x.members.map(x => x.toString()).join(', ');
             embed.addField(x.name, `Hex Color: **${x.hexColor}**. Members: **${x.members.size}**\r\n**Member List:** ${memberList}.`, true);
         });
