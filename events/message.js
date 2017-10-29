@@ -1,4 +1,3 @@
-const imageUrl       = 'config.imageurl';
 const urlExists      = require('url-exists');
 const { Message }    = require('discord.js');
 const ExtendedClient = require('../extendedClient');
@@ -63,7 +62,7 @@ const editEmoji = (client, message) => {
     const solution = regex.exec(message.content);
     const extentionarray = ['.png', '.gif', '.jpg', '.jpeg'];
     for (const index of extentionarray) {
-        const emoji = imageUrl + solution[1] + index;
+        const emoji = client.config.imageUrl + solution[1] + index;
         urlExists(emoji, function(err, exists) {
             if (!exists) return;
             message.delete();
