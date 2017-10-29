@@ -1,34 +1,29 @@
 const discord = require('discord.js');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class IntersectguildsCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'intersectguilds',
-            description: 'Shows a list of the people in both guilds.',
-            usage: 'intersectguilds [guild id] <guild id 2>'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('intersectguilds', 'Shows a list of the people in both guilds.', 'intersectguilds [guild id] <guild id 2>'));
     }
 
-    async run (client, message, args) {
+    async run(message, args) {
         let guild1;
         let guild2;
 
         if (args.length < 1) throw new Error('Please input a guild ID.');
 
         if (args.length === 1) {
-            guild1 = client.guilds.get(args[0]);
+            guild1 = this.client.guilds.get(args[0]);
             if (!guild1) throw new Error('Your Guild ID is not correct.');
             guild2 = message.guild;
             if (!guild2) throw new Error('You are not in a guild. Please input a 2nd id.');
         }
         else if (args.length === 2) {
-            guild1 = client.guilds.get(args[0]);
+            guild1 = this.client.guilds.get(args[0]);
             if (!guild1) throw new Error('Your Guild 1 ID is not correct.');
-            guild2 = client.guilds.get(args[1]);
+            guild2 = this.client.guilds.get(args[1]);
             if (!guild2) throw new Error('Your Guild 2 ID is not correct.');
         }
 
@@ -44,7 +39,7 @@ class IntersectguildsCommand extends Command {
 
         const embed = new discord.MessageEmbed()
             .setTitle('Intersect Guilds')
-            .setColor(client.utils.embedColor)
+            .setColor(this.client.utils.embedColor)
             .setDescription(`Intersected guild '${guild1.name}' and guild '${guild2.name}'.`)
             .addField('Amount', `There are ${intersectedList.length} members present in both guilds.`)
             .addField('Users', 'Below is a list of all the users:');

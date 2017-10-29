@@ -1,18 +1,13 @@
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class BCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {   
-            name: 'b',
-            description: 'Replaces all p/b/v/f/g with :b:.',
-            usage: 'b [text]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('b', 'Replaces all p/b/v/f/g with :b:.', 'b [text]'));
     }
 
-    async run (client, message, args) {
+    async run (message, args) {
         message.edit(args.join(' ').replace(/[pbvfg]/gi, '🅱'));
     }
 }

@@ -1,3 +1,6 @@
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
+
 const russian = {
     alpha: {
         'A': ['Д'],
@@ -32,21 +35,12 @@ const russian = {
     }
 };
 
-const Command = require('../../command');
-
 class RussianCommand extends Command {
-
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'russian',
-            description: 'Generates fake russian text.',
-            usage: 'russian [text]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('russian', 'Generates fake russian text.', 'russian [text]'));
     }
 
-    async run (client, message, args) {
+    async run(message, args) {
         if (!args || args.length < 1) throw new Error('Give something to convert xd');
         message.edit(russian.generate(args.join(' ')));
     }

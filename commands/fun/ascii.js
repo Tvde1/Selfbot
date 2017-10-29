@@ -1,22 +1,17 @@
-const request = require('request');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
+const request     = require('request');
 
 class AsciiCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {   
-            name: 'ascii',
-            description: 'Edits the message with a code block with the text in ascii-art.',
-            usage: 'ascii [text]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('ascii', 'Edits the message with a code block with the text in ascii-art.', 'ascii [text]'));
     }
 
-    async run (client, message, args) {
+    async run (message, args) {
         if (args.length === 0) throw new Error('You need to tell me what to say...');
 
-        request('http://artii.herokuapp.com/make?text=' + args.join(' '), function (error, response, body) {
+        request('http://artii.herokuapp.com/make?text=' + args.join(' '), (error, response, body) => {
             message.edit(body, { code: true });
         });
     }

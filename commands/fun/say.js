@@ -1,3 +1,6 @@
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
+
 const letters = {
     'z': '🇿',
     'y': '🇾',
@@ -45,21 +48,12 @@ const letters = {
     ' ': '⬛'
 };
 
-const Command = require('../../command');
-
 class SayCommand extends Command {
-
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'say',
-            description: 'Turns the text into emoji letters.',
-            usage: 'say [text]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('say', 'Turns the text into emoji letters.', 'say [text]'));
     }
 
-    async run (client, message, args) {
+    async run(message, args) {
         let text = args.join(' ').toLowerCase();
         if (text === '') throw new Error('You need to input some text, dummy.');
         let replacedText = '';

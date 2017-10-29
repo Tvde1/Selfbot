@@ -1,17 +1,12 @@
-const Nraw = require('nraw');
-const reddit = new Nraw('Discord Selfbot by /u/Tvde1 (for emojipastas)');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
+const reddit      = new Nraw('Discord Selfbot by /u/Tvde1 (for emojipastas)');
+const Nraw        = require('nraw');
 
 class EmojipastaCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'emojipasta',
-            description: 'Sends an embed with emojipasta.',
-            usage: 'emojipasta'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('emojipasta', 'Sends an embed with emojipasta.', 'emojipasta'));
     }
 
     async run (client, message) {

@@ -1,15 +1,10 @@
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class RandomcatCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'randomcat',
-            description: 'Sends a random cat.',
-            usage: 'randomcat'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('randomcat', 'Sends a random cat.', 'randomcat'));
     }
 
     async run (client, message) {

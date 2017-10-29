@@ -2,21 +2,16 @@ const discord = require('discord.js');
 const util = require('util');
 const mongoose = require('mongoose');
 const pa = require('../../tools/property-autocorrect.js');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class EvalCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'eval',
-            description: 'Evaluates arbitrary javascript.',
-            usage: 'eval [...code]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('eval', 'Evaluates arbitrary javascript.', 'eval [...code]'));
     }
 
-    async run (client, message, args) {
+    async run(message, args) {
         if (args.length < 1) throw new Error('Eval something lol');
         let match;
         let async = false;
@@ -39,7 +34,7 @@ const evalSync = async (_client, _message, match) => {
     const start = process.hrtime();
     let diff, evaled, response;
 
-    const client = pa(_client);
+    const this.client = pa(_client);
     const message = pa(_message);
 
     try {
@@ -91,7 +86,7 @@ const evalAsync = async (_client, _message, match) => {
     const start = process.hrtime();
     let diff, evaled, response;
 
-    const client = pa(_client);
+    const this.client = pa(_client);
     const message = pa(_message);
 
     try {

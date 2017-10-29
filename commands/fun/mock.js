@@ -1,18 +1,13 @@
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class MockCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'mock',
-            description: 'Mocks an user\'s message.',
-            usage: 'mock [message id]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('mock', 'Mocks an user\'s message.', 'mock [message id]'));
     }
 
-    async run (client, message, args) {
+    async run(message, args) {
         if (args.length === 0) throw new Error(message, 'Error', 'You need to give it a message id.');
 
         let msg;

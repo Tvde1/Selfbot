@@ -1,18 +1,13 @@
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class SourceCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'source',
-            description: 'Gets the markdown source of the specified message ID in the same channel.',
-            usage: 'source [message ID]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('source', 'Gets the markdown source of the specified message ID in the same channel.', 'source [message ID]'));
     }
 
-    async run (client, message, args) {
+    async run(message, args) {
         message.channel.messages.fetch(args[0])
             .then(replyToMsg => {
                 message.edit(`${message.content}\n==========\nSource Code for MSG ID ${replyToMsg}:\n\`\`\`md\n${clean(replyToMsg.content)}\n\`\`\``);

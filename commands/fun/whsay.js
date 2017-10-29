@@ -1,24 +1,19 @@
 const { GuildMember } = require('discord.js');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class WhsayCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'whsay',
-            description: 'Uses a webhook to impersonate a person',
-            usage: 'whsay [user | @user] [test...]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('whsay', 'Uses a webhook to impersonate a person', 'whsay [user | @user] [test...]'));
     }
 
-    async run (client, message, args) {
-        if (!message.channel.permissionsFor(client.user).has('MANAGE_WEBHOOKS')) throw new Error('Missing Permissions');
+    async run(message, args) {
+        if (!message.channel.permissionsFor(this._client.user).has('MANAGE_WEBHOOKS')) throw new Error('Missing Permissions');
 
         const [name, ...text] = args;
 
-        let user = message.mentions.members.first() || await client.utils.getUser(client, message.channel, name);
+        let user = message.mentions.members.first() || await this.client.utils.getUser(this._client, message.channel, name);
         if (!user) throw new Error('User not found.');
 
         let webhook;

@@ -1,20 +1,15 @@
 const discord = require('discord.js');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class AvatarCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'avatar',
-            description: 'Gets the avatar of a person.',
-            usage: 'avatar [name | @mention]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('avatar', 'Gets the avatar of a person.', 'avatar [name | @mention]'));
     }
 
-    async run (client, message, args) {
-        const user = await client.utils.getUser(args.join(' '));
+    async run(message, args) {
+        const user = await this.client.utils.getUser(args.join(' '));
 
         const embed = new discord.MessageEmbed()
             .setTitle(`${user.displayName || user.userName}'s avatar.`, )

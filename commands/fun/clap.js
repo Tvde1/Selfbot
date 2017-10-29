@@ -1,18 +1,13 @@
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class ClapCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'clap',
-            description: 'Swaps spaces with 👏 emojis.',
-            usage: 'clap [text]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('clap', 'Swaps spaces with 👏 emojis.', 'clap [text]'));
     }
 
-    async run (client, message, args) {
+    async run(message, args) {
         message.edit(args.join('👏'));
     }
 }

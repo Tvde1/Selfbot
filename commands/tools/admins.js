@@ -1,15 +1,10 @@
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class AdminsCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'admins',
-            description: 'Gets a list of all administrators.',
-            usage: 'admins'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('admins', 'Gets a list of all administrators.', 'admins'));
     }
 
     async run (client, message) {

@@ -1,22 +1,17 @@
 const discord = require('discord.js');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class ChannelsCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'channels',
-            description: 'Displays all types of channels for a guild.',
-            usage: 'channels [guild id]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('channels', 'Displays all types of channels for a guild.', 'channels [guild id]'));
     }
 
-    async run (client, message, args) {
+    async run(message, args) {
         let guild = message.guild;
         if (args[0]) {
-            guild = client.guilds.get(args[0]);
+            guild = this.client.guilds.get(args[0]);
             if (!guild) throw new Error('Your guild id is incorrect.');
         }
 

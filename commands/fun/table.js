@@ -1,30 +1,25 @@
 const wrap = require('wordwrap');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class TableCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'table',
-            description: 'Makes a table.',
-            usage: '[title]<|[text]<|[width]>>'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('table', 'Makes a table.', '[title]<|[text]<|[width]>>'));
     }
 
-    async run (client, message, args) {
-        if (args.length === 0) return client.EmbedEdit(message, 'Error', 'Needs atleast one argument.');
+    async run(message, args) {
+        if (args.length === 0) return this.client.EmbedEdit(message, 'Error', 'Needs atleast one argument.');
         const newArgs = args.join(' ').split('|');
 
         let res = {};
 
         /*
-    Arg[0]: Message,
-    Arg[1]: Title,
-    Arg[2]: Width,
-    Arg[3]: softCorners
-    */
+        Arg[0]: Message,
+        Arg[1]: Title,
+        Arg[2]: Width,
+        Arg[3]: softCorners
+        */
 
         let skipper = 'skip';
 
@@ -137,10 +132,3 @@ function prettyfy(s) {
     // End;
     return result;
 }
-
-exports.run = (client, message, args) => {
-    
-};
-
-exports.help = {
-};

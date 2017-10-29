@@ -1,16 +1,11 @@
-const discord = require('discord.js');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
+const discord     = require('discord.js');
 
 class NitroCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'nitro',
-            description: 'Sends a message only Nitro™ users can see.',
-            usage: 'nitro'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('nitro', 'Sends a message only Nitro™ users can see.', 'nitro'));
     }
 
     async run (client, message) {

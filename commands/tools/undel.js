@@ -1,38 +1,33 @@
 const discord = require('discord.js');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class UndelCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'undel',
-            description: 'Sends the last deleted message from the channel/user.',
-            usage: 'undel <[channel id] | user [user id]>'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('undel', 'Sends the last deleted message from the channel/user.', 'undel <[channel id] | user [user id]>'));
     }
 
-    async run (client, message, args) {
+    async run(message, args) {
         let delMessage;
-        if (!client.deletedMessages) client.deletedMessages = {};
+        if (!this.client.deletedMessages) this.client.deletedMessages = {};
 
         if (args.length === 0) {
             let channelId = message.channel.id;
-            delMessage = client.deletedMessages.get(channelId);
+            delMessage = this.client.deletedMessages.get(channelId);
             if (!delMessage) throw new Error('Could not find any deleted messages of this channel.');
         }
         else if (args.length === 1) {
             if (isNaN(args[0])) throw new Error('Your channel id seems to be incorrect.');
 
             let channelId = args[0];
-            delMessage = client.deletedMessages.get(channelId);
+            delMessage = this.client.deletedMessages.get(channelId);
             if (!delMessage) throw new Error('Could not find any deleted messages of this channel.');
         }
         else if (args.length >= 2 && args[0] === 'user') {
             if (isNaN(args[1])) throw new Error('Your user id doesn\'t seem to be a number.');
 
-            delMessage = client.deletedMessages.get(args[2]);
+            delMessage = this.client.deletedMessages.get(args[2]);
             if (!delMessage) throw new Error('Could not find any deleted messages of this user.');
         } else {
             throw new Error('Wrong parameters.');
@@ -48,7 +43,7 @@ class UndelCommand extends Command {
             .setAuthor((delMessage.member ? delMessage.member.displayName : delMessage.author.username), delMessage.author.avatarURL('png'))
             .setTitle(info)
             .setDescription(delMessage.content)
-            .setColor(client.utilsembedColor);
+            .setColor(this.client.utilsembedColor);
 
         if (delMessage.attachments.size > 0) {
             embed.setImage(delMessage.attachments.first().proxyURL);

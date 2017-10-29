@@ -7,7 +7,6 @@ const Utils                  = require('./tools/utils.js');
 class ExtendedClient extends Client {
     constructor() {
         super();
-
         this._config       = readConfig();
 
         this._utils        = new Utils(this._config );
@@ -33,20 +32,13 @@ class ExtendedClient extends Client {
     get utils() {
         return this._utils;
     }
-    
+
     /**
      * @returns {*}
      */
     get config() {
         return this._config;
     }
-
-    // /**
-    //  * @private
-    //  */
-    // set config(n) {
-    //     this._config = n;
-    // }
 
     /**
      * @returns {CommandStore}

@@ -1,11 +1,12 @@
 const { js_beautify } = require('js-beautify');
 const emojify         = require('emojify');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class EmojiCodeCommand extends Command {
 
-    constructor() {
-        super();
+    constructor(client) {
+        super(client, new CommandInfo(
  
         this.help = {
             name: 'emojicode',
@@ -16,7 +17,7 @@ class EmojiCodeCommand extends Command {
 
     async run (client, message) {
         await message.channel.messages.fetch({limit:100});
-        let code = await client.utils.getCode(message.channel.messages.array());
+        let code = await this.client.utils.getCode(message.channel.messages.array());
         if (!code) throw new Error('No Javascript codeblock found.');
 
         code = emojify.minify(code, {fromString: true}).code;

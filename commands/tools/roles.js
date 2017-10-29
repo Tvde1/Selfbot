@@ -1,19 +1,14 @@
 const discord = require('discord.js');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class RolesCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'roles',
-            description: 'Sends a list of roles, color and users per role.',
-            usage: 'roles <guild id>'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('roles', 'Sends a list of roles, color and users per role.', 'roles <guild id>'));
     }
 
-    async run (client, message, args) {
+    async run(message, args) {
         let serverId = args[0];
         if (serverId) {
             if (serverId === ' ' || isNaN(serverId)) throw new Error('Your server ID is not a number,');
@@ -22,11 +17,11 @@ class RolesCommand extends Command {
             if (!message.guild) throw new Error('You have to be in a server, or put a server ID.');
         }
 
-        const guild = client.guilds.get(serverId);
+        const guild = this.client.guilds.get(serverId);
         if (!guild) throw new Error('Your GuildID is invalid. Are you sure you\'re in it?');
 
         let embed = new discord.MessageEmbed()
-            .setColor(client.utils.embedColor)
+            .setColor(this.client.utils.embedColor)
             .setTitle(`Role Distribution in ${guild.name}.`)
             .setDescription('Here\'s all the roles with the amount of members that have said role.');
 

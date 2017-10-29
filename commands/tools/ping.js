@@ -1,15 +1,10 @@
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class PingCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'ping',
-            description: 'It... like... pings. Then Pongs. And it\'s not Ping Pong.',
-            usage: 'ping'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('ping', 'It... like... pings. Then Pongs. And it\'s not Ping Pong.', 'ping'));
     }
 
     async run (client, message) {

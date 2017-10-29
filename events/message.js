@@ -34,7 +34,7 @@ exports.run = async (client, message) => {
     if (!command) return;
 
     try {
-        await command.run(client, message, args);
+        await command.run(message, args);
     }
     catch (err) {
         // client.logger.error(err);

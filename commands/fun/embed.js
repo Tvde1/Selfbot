@@ -1,22 +1,17 @@
 const { MessageEmbed } = require('discord.js');
-const Command = require('../../command');
+const CommandInfo      = require('../../templates/commandInfo');
+const Command          = require('../../templates/command');
 
 class EmbedCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'embed',
-            description: 'Embeds text.',
-            usage: 'embed [text]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('embed', 'Embeds text.', 'embed [text]'));
     }
 
-    async run (client, message, args) {
+    async run(message, args) {
 
         const embed = new MessageEmbed()
-            .setColor(client.utils.embedColor)
+            .setColor(this._client.utils.embedColor)
             .setDescription(args.join(' '));
 
         message.edit({ embed });

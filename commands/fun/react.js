@@ -1,3 +1,6 @@
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
+
 const letters = {
     'z': ['🇿'],
     'y': ['🇾'],
@@ -71,22 +74,13 @@ const letters = {
     ' ': ['▪', '◾', '◼', '⬛', '⚫', '▫', '◽', '◻', '⬜', '⚪']
 };
 
-const Command = require('../../command');
-
 class ReactCommand extends Command {
-
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'react',
-            description: 'React with emoji to a message.',
-            usage: 'react [message id] [text]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('react', 'React with emoji to a message.', 'react [message id] [text]'));
     }
 
-    async run (client, message, args) {
-        if (args.length < 2) throw new Error(`The syntax is like this: \`${client.prefix}react [message id] [react text]\`.`);
+    async run(message, args) {
+        if (args.length < 2) throw new Error(`The syntax is like this: \`${this._client.config.prefix}react [message id] [react text]\`.`);
         
         let reactMessage = await message.channel.messages.fetch(args[0]);
         if (!reactMessage) throw new Error('Could not find the message specified.');

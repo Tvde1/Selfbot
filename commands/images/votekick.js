@@ -1,19 +1,14 @@
 const jimp = require('jimp');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class VotekickCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'votekick',
-            description: 'Start a votekick.',
-            usage: 'votekick [text]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('votekick', 'Start a votekick.', 'votekick [text]'));
     }
 
-    async run (client, message, args) {
+    async run(message, args) {
         const user = message.author.username;
 
         const title = args.join(' ');
@@ -26,7 +21,7 @@ class VotekickCommand extends Command {
         console.log('test');
         image.print(verdana, 10, 5, `${user} wants to call a vote:`, 1000, 1000);
 
-        image = await client.utils.getBufferFromJimp(image);
+        image = await this.client.utils.getBufferFromJimp(image);
 
         message.channel.send({
             files: [{

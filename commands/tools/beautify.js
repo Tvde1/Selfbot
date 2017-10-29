@@ -1,21 +1,16 @@
 const {js_beautify} = require('js-beautify');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class BeautifyCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'beautify',
-            description: 'Get the last JS code block and makes it *prettier*.',
-            usage: 'beautify'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('beautify', 'Get the last JS code block and makes it *prettier*.', 'beautify'));
     }
 
     async run (client, message) {
         await message.channel.messages.fetch({limit:100});
-        const code = await client.utils.getCode(message.channel.messages.array());
+        const code = await this.client.utils.getCode(message.channel.messages.array());
         if (!code) throw new Error('No Javascript codeblock found.');
         const betterCode = format(code);
         message.edit(message.content + '\n==========\n' + betterCode);

@@ -1,19 +1,14 @@
 const exec = require('child_process').exec;
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class ExecCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'exec',
-            description: 'Executes a console command.',
-            usage: 'exec [command]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('exec', 'Executes a console command.', 'exec [command]'));
     }
 
-    async run (client, message, args) {
+    async run(message, args) {
         if (args.length === 0) throw new Error('You need to input something...');
         let command = args.join(' ');
 

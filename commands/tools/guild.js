@@ -1,20 +1,15 @@
 const discord = require('discord.js');
 const moment = require('moment');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class GuildCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'guild',
-            description: 'Displays all info about the guild.',
-            usage: 'guild <guild id>'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('guild', 'Displays all info about the guild.', 'guild <guild id>'));
     }
 
-    async run (client, message, args) {
+    async run(message, args) {
         let guild = args[0];
 
         if (!guild) guild = message.guild;
@@ -24,7 +19,7 @@ class GuildCommand extends Command {
         guild = guild.id;
 
         try {
-            guild = client.guilds.get(guild);
+            guild = this.client.guilds.get(guild);
             await guild.fetchMembers();
         }
         catch (err) {
@@ -60,8 +55,8 @@ class GuildCommand extends Command {
             .addField('🆔 ID:', guild.id, true)
             .addField('👥 Users:', `**${onlineMembers}** Online | **${idleMembers}** Idle | **${dndMembers}** DND | **${offlineMembers}** Offline | **${guild.memberCount}** Total.`, false)
             .addField('👤 Owner:', guild.owner.toString(), true)
-            .addField('🗺 Region:', client.utils.capitaliseFirstLetter(guild.region), true)
-            .addField('🗓 Created:', client.utils.capitaliseFirstLetter(moment(message.guild.createdAt).fromNow()) + ' (' + moment(message.guild.createdAt).format('MMMM Do YYYY') + ')', false)
+            .addField('🗺 Region:', this.client.utils.capitaliseFirstLetter(guild.region), true)
+            .addField('🗓 Created:', this.client.utils.capitaliseFirstLetter(moment(message.guild.createdAt).fromNow()) + ' (' + moment(message.guild.createdAt).format('MMMM Do YYYY') + ')', false)
 
             //.addField('👥 Total Users:', message.guild.memberCount, true)
 

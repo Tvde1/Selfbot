@@ -1,19 +1,14 @@
-const rp = require('request-promise');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
+const rp          = require('request-promise');
 
 class AiCommand extends Command {
 
-    constructor() {
-        super();
-
-        this.help = {
-            name: 'ai',
-            description: 'Let the robot man talk.',
-            usage: 'ai'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('ai', 'Let the robot man talk.', 'ai'));
     }
 
-    async run(client, message, args) {
+    async run(message, args) {
         rp('http://api.program-o.com/v2/chatbot/?bot_id=6&format=json&say=' + args.join('%20'))
             .then(body => {
                 const talk = JSON.parse(body);

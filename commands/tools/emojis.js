@@ -1,16 +1,11 @@
 const table = require('markdown-table');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class EmojisCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'emojis',
-            description: 'Sends a list of all emojis with their name.',
-            usage: 'emojis'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('emojis', 'Sends a list of all emojis with their name.', 'emojis'));
     }
 
     async run (client, message) {

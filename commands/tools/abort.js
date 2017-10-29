@@ -1,20 +1,15 @@
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class AbortCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'abort',
-            description: 'Shuts down the bot.',
-            usage: 'abort'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('abort', 'Shuts down the bot.', 'abort'));
     }
 
     async run (client, message) {
         await message.channel.send('**FUCK I SCREWED UP. THIS IS AN AUTOMATED SHUTDOWN MESSAGE**');
-        client.destroy();
+        this.client.destroy();
         process.exit(1);
     }
 }

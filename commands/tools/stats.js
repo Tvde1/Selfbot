@@ -2,18 +2,13 @@ const Discord = require('discord.js');
 const moment = require('moment');
 require('moment-duration-format');
 
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class StatsCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'stats',
-            description: 'Gives some useful bot statistics',
-            usage: 'stats'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('stats', 'Gives some useful bot statistics', 'stats'));
     }
 
     async run (client, message) {

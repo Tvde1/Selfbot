@@ -1,5 +1,6 @@
-const puppeteer = require('puppeteer');
-const Command   = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const puppeteer   = require('puppeteer');
+const Command     = require('../../templates/command');
 
 const headers = new Map([
     ['Accept-Language', 'en-US'],
@@ -9,17 +10,11 @@ const headers = new Map([
 
 class ScreenshotCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'screenshot',
-            description: 'Make a screenshot of an url.',
-            usage: 'screenshot [url]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('screenshot', 'Make a screenshot of an url.', 'screenshot [url]'));
     }
 
-    async run (client, message, args) {
+    async run(message, args) {
         const argsString = args.join(' ');
         if (args === '') return new Error('You need to input an url.');
 

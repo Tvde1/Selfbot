@@ -1,19 +1,14 @@
 const discord = require('discord.js');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class QuoteCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'quote',
-            description: 'Sends a message as a quote.',
-            usage: 'quote [message id]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('quote', 'Sends a message as a quote.', 'quote [message id]'));
     }
 
-    async run (client, message, args) {
+    async run(message, args) {
         if (args.length === 0) throw new Error('Please paste the ID of the command you want quoted.');
         const id = args[0];
 
@@ -27,7 +22,7 @@ class QuoteCommand extends Command {
 
         const embed = new discord.MessageEmbed()
             .setAuthor(quoteMessage.member ? quoteMessage.member.displayName : quoteMessage.author.username, quoteMessage.author.avatarURL())
-            .setColor(client.utils.embedColor)
+            .setColor(this.client.utils.embedColor)
             .setDescription(quoteMessage.content)
             .setFooter('By @' + quoteMessage.author.username)
             .setTimestamp(quoteMessage.createdAt);

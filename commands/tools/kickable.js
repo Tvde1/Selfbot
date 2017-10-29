@@ -1,22 +1,17 @@
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class KickableCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'kickable',
-            description: 'Returns a list of users you can kick.',
-            usage: 'kickable'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('kickable', 'Returns a list of users you can kick.', 'kickable'));
     }
 
     async run (client, message) {
         if (message.channel.type !== 'text') throw new Error('You aren\'t in a guild.');
-        await message.guild.fetchMembers();
+        await message.guild.members.fetch();
         const kickMemberList = message.guild.members.filter(x => x.kickable);
-        if (kickMemberList.size === 0) return client.EmbedEdit(message, 'You can kick **0** members!', 'rip');
+        if (kickMemberList.size === 0) return this.client.EmbedEdit(message, 'You can kick **0** members!', 'rip');
         message.EmbedEdit(`You can kick **${kickMemberList.size}** members!`, `They are:\n${kickMemberList.map(x => x.toString()).join(', ')}.`);
     }
 }

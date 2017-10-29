@@ -1,4 +1,5 @@
-const Command = require('../../command.js');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 /**
  * @extends Command
@@ -6,17 +7,11 @@ const Command = require('../../command.js');
  */
 class AesCommand extends Command {
 
-    constructor() {
-        super();
-
-        this.help = {
-            name: 'aes',
-            description: 'Edits the message with ＡＥＳＴＨＥＴＩＣ text.',
-            usage: 'aes [text]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('aes', 'Edits the message with ＡＥＳＴＨＥＴＩＣ text.', 'aes [text]'));
     }
 
-    async run(client, message, args) {
+    async run(message, args) {
         if (args.length === 0) throw new Error('You need to input something...');
 
         let phrase = args.join(' ');

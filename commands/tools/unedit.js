@@ -1,19 +1,14 @@
 const discord = require('discord.js');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class UneditCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'unedit',
-            description: 'Displays all the edits for a certain message.',
-            usage: 'unedit <message id>'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('unedit', 'Displays all the edits for a certain message.', 'unedit <message id>'));
     }
 
-    async run (client, message, args) {
+    async run(message, args) {
         let id = args[0];
 
         if (!id) {
@@ -32,7 +27,7 @@ class UneditCommand extends Command {
         const embed = new discord.MessageEmbed()
             .setTitle('Unedit')
             .setAuthor((editedMessage.member ? editedMessage.member.displayName : editedMessage.author.username), editedMessage.author.avatarURL('png'))
-            .setColor(client.utils.embedColor)
+            .setColor(this.client.utils.embedColor)
             .setDescription(`Displaying all edits for ${editedMessage.member ? editedMessage.member.displayName : editedMessage.author.username}`)
             .addField('Original Message:', edits[0].content ? edits[0].content : 'EMPTY')
             .setFooter(`By @${editedMessage.author.username}`)

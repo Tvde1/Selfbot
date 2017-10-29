@@ -1,19 +1,14 @@
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class ReloadCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'reload',
-            description: 'Reloads a command that\'s been modified.',
-            usage: 'reload [command]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('reload', 'Reloads a command that\'s been modified.', 'reload [command]'));
     }
 
     async run (client, message) {
-        client.commands.load();
+        this.client.commands.load();
         message.EmbedEdit('Done!', 'All commands reloaded.');
     }
 }

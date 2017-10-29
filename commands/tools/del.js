@@ -1,22 +1,17 @@
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class DelCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'del',
-            description: 'Deletes an amount of messages in the channel.',
-            usage: 'del [number]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('del', 'Deletes an amount of messages in the channel.', 'del [number]'));
     }
 
-    async run (client, message, args) {
-        if (isNaN(args[0]) || args[0] === ' ') throw new Error(`The correct syntax is ${client.config.prefix}${this.help.usage}`);
+    async run(message, args) {
+        if (isNaN(args[0]) || args[0] === ' ') throw new Error(`The correct syntax is ${this.client.config.prefix}${this.help.usage}`);
         const number = parseInt(args[0]);
 
-        client.utils.deleteMyMessages(client, message.channel, number + 1);
+        this.client.utils.deleteMyMessages(this.client, message.channel, number + 1);
     }
 }
 

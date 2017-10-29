@@ -1,20 +1,15 @@
 const jimp = require('jimp');
 const fs = require('fs');
-const Command = require('../../command');
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
 
 class HackerCommand extends Command {
 
-    constructor() {
-        super();
- 
-        this.help = {
-            name: 'hacker',
-            description: 'Be a real hacker!',
-            usage: 'hacker [text]'
-        };
+    constructor(client) {
+        super(client, new CommandInfo('hacker', 'Be a real hacker!', 'hacker [text]'));
     }
 
-    async run (client, message, args) {
+    async run(message, args) {
         if (args.length === 0) {
             const invalidArgsImg = fs.readFileSync('./files/hacker/invalidargs.png');
 
@@ -37,7 +32,7 @@ class HackerCommand extends Command {
             image.print(font, 220, (260 + 12 * ln), part.replace(/^[^\S\x0a\x0d]+/, ''));
         });
 
-        image = await client.utils.getBufferFromJimp(image);
+        image = await this.client.utils.getBufferFromJimp(image);
 
         message.channel.send({
             files: [{
