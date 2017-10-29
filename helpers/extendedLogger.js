@@ -40,8 +40,7 @@ class Logger extends tvde1logger {
      * @param {Message} message  The message in which you are mentioned.
      */
     logMention(message) {
-
-        const mentionChannel = this.cannels.mentionChannel;
+        const mentionChannel = this.channels.mentionChannel;
         if (mentionChannel) throw new Error('No mention channel found.');
 
         const embed = new MessageEmbed()
@@ -53,7 +52,6 @@ class Logger extends tvde1logger {
 
         mentionChannel.send(embed);
     }
-
 }
 
 module.exports = Logger;
