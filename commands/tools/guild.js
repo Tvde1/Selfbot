@@ -49,7 +49,7 @@ class GuildCommand extends Command {
         });
 
         let embed = new discord.MessageEmbed()
-            .setColor(client.utils.embedColor)
+            .setColor(this.client.utils.embedColor)
             .setThumbnail(guild.iconURL, true)
             .addField('ℹ Name:', guild.name, true)
             .addField('🆔 ID:', guild.id, true)

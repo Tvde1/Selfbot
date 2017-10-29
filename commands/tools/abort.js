@@ -7,7 +7,7 @@ class AbortCommand extends Command {
         super(client, new CommandInfo('abort', 'Shuts down the bot.', 'abort'));
     }
 
-    async run(, message) {
+    async run(message) {
         await message.channel.send('**FUCK I SCREWED UP. THIS IS AN AUTOMATED SHUTDOWN MESSAGE**');
         this.client.destroy();
         process.exit(1);

@@ -9,7 +9,7 @@ class EmojipastaCommand extends Command {
         super(client, new CommandInfo('emojipasta', 'Sends an embed with emojipasta.', 'emojipasta'));
     }
 
-    async run(, message) {
+    async run(message) {
         let text = await getPost();
         while (!text || text === '' || text.length > 2000) {
             text = await getPost();

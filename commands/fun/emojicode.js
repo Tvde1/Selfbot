@@ -9,7 +9,7 @@ class EmojiCodeCommand extends Command {
         super(client, new CommandInfo('emojicode', 'Get the last JS code block and makes it *readable*', 'emojicode'));
     }
 
-    async run(, message) {
+    async run(message) {
         await message.channel.messages.fetch({limit:100});
         let code = await this.client.utils.getCode(message.channel.messages.array());
         if (!code) throw new Error('No Javascript codeblock found.');
