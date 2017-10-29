@@ -1,7 +1,6 @@
 const { Client, Collection } = require('discord.js');              //eslint-disable-line no-unused-vars
 const CommandStore           = require('./tools/commandStore.js');
 const EventLoader            = require('./tools/eventLoader.js');
-const Settings               = require('./tools/settings.js');
 const Logger                 = require('./tools/extendedLogger');
 const Utils                  = require('./tools/utils.js');
 
@@ -13,7 +12,6 @@ class ExtendedClient extends Client {
 
         this._utils        = new Utils(this._config );
         this._logger       = new Logger(this.config.channels, this.utils);
-        this._settings     = new Settings(this.logger);
 
         const eventLoader = new EventLoader(this);
         eventLoader.load();
@@ -35,14 +33,7 @@ class ExtendedClient extends Client {
     get utils() {
         return this._utils;
     }
-
-    /**
-     * @returns {Settings}
-     */
-    get settings() {
-        return this._settings;
-    }
-
+    
     /**
      * @returns {*}
      */
