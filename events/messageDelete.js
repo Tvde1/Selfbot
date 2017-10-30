@@ -1,6 +1,6 @@
 module.exports = (client, message) => {
-    if (client.db)
-        client.db.saveDeletedMessage(message);
+
+    client.databaseClient.saveDeletedMessage(message);
         
     if (!client.deletedMessages) client.deletedMessages = new Map();
     client.deletedMessages.set(message.channel.id, message);
