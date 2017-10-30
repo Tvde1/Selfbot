@@ -9,7 +9,7 @@ class ReloadCommand extends Command {
 
     async run(message) {
         this.client.commands.load();
-        message.EmbedEdit('Done!', 'All commands reloaded.');
+        message.Success();
     }
 }
 

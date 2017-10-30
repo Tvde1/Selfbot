@@ -44,3 +44,7 @@ class HackerCommand extends Command {
 }
 
 module.exports = HackerCommand;
+
+/**
+ * Most of this command is made by @matmen#6666
+ */
