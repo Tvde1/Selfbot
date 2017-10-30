@@ -8,7 +8,7 @@ class ReloadCommand extends Command {
     }
 
     async run(message) {
-        this.client.commands.load();
+        this.client.commandHandler.load();
         message.Success();
     }
 }
