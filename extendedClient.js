@@ -7,15 +7,14 @@ const Utils          = require('./helpers/utils');
 class ExtendedClient extends Client {
     constructor() {
         super();
-        this._config       = readConfig();
+        this._config         = readConfig();
 
-        this._utils        = new Utils(this._config );
-        this._logger       = new ExtendedLogger(this.config.channels, this.utils);
-
-        const eventLoader = new EventHandler(this);
-        eventLoader.load();
-
+        this._utils          = new Utils(this._config );
+        this._logger         = new ExtendedLogger(this.config.channels, this.utils);
+        const eventLoader    = new EventHandler(this);
         this._commandHandler = new CommandHandler(this);
+
+        eventLoader.load();
         this._commandHandler.load();
     }
 

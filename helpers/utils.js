@@ -1,7 +1,6 @@
-const fetch                        = require('node-fetch');
-const jimp                         = require('jimp');
-const discord                      = require('discord.js');
-const { Channel, Client, Message } = require('discord.js');
+const { Channel, Client, Message, MessageEmbed } = require('discord.js'); //eslint-disable-line no-unused-vars
+const fetch                                      = require('node-fetch');
+const jimp                                       = require('jimp');
 
 class Utils {
 
@@ -126,12 +125,20 @@ class Utils {
         const utils = this;
 
         Message.prototype.EmbedEdit = async function(title, description) {
-            const embed = new discord.MessageEmbed()
+            const embed = new MessageEmbed()
                 .setColor(utils.embedColor)
                 .setTitle(title)
                 .setDescription(description);
     
             await this.edit(this.content, {embed});
+        };
+
+        Message.prototype.Success = async function() {
+            await this.react('✅');
+        };
+
+        Message.prototype.Fail = async function() {
+            await this.react('❌');
         };
     }
     
