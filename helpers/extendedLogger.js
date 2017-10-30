@@ -46,7 +46,7 @@ class Logger extends tvde1logger {
         const embed = new MessageEmbed()
             .setTitle('Mention')
             .setAuthor(message.author.tag, message.author.displayAvatarURL)
-            .setTitle(`${message.member.tag} mentioned me in ${message.guild ? `$${message.channel.name} (${message.guild.name})` : 'DMs'}.`)
+            .setTitle(`${message.author.tag} mentioned me in ${message.guild ? `$${message.channel.name} (${message.guild.name})` : 'DMs'}.`)
             .setDescription(message.cleanContent)
             .setColor(this.embedColor);
 
