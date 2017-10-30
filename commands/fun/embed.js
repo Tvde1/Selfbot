@@ -11,7 +11,7 @@ class EmbedCommand extends Command {
     async run(message, args) {
 
         const embed = new MessageEmbed()
-            .setColor(this._client.utils.embedColor)
+            .setColor(this.client.utils.embedColor)
             .setDescription(args.join(' '));
 
         message.edit({ embed });
