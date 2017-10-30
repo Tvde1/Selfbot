@@ -23,8 +23,8 @@ class EvalCommand extends Command {
         }
         else match = args.join(' ');
 
-        if(async) await evalAsync(client, message, match);
-        else await evalSync(client, message, match);
+        if(async) await evalAsync(this.client, message, match);
+        else await evalSync(this.client, message, match);
     }
 }
 
