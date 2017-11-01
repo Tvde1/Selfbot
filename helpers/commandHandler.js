@@ -25,7 +25,7 @@ class CommandHandler {
             delete require.cache[require.resolve(`../${command}`)];
             const commandConstructor = require(`../${command}`);
             const comm = new commandConstructor(this._client);
-            const category = command.split('\\')[1];
+            const category = command.split('\\')[1] || command.split('/')[1];
             comm.info.category = category;
             this._commands.set(comm.info.name.toLowerCase(), comm);
             this._client.logger.log('CommandLoader', `Loaded command ${comm.info.name}`);
