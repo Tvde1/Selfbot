@@ -41,7 +41,7 @@ class Logger extends tvde1logger {
      */
     logMention(message) {
         const mentionChannel = this.channels.mentions;
-        if (mentionChannel) throw new Error('No mention channel found.');
+        if (!mentionChannel) throw new Error('No mention channel found.');
 
         const embed = new MessageEmbed()
             .setTitle('Mention')
