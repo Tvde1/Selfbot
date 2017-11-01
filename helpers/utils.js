@@ -1,11 +1,11 @@
-const { Channel, Client, Message, MessageEmbed } = require('discord.js'); //eslint-disable-line no-unused-vars
+const { Channel, Message, MessageEmbed } = require('discord.js'); //eslint-disable-line no-unused-vars
 const fetch                                      = require('node-fetch');
 const jimp                                       = require('jimp');
 
 class Utils {
 
-    constructor(config) {
-        this.config = config;
+    constructor(client) {
+        this.client = client;
         this.addToPrototypes();
     }
 
@@ -77,7 +77,7 @@ class Utils {
         }
 
         try {
-            for (const token of this.config.oxfordTokens) {
+            for (const token of this.client.config.oxfordTokens) {
                 const facesRequest = await fetch('https://api.projectoxford.ai/face/v1.0/detect?returnFaceId=false&returnFaceLandmarks=true&returnFaceAttributes=headPose', {
                     method: 'POST',
                     headers: {
@@ -121,7 +121,6 @@ class Utils {
      * Adds functions to prototypes.
      */
     addToPrototypes() {
-
         const utils = this;
 
         Message.prototype.EmbedEdit = async function(title, description) {
@@ -150,24 +149,23 @@ class Utils {
     }
     
     /**
-     * Deletes an amount of messages from this channel.
-     * @param {Client} client 
+     * Deletes an amount of messages from this channel. 
      * @param {Channel} channel 
      * @param {number} number 
      */
-    async deleteMyMessages(client, channel, number) {
+    async deleteMyMessages(channel, number) {
         const msgs = await channel.messages.fetch({limit: 100});
-        const myMessages = msgs.filterArray(x => x.author.id === client.user.id);
+        const myMessages = msgs.filterArray(x => x.author.id === this.client.user.id);
         myMessages.slice(0, number).forEach(x => x.delete());
     }
     
     /**
      * Gets an user in a guild/dm.
-     * @param {Client} client 
      * @param {Channel} channel 
      * @param {string} search 
      */
-    async getUser(client, channel, search) {
+    async getUser(channel, search) {
+
         search = search.toLowerCase();
         switch (channel.type) {
             case 'text': {
@@ -176,12 +174,12 @@ class Utils {
             }
             case 'dm': {
                 if (channel.recipient.username.toLowerCase().includes(search)) return channel.recipient;
-                else if (client.user.username.toLowerCase().includes(search)) return client.user;
+                else if (this.client.user.username.toLowerCase().includes(search)) return this.client.user;
                 return null;
             }
             case 'group': {
                 if (channel.recipients.toLowerCase().includes(search)) return channel.recipients.find(x => x.username.toLowerCase().includes(search));
-                else if (client.user.username.toLowerCase().includes(search)) return client.user;
+                else if (this.client.user.username.toLowerCase().includes(search)) return this.client.user;
                 return null;
             }
         }
@@ -262,12 +260,19 @@ class Utils {
      */
     async getImageFromMessageAndOpen(message, args) {
         let image = await this.getImagesFromMessage(message, args);
-        if (!image) throw new Error('Could not find an image in the last 100 messages.');
+        if (!image) {
+            throw new Error('Could not find an image in the last 100 messages.');
+        }
 
         image = await jimp.read(image);
-        if (!image) throw new Error('An error occurred while loading the image.');
+        if (!image) {
+            throw new Error('An error occurred while loading the image.');
+        }
 
-        if (image.bitmap.width * image.bitmap.height > 5000 * 5000) throw new Error('This image is too big.');
+        if (image.bitmap.width * image.bitmap.height > 5000 * 5000) {
+            throw new Error('This image is too big.');
+        }
+        
         return image;
     }
 }

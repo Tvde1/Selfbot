@@ -23,7 +23,7 @@ class Logger extends tvde1logger {
      */
     logInChannel(title, description) {
 
-        const logChannel = this.channels.logChannel;
+        const logChannel = this.channels.logs;
         if (!logChannel) throw new Error('No log channel found');
 
         const embed = new MessageEmbed()
@@ -40,7 +40,7 @@ class Logger extends tvde1logger {
      * @param {Message} message  The message in which you are mentioned.
      */
     logMention(message) {
-        const mentionChannel = this.channels.mentionChannel;
+        const mentionChannel = this.channels.mentions;
         if (mentionChannel) throw new Error('No mention channel found.');
 
         const embed = new MessageEmbed()

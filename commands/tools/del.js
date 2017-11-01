@@ -13,7 +13,7 @@ class DelCommand extends Command {
 
         message.Success();
 
-        this.client.utils.deleteMyMessages(this.client, message.channel, number + 1);
+        this.client.utils.deleteMyMessages(message.channel, number + 1);
     }
 }
 

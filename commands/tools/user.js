@@ -13,7 +13,7 @@ class UserCommand extends Command {
         if (args.length === 0) throw new Error('Please specify a username.');
         if (message.mentions.users.size > 0) return showInfo(this.client, message, message.mentions.members.first());
 
-        const user = await this.client.utils.getUser(this.client, message.channel, args.join());
+        const user = await this.client.utils.getUser(message.channel, args.join());
         if (user) showInfo(this.client, message, user);
         else throw new Error('Could not find user.');
     }

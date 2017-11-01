@@ -9,7 +9,7 @@ class AvatarCommand extends Command {
     }
 
     async run(message, args) {
-        const user = await this.client.utils.getUser(args.join(' '));
+        const user = await this.client.utils.getUser(this.channel, args.join(' '));
 
         const embed = new discord.MessageEmbed()
             .setTitle(`${user.displayName || user.userName}'s avatar.`, )

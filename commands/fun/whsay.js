@@ -13,7 +13,7 @@ class WhsayCommand extends Command {
 
         const [name, ...text] = args;
 
-        let user = message.mentions.members.first() || await this.client.utils.getUser(this._client, message.channel, name);
+        let user = message.mentions.members.first() || await this.client.utils.getUser(message.channel, name);
         if (!user) throw new Error('User not found.');
 
         let webhook;
