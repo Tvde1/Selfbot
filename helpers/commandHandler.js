@@ -1,35 +1,38 @@
-const { Message }    = require('discord.js');           //eslint-disable-line no-unused-vars
-const ExtendedClient = require('../extendedClient');    //eslint-disable-line no-unused-vars
-const distance       = require('jaro-winkler');
-const Command        = require('../templates/command'); //eslint-disable-line no-unused-vars
-const path           = require('path'); 
-const fs             = require('fs');
+const { Collection, Message } = require('discord.js');           //eslint-disable-line no-unused-vars
+const ExtendedClient          = require('../extendedClient');    //eslint-disable-line no-unused-vars
+const distance                = require('jaro-winkler');
+const Command                 = require('../templates/command'); //eslint-disable-line no-unused-vars
+const path                    = require('path'); 
+const fs                      = require('fs');
+
 class CommandHandler {
+
     /**
      * Creates a new commandhandler.
      * @param {ExtendedClient} client The active client.
      */
     constructor(client) {
         this._client   = client;
-        this._commands = new Map();
+        this._commands = new Collection();
     }
 
     /**
      * Loads commands.
      */
     load() {
-        this._commands = new Map();
+        this._commands.clear();
         for (const command of readDirR('commands')) {
             delete require.cache[require.resolve(`../${command}`)];
             const commandConstructor = require(`../${command}`);
             const comm = new commandConstructor(this._client);
+            const category = command.split('\\')[1];
+            comm.info.category = category;
             this._commands.set(comm.info.name.toLowerCase(), comm);
             this._client.logger.log('CommandLoader', `Loaded command ${comm.info.name}`);
         }
     }
 
     /**
-     * 
      * @param {ExtendedClient} client 
      * @param {Message} message 
      */
@@ -55,7 +58,14 @@ class CommandHandler {
             message.EmbedEdit('Error', `❌ ${err.message}`);
         }
     }
-}
+
+    /**
+     * @returns {Collection<String, Command>}
+     */
+    get commands() {
+        return this._commands;
+    }
+} 
 
 module.exports = CommandHandler;
 

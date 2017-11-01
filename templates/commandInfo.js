@@ -26,6 +26,18 @@ class CommandInfo {
     get usage() {
         return this._usage;
     }
+
+    get category() {
+        return this._category;
+    }
+
+    set category(category) {
+        if (!category || typeof category !== 'string') {
+            throw new Error('Invalid parameter.');
+        }
+        
+        this._category = category;
+    }
 }
 
 module.exports = CommandInfo;

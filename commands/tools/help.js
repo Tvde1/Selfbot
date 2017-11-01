@@ -4,27 +4,50 @@ const Command     = require('../../templates/command');
 class HelpCommand extends Command {
 
     constructor(client) {
-        super(client, new CommandInfo('help', 'Displays all the available commands for your permission level.', 'help [command]'));
+        super(client, new CommandInfo('help', 'Displays all the available commands for your permission level.', 'help [(category) | command [command)]'));
     }
 
     async run(message, args) {
         if (args[0]) {
-            let command = args[0];
-            if (this.client.commands.has(command)) {
-                command = this.client.commands.get(command);
+            if (args[0] === 'command') {
+                if (!this.client.commandHandler.commands.has(args[1])) {
+                    return message.Fail();
+                }
+
+                const command = this.client.commandHandler.commands.get(args[1]);
                 message.channel.send(`= ${command.info.name} = \ndescription :: ${command.info.description}\nusage       :: ${command.info.usage}`, {
                     code: 'asciidoc',
                     split: {prepend: '```asciidoc\n', append: '```'}
                 });
+                return;
             }
-        } else {
-            const commandNames = Array.from(this.client.commands.getAll().keys());
+
+            const categoryCommands = this.client.commandHandler.commands.filter(c => c.info.category === args[0]);
+            if (categoryCommands.size === 0) {
+                return message.Fail();
+            }
+
+            const commandNames = categoryCommands.keyArray();
             const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
-            message.channel.send(`= Command List =\n\nPrefix: "${this.client.config.prefix}"\n\n[Use ${this.client.config.prefix}help <commandname> for details]\n\n${this.client.commands.getAll().map(c => `${c.info.name}${' '.repeat(longest - c.info.name.length)} :: ${c.info.description}`).join('\n')}`, {
+            message.channel.send(`= Command List =\n\nPrefix: "${this.client.config.prefix}"\n\n[Use ${this.client.config.prefix}help [commandname] for details]\n\n${categoryCommands.map(c => `${c.info.name}${' '.repeat(longest - c.info.name.length)} :: ${c.info.description}`).join('\n')}`, {
                 code: 'asciidoc',
-                split: {prepend: '```asciidoc\n', append: '```'}
+                split: { prepend: '```asciidoc\n', append: '```' }
             });
+
+            return;
         }
+        
+        const categories = [];
+        for (let comm of this.client.commandHandler.commands.values()) {
+            if (!categories.includes(comm.info.category)) {
+                categories.push(comm.info.category);
+            }
+        }
+
+        message.channel.send(`= Category List =\n\nPrefix: "${this.client.config.prefix}"\n\n${categories.join('\n')}`, {
+            code: 'asciidoc',
+            split: { prepend: '```asciidoc\n', append: '```' }
+        });
     }
 }
 
