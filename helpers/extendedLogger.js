@@ -1,18 +1,19 @@
-                                  require('colors');     //eslint-disable-line indent
-const Utils                     = require('./utils.js'); //eslint-disable-line no-unused-vars
+                                  require('colors');            //eslint-disable-line indent
+const Utils                     = require('./utils.js');        //eslint-disable-line no-unused-vars
 const tvde1logger               = require('tvde1logger');
-const { Message, MessageEmbed } = require('discord.js'); //eslint-disable-line no-unused-vars
+const ExtendedClient            = require('../extendedClient'); //eslint-disable-line no-unused-vars
+const { Message, MessageEmbed } = require('discord.js');        //eslint-disable-line no-unused-vars
 
 class Logger extends tvde1logger {
     
     /**
      * 
-     * @param {*} channels The channels to log in;
+     * @param {ExtendedClient} client The channels to log in;
      * @param {Utils} utils Utils.
      */
-    constructor(channels, utils) {
+    constructor(client, utils) {
         super('Selfbot', !process.env.DONTLOGTIME);
-        this.channels = channels;
+        this.client = client;
         this.utils = utils;
     }
 
@@ -22,33 +23,36 @@ class Logger extends tvde1logger {
      * @param {string} description The description of the log message.
      */
     logInChannel(title, description) {
-
-        const logChannel = this.channels.logs;
+        let logChannel = this.client.config.channels.logs;
         if (!logChannel) throw new Error('No log channel found');
+
+        logChannel = this.client.channels.get(logChannel);
 
         const embed = new MessageEmbed()
             .setTitle(title)
             .setDescription(description)
             .setAuthor(this.client.author)
-            .setColor(this.embedColor);
+            .setColor(this.utils.embedColor);
 
         logChannel.send(embed);
     }
 
     /**
      * Puts a mention message in the mention channel.
-     * @param {Message} message  The message in which you are mentioned.
+     * @param {Message} message The message in which you are mentioned.
      */
     logMention(message) {
-        const mentionChannel = this.channels.mentions;
+        let mentionChannel = this.client.config.channels.mentions;
         if (!mentionChannel) throw new Error('No mention channel found.');
+
+        mentionChannel = this.client.channels.get(mentionChannel);
 
         const embed = new MessageEmbed()
             .setTitle('Mention')
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
-            .setTitle(`${message.author.tag} mentioned me in ${message.guild ? `$${message.channel.name} (${message.guild.name})` : 'DMs'}.`)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL())
+            .setTitle(`${message.author.tag} mentioned me in ${message.guild ? `#${message.channel.name} (${message.guild.name})` : 'DMs'}.`)
             .setDescription(message.cleanContent)
-            .setColor(this.embedColor);
+            .setColor(this.utils.embedColor);
 
         mentionChannel.send(embed);
     }

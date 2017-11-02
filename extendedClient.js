@@ -11,7 +11,7 @@ class ExtendedClient extends Client {
         this._config         = readConfig();
 
         this._utils          = new Utils(this._config);
-        this._logger         = new ExtendedLogger(this._config.channels, this.utils);
+        this._logger         = new ExtendedLogger(this, this.utils);
         this._databaseClient = new DatabaseClient(this._config.databaseurl, this._logger);
         const eventLoader    = new EventHandler(this);
         this._commandHandler = new CommandHandler(this);
