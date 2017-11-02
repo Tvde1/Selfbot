@@ -43,7 +43,7 @@ class UndelCommand extends Command {
             .setAuthor((delMessage.member ? delMessage.member.displayName : delMessage.author.username), delMessage.author.avatarURL('png'))
             .setTitle(info)
             .setDescription(delMessage.content)
-            .setColor(this.client.utilsembedColor);
+            .setColor(this.client.utils.embedColor);
 
         if (delMessage.attachments.size > 0) {
             embed.setImage(delMessage.attachments.first().proxyURL);
