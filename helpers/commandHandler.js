@@ -51,6 +51,10 @@ class CommandHandler {
             }
         }
 
+        if (!command) {
+            return;
+        }
+
         try {
             await command.run(message, args);
         }
