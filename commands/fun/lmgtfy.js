@@ -9,7 +9,7 @@ class LmgtfyCommand extends Command {
 
     async run(message, args) {
         if (args.length === 0) args = ['how', 'to', 'add', 'arguments'];
-        message.edit(`<http://lmgtfy.com/?q${args.join('+')}>`);
+        message.edit(`<http://lmgtfy.com/?q=${args.join('+')}>`);
     }
 }
 
