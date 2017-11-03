@@ -31,6 +31,7 @@
     "mongoose": "^4.12.1",
     "node-fetch": "^1.7.3",
     "nraw": "^0.2.5",
+    "object-autocorrect": "^1.0.1",
     "puppeteer": "^0.11.0",
     "request-promise": "^4.2.2",
     "tvde1logger": "^1.0.7",
