@@ -1,9 +1,8 @@
 const { Channel, Message, MessageEmbed } = require('discord.js'); //eslint-disable-line no-unused-vars
-const fetch                                      = require('node-fetch');
-const jimp                                       = require('jimp');
+const fetch                              = require('node-fetch');
+const jimp                               = require('jimp');
 
 class Utils {
-
     constructor(client) {
         this.client = client;
         this.addToPrototypes();

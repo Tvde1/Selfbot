@@ -1,9 +1,9 @@
-const CommandInfo = require('../../templates/commandInfo');
-const mongoose    = require('mongoose');
-const Command     = require('../../templates/command');
-const discord     = require('discord.js');
-const util        = require('util');
-const pa          = require('../../helpers/property-autocorrect');
+const ObjectAutocorrect = require('object-autocorrect');
+const CommandInfo       = require('../../templates/commandInfo');
+const mongoose          = require('mongoose');
+const Command           = require('../../templates/command');
+const discord           = require('discord.js');
+const util              = require('util');
 
 class EvalCommand extends Command {
 
@@ -34,8 +34,8 @@ const evalSync = async (_client, _message, match) => {
     const start = process.hrtime();
     let diff, evaled, response;
 
-    const client = pa(_client);
-    const message = pa(_message);
+    const client = new ObjectAutocorrect(_client);
+    const message = new ObjectAutocorrect(_message);
 
     try {
         evaled = eval(match);
@@ -45,6 +45,10 @@ const evalSync = async (_client, _message, match) => {
         response = error.message;
         _message.edit(`**Eval:**\n**:speech_balloon: Input:**\n\`\`\`js\n${match}\n\`\`\`\n**:warning: Error:**\n\`\`\`xl\n${response}\n\`\`\`\n**Time Taken:** \`${diff[0] * 1e9 + diff[1]}\` nanoseconds.`);
         return;
+    }
+
+    if (typeof evaled === 'object') {
+        evaled = evaled.getTarget();
     }
 
     const type = typeof(evaled);
@@ -86,8 +90,8 @@ const evalAsync = async (_client, _message, match) => {
     const start = process.hrtime();
     let diff, evaled, response;
 
-    const client = pa(_client);
-    const message = pa(_message);
+    const client = new ObjectAutocorrect(_client);
+    const message = new ObjectAutocorrect(_message);
 
     try {
         evaled = await eval('(async() => {\n' + match +'\n})();');
@@ -98,6 +102,10 @@ const evalAsync = async (_client, _message, match) => {
         response = error.message;
         _message.edit(`**Eval:**\n**:speech_balloon: Input:**\n\`\`\`js\n${match}\n\`\`\`\n**:warning: Error:**\n\`\`\`xl\n${response}\n\`\`\`\n**Time Taken:** \`${diff[0] * 1e9 + diff[1]}\` nanoseconds.`);
         return;
+    }
+
+    if (typeof evaled === 'object') {
+        evaled = evaled.getTarget();
     }
 
     const type = typeof (evaled);
