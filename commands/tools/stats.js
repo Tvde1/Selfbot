@@ -17,7 +17,7 @@ class StatsCommand extends Command {
 • Mem Usage  :: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
 • Uptime     :: ${duration}
 • Users      :: ${this.client.users.size.toLocaleString()}
-• Servers    :: ${this.client.guilds.size.toLocaleString()}
+• Guilds     :: ${this.client.guilds.size.toLocaleString()}
 • Channels   :: ${this.client.channels.size.toLocaleString()}
 • Discord.js :: v${Discord.version}
 • Node       :: ${process.version}\`\`\``);
