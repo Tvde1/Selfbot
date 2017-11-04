@@ -4,7 +4,7 @@ module.exports = async (client, reaction, user) => {
     if (reaction.emoji.name === '📤') {
         reaction.remove();
 
-        const image = reaction.message.attachments.first();
+        const image = reaction.message.attachments.first() || reaction.message.embeds[0] ? reaction.message.embeds[0].image : null;
 
         let options = image ? { files: [ image.url ]} : null;
         let message = image ? null : `Lol! ${reaction.message.author.username} said:\n"${reaction.message.content}"`;
