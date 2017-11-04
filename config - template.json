@@ -1,13 +1,19 @@
 {
   "token": "",
-  "channels" : {
-    "logs": "",
-    "mentions": ""
-  },
   "password": "",
   "prefix": "",
   "oxfordTokens": [
   ],
   "imageurl": "",
-  "databaseurl": ""
+  "databaseurl": "",
+  "webhooks": {
+    "mentions": {
+      "id": "",
+      "token": ""
+    },
+    "logs": {
+      "id": "",
+      "token": ""
+    }
+  }
 }
