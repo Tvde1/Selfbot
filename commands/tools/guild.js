@@ -19,7 +19,7 @@ class GuildCommand extends Command {
 
         try {
             guild = this.client.guilds.get(guild);
-            await guild.fetchMembers();
+            await guild.members.fetch();
         }
         catch (err) {
             throw new Error(`Could not fetch this guild:\n${err}\n\nThe guild was: ${guild}`);
