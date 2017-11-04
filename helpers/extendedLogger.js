@@ -14,7 +14,7 @@ class Logger extends tvde1logger {
     constructor(client, utils) {
         super('Selfbot', !process.env.DONTLOGTIME);
         this.client = client;
-        this.utils = utils;
+        this.utils  = utils;
 
         this.logWebhook     = new WebhookClient(client.config.webhooks.logs.id,     client.config.webhooks.logs.token    );
         this.mentionWebhook = new WebhookClient(client.config.webhooks.mentions.id, client.config.webhooks.mentions.token);

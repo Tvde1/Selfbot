@@ -1,10 +1,9 @@
-const discord = require('discord.js');
-const moment = require('moment');
 const CommandInfo = require('../../templates/commandInfo');
-const Command     = require('../../templates/command');
+const Command     = require('../../templates/command'    );
+const discord     = require('discord.js'                 );
+const moment      = require('moment'                     );
 
 class GuildCommand extends Command {
-
     constructor(client) {
         super(client, new CommandInfo('guild', 'Displays all info about the guild.', 'guild <guild id>'));
     }
@@ -75,7 +74,7 @@ class GuildCommand extends Command {
         embed.addField('❗ Verfication Level:', guild.verificationLevel, true)
             .addField('💬 Default Channel:', guild.defaultChannel, true);
 
-        message.edit(message.content, {embed});
+        message.edit(message.content, { embed });
     }
 }
 

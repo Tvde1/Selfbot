@@ -19,8 +19,8 @@ class EvalCommand extends Command {
             match = `(async()=>{${args.join(' ')}})()`;
         }
 
-        const client = new ObjectAutocorrect(this.client); //eslint-disable-line no-unused-vars
-        const message = new ObjectAutocorrect(_message);   //eslint-disable-line no-unused-vars
+        const message = new ObjectAutocorrect(_message   ); //eslint-disable-line no-unused-vars
+        const client  = new ObjectAutocorrect(this.client); //eslint-disable-line no-unused-vars
 
         let evaled, diff, start;
         try {
