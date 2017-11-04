@@ -108,6 +108,6 @@ const rtoken = () => {
             }
         }
     }
-    
+
     return current;
 };

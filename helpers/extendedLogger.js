@@ -1,4 +1,4 @@
-const { Message, MessageEmbed, WebhookCLient } = require('discord.js'       ); //eslint-disable-line no-unused-vars
+const { Message, MessageEmbed, WebhookClient } = require('discord.js'       ); //eslint-disable-line no-unused-vars
 const ExtendedClient                           = require('../extendedClient'); //eslint-disable-line no-unused-vars
 const Utils                                    = require('./utils.js'       ); //eslint-disable-line no-unused-vars
 const tvde1logger                              = require('tvde1logger'      );
@@ -16,8 +16,8 @@ class Logger extends tvde1logger {
         this.client = client;
         this.utils = utils;
 
-        this.logWebhook     = new WebhookCLient(client.config.webhooks.logs.id,     client.config.webhooks.logs.token    );
-        this.mentionWebhook = new WebhookCLient(client.config.webhooks.mentions.id, client.config.webhooks.mentions.token);
+        this.logWebhook     = new WebhookClient(client.config.webhooks.logs.id,     client.config.webhooks.logs.token    );
+        this.mentionWebhook = new WebhookClient(client.config.webhooks.mentions.id, client.config.webhooks.mentions.token);
     }
 
     /**
