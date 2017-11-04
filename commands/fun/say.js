@@ -54,26 +54,12 @@ class SayCommand extends Command {
     }
 
     async run(message, args) {
-        let text = args.join(' ').toLowerCase();
-        if (text === '') throw new Error('You need to input some text, dummy.');
-        let replacedText = '';
-
-        while (text.length > 0) {
-            if (!letters.hasOwnProperty(text[0])) {
-                replacedText += text[0];
-                text = text.substring(1);
-                continue;
-            }
-            for (const letter of Object.getOwnPropertyNames(letters)) {
-                if (text.startsWith(letter)) {
-                    replacedText += letters[letter];
-                    text = text.substring(letter.length);
-                    break;
-                }
-            }
+        if (args.length === 0) {
+            throw new Error('You need to input some text, dummy.');
         }
-
-        message.edit(replacedText);
+        
+        const newText = args.join(' ').split('').map(x => letters[x.toLowerCase()] || x).join('');
+        message.edit(newText);
     }
 }
 
