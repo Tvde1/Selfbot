@@ -10,7 +10,7 @@ class UndelCommand extends Command {
 
     async run(message, args) {
         let delMessage;
-        if (!this.client.deletedMessages) this.client.deletedMessages = {};
+        if (!this.client.deletedMessages) this.client.deletedMessages = new Map();
 
         if (args.length === 0) {
             let channelId = message.channel.id;
