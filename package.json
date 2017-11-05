@@ -20,7 +20,7 @@
   "dependencies": {
     "cat-facts": "^1.0.2",
     "colors": "^1.1.2",
-    "discord.js": "github:hydrabolt/Discord.js",
+    "discord.js": "github:Tvde1/discord.js",
     "emojify": "^1.0.0",
     "jaro-winkler": "^0.2.8",
     "jimp": "github:xmatmen/jimp",
