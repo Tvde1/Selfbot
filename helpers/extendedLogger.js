@@ -32,7 +32,7 @@ class Logger extends tvde1logger {
             .setAuthor(this.client.author)
             .setColor(this.utils.embedColor);
 
-        this.logWebhook.send(embed);
+        this.logWebhook.send({embed});
     }
 
     /**
@@ -47,7 +47,7 @@ class Logger extends tvde1logger {
             .setDescription(message.cleanContent)
             .setColor(this.utils.embedColor);
 
-        this.mentionWebhook.send(embed);
+        this.mentionWebhook.send({embed});
     }
 }
 
