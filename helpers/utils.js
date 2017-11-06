@@ -1,11 +1,21 @@
 const { Channel, Message, MessageEmbed } = require('discord.js'); //eslint-disable-line no-unused-vars
 const fetch                              = require('node-fetch');
+// const https                              = require('https');
 const jimp                               = require('jimp');
+
+const APIURL = false ? 'http://tvde1-api.herokuapp.com/api/' : 'http://localhost:3000/api/'; //eslint-disable-line no-constant-condition
 
 class Utils {
     constructor(client) {
         this.client = client;
         this.addToPrototypes();
+        this.getApiToken(client.config.api.username, client.config.api.password)
+            .then(key => {
+                this.apikey = key;
+            })
+            .catch(error => {
+                client.logger.error('Utils', `Could not get API token: ${error.message}`);
+            });
     }
 
     /**
@@ -273,6 +283,69 @@ class Utils {
         }
         
         return image;
+    }
+
+    async getApiToken(username, password) {
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username,
+                password
+            })
+        };
+
+        let result = await fetch(`${APIURL}account/authenticate`, requestOptions);
+
+        if (!result.ok) {
+            throw new Error('Request failed.');
+        }
+
+        result = await result.json();
+        if (!result.success) {
+            throw new Error(result.message);
+        }
+
+        return result.token;
+    }
+
+    async fetchImageEndpointFromApi(endpoint, options) {
+        // const agent = new https.Agent({
+        //     rejectUnauthorized: false
+        // });
+
+        const requestOptions = {
+            // agent,
+            headers: {
+                'Authorization': `${this.apikey}`
+            }
+        };
+
+        if (options) {
+            requestOptions.method = 'POST';
+            requestOptions.headers['Content-Type'] = 'application/json';
+
+            requestOptions.body = JSON.stringify({
+                images: options.images,
+                args: options.args
+            });
+        }
+
+        const result = await fetch(`${APIURL}image-manipulation/${endpoint}`, requestOptions);
+
+        if (!result.ok) {
+            throw new Error('Could not fetch result from API');
+        } else {
+            const body = await result.json();
+
+            if (!body.sucess) {
+                throw new Error(body.message);
+            }
+
+            return Buffer.from(body.image, 'base64');
+        }
     }
 }
 
