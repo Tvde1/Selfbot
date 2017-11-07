@@ -3,7 +3,7 @@ const fetch                              = require('node-fetch');
 // const https                              = require('https');
 const jimp                               = require('jimp');
 
-const APIURL = false ? 'http://tvde1-api.herokuapp.com/api/' : 'http://localhost:3000/api/'; //eslint-disable-line no-constant-condition
+const APIURL = true ? 'http://tvde1-api.herokuapp.com/api/' : 'http://localhost:3000/api/'; //eslint-disable-line no-constant-condition
 
 class Utils {
     constructor(client) {
@@ -69,43 +69,6 @@ class Utils {
      */
     isURL(value) {
         return /^(https?:\/\/)?.+(\..+)?\.\w+(\/[^/]*)*$/.test(value);
-    }
-
-    /**
-     * Returns an object with data about faces in an image.
-     * @param {buffer} image 
-     */
-    async detectFaces(image) {
-        let buff;
-
-        try{ 
-            buff = await this.getBufferFromJimp(image);
-        }
-        catch (err) {
-            throw new Error('Failed to get buffer from image.');
-        }
-
-        try {
-            for (const token of this.client.config.oxfordTokens) {
-                const facesRequest = await fetch('https://api.projectoxford.ai/face/v1.0/detect?returnFaceId=false&returnFaceLandmarks=true&returnFaceAttributes=headPose', {
-                    method: 'POST',
-                    headers: {
-                        'Ocp-Apim-Subscription-Key': token,
-                        'Content-Type': 'application/octet-stream'
-                    },
-                    body: buff
-                });
-
-                if (!facesRequest.ok) continue;
-
-                const faces = await facesRequest.json();
-                if (!faces.length) return new Error('No faces detected');
-                return faces;
-            }
-        }
-        catch(err) {
-            return new Error('There was an unexpected API error');
-        }
     }
 
     /**
