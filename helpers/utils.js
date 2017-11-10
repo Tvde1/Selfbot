@@ -3,7 +3,7 @@ const fetch                              = require('node-fetch');
 // const https                              = require('https');
 const jimp                               = require('jimp');
 
-const APIURL = true ? 'http://tvde1-api.herokuapp.com/api/' : 'http://localhost:3000/api/'; //eslint-disable-line no-constant-condition
+const APIURL = false ? 'http://tvde1-api.herokuapp.com/api/' : 'http://localhost:3000/api/'; //eslint-disable-line no-constant-condition
 
 class Utils {
     constructor(client) {
