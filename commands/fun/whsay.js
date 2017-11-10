@@ -9,7 +9,7 @@ class WhsayCommand extends Command {
     }
 
     async run(message, args) {
-        if (!message.channel.permissionsFor(this._client.user).has('MANAGE_WEBHOOKS')) throw new Error('Missing Permissions');
+        if (!message.channel.permissionsFor(this.client.user).has('MANAGE_WEBHOOKS')) throw new Error('Missing Permissions');
 
         const [name, ...text] = args;
 
