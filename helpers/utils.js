@@ -2,8 +2,6 @@ const { Channel, Message, MessageEmbed } = require('discord.js'); //eslint-disab
 const fetch                              = require('node-fetch');
 const jimp                               = require('jimp');
 
-const APIURL = false ? 'http://tvde1-api.herokuapp.com/api/' : 'http://localhost:3000/api/'; //eslint-disable-line no-constant-condition
-
 class Utils {
     constructor(client) {
         this.client = client;
