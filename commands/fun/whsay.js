@@ -24,7 +24,7 @@ class WhsayCommand extends Command {
             webhook = await message.channel.createWebhook(user.username, { avatar: user.displayAvatarURL() });
         }
 
-        webhook.send(text.join(' '));
+        await webhook.send(text.join(' '));
         webhook.delete();
     }
 }
