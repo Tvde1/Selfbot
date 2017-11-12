@@ -1,19 +1,21 @@
 {
-  "token": "",
-  "password": "",
-  "prefix": "",
-  "oxfordTokens": [
-  ],
-  "imageurl": "",
-  "databaseurl": "",
-  "webhooks": {
-    "mentions": {
-      "id": "",
-      "token": ""
+    "token": "",
+    "password": "",
+    "prefix": "",
+    "imageurl": "",
+    "databaseurl": "",
+    "webhooks": {
+        "mentions": {
+            "id": "",
+            "token": ""
+        },
+        "logs": {
+            "id": "",
+            "token": ""
+        }
     },
-    "logs": {
-      "id": "",
-      "token": ""
+    "api": {
+        "username": "",
+        "password": ""
     }
-  }
 }

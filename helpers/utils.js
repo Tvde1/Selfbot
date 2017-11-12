@@ -1,11 +1,20 @@
 const { Channel, Message, MessageEmbed } = require('discord.js'); //eslint-disable-line no-unused-vars
 const fetch                              = require('node-fetch');
-const jimp                               = require('jimp');
+// const https                              = require('https');
+
+const APIURL = true ? 'https://tvde1-api.herokuapp.com/api/' : 'http://localhost:3000/api/'; //eslint-disable-line no-constant-condition
 
 class Utils {
     constructor(client) {
         this.client = client;
         this.addToPrototypes();
+        this.getApiToken(client.config.api.username, client.config.api.password)
+            .then(key => {
+                this.apikey = key;
+            })
+            .catch(error => {
+                client.logger.error('Utils', `Could not get API token: ${error.message}`);
+            });
     }
 
     /**
@@ -59,61 +68,6 @@ class Utils {
      */
     isURL(value) {
         return /^(https?:\/\/)?.+(\..+)?\.\w+(\/[^/]*)*$/.test(value);
-    }
-
-    /**
-     * Returns an object with data about faces in an image.
-     * @param {buffer} image 
-     */
-    async detectFaces(image) {
-        let buff;
-
-        try{ 
-            buff = await this.getBufferFromJimp(image);
-        }
-        catch (err) {
-            throw new Error('Failed to get buffer from image.');
-        }
-
-        try {
-            for (const token of this.client.config.oxfordTokens) {
-                const facesRequest = await fetch('https://api.projectoxford.ai/face/v1.0/detect?returnFaceId=false&returnFaceLandmarks=true&returnFaceAttributes=headPose', {
-                    method: 'POST',
-                    headers: {
-                        'Ocp-Apim-Subscription-Key': token,
-                        'Content-Type': 'application/octet-stream'
-                    },
-                    body: buff
-                });
-
-                if (!facesRequest.ok) continue;
-
-                const faces = await facesRequest.json();
-                if (!faces.length) return new Error('No faces detected');
-                return faces;
-            }
-        }
-        catch(err) {
-            return new Error('There was an unexpected API error');
-        }
-    }
-
-    /**
-     * Gets a buffer from a jimp image.
-     * @param {Jimp.Jimp} img 
-     * @param {string} mime 
-     * @returns {buffer}
-     */
-    getBufferFromJimp(img, mime) {
-        return new Promise(async (resolve, reject) => {
-
-            if (img.bitmap.width > 1024 || img.bitmap.height > 1024) img = await img.scaleToFit(1024, 1024);
-
-            img.getBuffer(mime || jimp.MIME_PNG, (err, buffer) => {
-                if (err) reject(err);
-                resolve(buffer);
-            });
-        });
     }
 
     /**
@@ -252,27 +206,67 @@ class Utils {
         }
     }
 
-    /**
-     * Gets an image and opens it with jimp.
-     * @param {Message} message The message that requested the image.
-     * @param {string[]} args The message's args.
-     */
-    async getImageFromMessageAndOpen(message, args) {
-        let image = await this.getImagesFromMessage(message, args);
-        if (!image) {
-            throw new Error('Could not find an image in the last 100 messages.');
+    async getApiToken(username, password) {
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username,
+                password
+            })
+        };
+
+        let result = await fetch(`${APIURL}account/authenticate`, requestOptions);
+
+        if (!result.ok) {
+            throw new Error('Request failed.');
         }
 
-        image = await jimp.read(image);
-        if (!image) {
-            throw new Error('An error occurred while loading the image.');
+        result = await result.json();
+        if (!result.success) {
+            throw new Error(result.message);
         }
 
-        if (image.bitmap.width * image.bitmap.height > 5000 * 5000) {
-            throw new Error('This image is too big.');
+        return result.token;
+    }
+
+    async fetchImageEndpointFromApi(endpoint, options) {
+        // const agent = new https.Agent({
+        //     rejectUnauthorized: false
+        // });
+
+        const requestOptions = {
+            // agent,
+            headers: {
+                'Authorization': `${this.apikey}`
+            }
+        };
+
+        if (options) {
+            requestOptions.method = 'POST';
+            requestOptions.headers['Content-Type'] = 'application/json';
+
+            requestOptions.body = JSON.stringify({
+                images: options.images,
+                args: options.args
+            });
         }
-        
-        return image;
+
+        const result = await fetch(`${APIURL}image-manipulation/${endpoint}`, requestOptions);
+
+        if (!result.ok) {
+            throw new Error('Could not fetch result from API');
+        } else {
+            const body = await result.json();
+
+            if (!body.sucess) {
+                throw new Error(body.message);
+            }
+
+            return Buffer.from(body.image, 'base64');
+        }
     }
 }
 

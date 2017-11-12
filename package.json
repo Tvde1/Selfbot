@@ -23,7 +23,6 @@
     "discord.js": "github:Tvde1/discord.js",
     "emojify": "^1.0.0",
     "jaro-winkler": "^0.2.8",
-    "jimp": "github:xmatmen/jimp",
     "js-beautify": "^1.7.4",
     "markdown-table": "^1.1.1",
     "moment": "^2.19.2",
