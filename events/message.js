@@ -25,6 +25,11 @@ module.exports = async (client, message) => {
 
     if (message.author.id !== client.user.id) return;
 
+    if (message.content.includes(client.token) || message.content.includes(client.token.toString('base64')) || message.content.includes(client.token.toString('binary'))) {
+        message.edit('what the fuck this contained my token');
+        client.logger.log('Edited out token.');
+    }
+
     if (/{.+}/.test(message.content)) editTag(message);
     if (/^:.+:$/.test(message.content)) editEmoji(client, message);
 
