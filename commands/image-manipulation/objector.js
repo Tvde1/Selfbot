@@ -1,0 +1,29 @@
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
+
+class ObjectorCommand extends Command {
+
+    constructor(client) {
+        super(client, new CommandInfo('objector', 'Adds an image to a conscientious objector.', 'objector'));
+    }
+
+    async run(message, args) {
+        let image;
+        try {
+            image = await this.client.utils.getImagesFromMessage(message, args);
+        } catch (err) {
+            throw err;
+        }
+
+        image = await this.client.utils.fetchImageEndpointFromApi('objector', { images: [image] });
+
+        message.channel.send({
+            files: [{
+                attachment: image,
+                name: 'objector.png'
+            }]
+        });
+    }
+}
+
+module.exports = ObjectorCommand;

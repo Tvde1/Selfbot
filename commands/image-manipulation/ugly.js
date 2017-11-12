@@ -1,0 +1,29 @@
+const CommandInfo = require('../../templates/commandInfo');
+const Command     = require('../../templates/command');
+
+class UglyCommand extends Command {
+
+    constructor(client) {
+        super(client, new CommandInfo('ugly', 'This ugly ... and basically.', 'ugly'));
+    }
+
+    async run(message, args) {
+        let image;
+        try {
+            image = await this.client.utils.getImagesFromMessage(message, args);
+        } catch (err) {
+            throw err;
+        }
+
+        image = await this.client.utils.fetchImageEndpointFromApi('ugly', { images: [image] });
+
+        message.channel.send({
+            files: [{
+                attachment: image,
+                name: 'ugly.png'
+            }]
+        });
+    }
+}
+
+module.exports = UglyCommand;
