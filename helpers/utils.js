@@ -1,8 +1,9 @@
 const { Channel, Message, MessageEmbed } = require('discord.js'); //eslint-disable-line no-unused-vars
 const fetch                              = require('node-fetch');
-// const https                              = require('https');
+const https                              = require('https');
 
-const APIURL = true ? 'https://tvde1-api.herokuapp.com/api/' : 'http://localhost:3000/api/'; //eslint-disable-line no-constant-condition
+const USEHEROKU = true;
+const APIURL = USEHEROKU ? 'https://tvde1-api.herokuapp.com/api/' : 'http://localhost:3000/api/'; //eslint-disable-line no-constant-condition
 
 class Utils {
     constructor(client) {
@@ -233,16 +234,19 @@ class Utils {
     }
 
     async fetchImageEndpointFromApi(endpoint, options) {
-        // const agent = new https.Agent({
-        //     rejectUnauthorized: false
-        // });
-
+        
         const requestOptions = {
-            // agent,
             headers: {
                 'Authorization': `${this.apikey}`
             }
         };
+
+        if (USEHEROKU) {
+            requestOptions['agent'] = new https.Agent({
+                rejectUnauthorized: false
+            });
+        }
+
 
         if (options) {
             requestOptions.method = 'POST';
