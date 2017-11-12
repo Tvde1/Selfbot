@@ -271,7 +271,7 @@ class Utils {
         } else {
             const body = await result.json();
 
-            if (!body.sucess) {
+            if (!body.success) {
                 throw new Error(body.message);
             }
 
