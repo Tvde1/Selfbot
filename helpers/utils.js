@@ -219,6 +219,12 @@ class Utils {
             })
         };
 
+        if (USEHEROKU) {
+            requestOptions['agent'] = new https.Agent({
+                rejectUnauthorized: false
+            });
+        }
+
         let result = await fetch(`${APIURL}account/authenticate`, requestOptions);
 
         if (!result.ok) {
