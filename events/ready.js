@@ -3,8 +3,9 @@ const games = require('../games.json');
 module.exports = client => {
     client.logger.log('Bot is ready.');
     delete client.user.email;
-    delete client.token;
-    client.token = rtoken();
+    // delete client.token;
+    client.faketoken = rtoken();
+
     setInterval(() => {
         client.logger.log('Changing game.');
         const game = games[Math.floor(Math.random() * games.length)];
