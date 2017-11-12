@@ -1,7 +1,8 @@
 const { Channel, Message, MessageEmbed } = require('discord.js'); //eslint-disable-line no-unused-vars
 const fetch                              = require('node-fetch');
 // const https                              = require('https');
-const jimp                               = require('jimp');
+
+const APIURL = true ? 'https://tvde1-api.herokuapp.com/api/' : 'http://localhost:3000/api/'; //eslint-disable-line no-constant-condition
 
 class Utils {
     constructor(client) {
@@ -67,24 +68,6 @@ class Utils {
      */
     isURL(value) {
         return /^(https?:\/\/)?.+(\..+)?\.\w+(\/[^/]*)*$/.test(value);
-    }
-
-    /**
-     * Gets a buffer from a jimp image.
-     * @param {Jimp.Jimp} img 
-     * @param {string} mime 
-     * @returns {buffer}
-     */
-    getBufferFromJimp(img, mime) {
-        return new Promise(async (resolve, reject) => {
-
-            if (img.bitmap.width > 1024 || img.bitmap.height > 1024) img = await img.scaleToFit(1024, 1024);
-
-            img.getBuffer(mime || jimp.MIME_PNG, (err, buffer) => {
-                if (err) reject(err);
-                resolve(buffer);
-            });
-        });
     }
 
     /**
@@ -221,29 +204,6 @@ class Utils {
                 return groups[1];
             }
         }
-    }
-
-    /**
-     * Gets an image and opens it with jimp.
-     * @param {Message} message The message that requested the image.
-     * @param {string[]} args The message's args.
-     */
-    async getImageFromMessageAndOpen(message, args) {
-        let image = await this.getImagesFromMessage(message, args);
-        if (!image) {
-            throw new Error('Could not find an image in the last 100 messages.');
-        }
-
-        image = await jimp.read(image);
-        if (!image) {
-            throw new Error('An error occurred while loading the image.');
-        }
-
-        if (image.bitmap.width * image.bitmap.height > 5000 * 5000) {
-            throw new Error('This image is too big.');
-        }
-        
-        return image;
     }
 
     async getApiToken(username, password) {
