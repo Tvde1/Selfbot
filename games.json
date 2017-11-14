@@ -1,12 +1,15 @@
 [
-    ["PLAYING", "with you"],
-    ["PLAYING", "with bad code"],
+    ["PLAYING", "with you."],
+    ["PLAYING", "with bad code."],
     ["PLAYING", "with u're mom!"],
-    ["PLAYING", "@everyone"],
-    ["PLAYING", "cracked games"],
+    ["PLAYING", "@everyone."],
+    ["PLAYING", "cracked games."],
     ["PLAYING", "cnhv.co/8sj4"],
-    ["WATCHING", "you"],
-    ["WATCHING", "something"],
-    ["LISTENING", "music"],
-    ["STREAMING", "illegally"]
+    ["PLAYING", "you."],
+    ["PLAYING", "but should be studying."],
+    ["PLAYING", "with code."],
+    ["PLAYING", "with filter_branch."],
+    ["PLAYING", "with heroku."],
+    ["PLAYING", "nothing."],
+    ["PLAYING", "with Node.js"]
 ]
