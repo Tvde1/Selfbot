@@ -1,4 +1,4 @@
-const ExtendedClient = require('../extendedClient');
+const ExtendedClient = require('../extendedClient'); //eslint-disable-line no-unused-vars
 const CommandInfo    = require('./commandInfo');
 const { Message }    = require('discord.js');        //eslint-disable-line no-unused-vars
 
