@@ -2,7 +2,7 @@ const CommandInfo = require('../../templates/commandInfo');
 const catFacts    = require('cat-facts');
 const Command     = require('../../templates/command');
 
-module.exports = new class extends Command {
+module.exports = class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('catfact', 'Sends a nice catfact.', 'catfact'));

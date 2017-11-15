@@ -3,7 +3,7 @@ const Command     = require('../../templates/command');
 const Nraw        = require('nraw');
 const reddit      = new Nraw('Discord Selfbot by /u/Tvde1 (for emojipastas)');
 
-module.exports = new class extends Command {
+module.exports = class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('emojipasta', 'Sends an embed with emojipasta.', 'emojipasta'));

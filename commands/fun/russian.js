@@ -35,7 +35,7 @@ const russian = {
     }
 };
 
-module.exports = new class extends Command {
+module.exports = class extends Command {
     constructor(client) {
         super(client, new CommandInfo('russian', 'Generates fake russian text.', 'russian [text]'));
     }

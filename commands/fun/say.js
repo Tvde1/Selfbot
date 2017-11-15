@@ -48,7 +48,7 @@ const letters = {
     ' ': '⬛'
 };
 
-module.exports = new class extends Command {
+module.exports = class extends Command {
     constructor(client) {
         super(client, new CommandInfo('say', 'Turns the text into emoji letters.', 'say [text]'));
     }

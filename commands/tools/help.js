@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-module.exports = new class extends Command {
+module.exports = class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('help', 'Displays all the available commands for your permission level.', 'help [(category) | command [command)]'));

@@ -2,7 +2,7 @@ const {js_beautify} = require('js-beautify');
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-module.exports = new class extends Command {
+module.exports = class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('beautify', 'Get the last JS code block and makes it *prettier*.', 'beautify'));

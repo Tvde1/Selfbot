@@ -2,7 +2,7 @@ const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 const rp          = require('request-promise');
 
-module.exports = new class extends Command {
+module.exports = class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('ai', 'Let the robot man talk.', 'ai'));

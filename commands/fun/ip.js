@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-module.exports = new class extends Command {
+module.exports = class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('ip', 'Tracks TCP packets through DHCP reverse proxy or HTTP BlueTooh services to get the IP adress of a user.', 'ip [name|@mention]'));

@@ -2,7 +2,7 @@ const eyesList = ['big', 'blood', 'blue', 'googly', 'green', 'horror', 'illumina
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-module.exports = new class extends Command {
+module.exports = class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('eyes', 'Adds funny eyes to the last sent image.', `eyes [${eyesList.join(' | ')}]`));

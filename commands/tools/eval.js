@@ -5,7 +5,7 @@ const Command           = require('../../templates/command'    );
 const discord           = require('discord.js'                 ); //eslint-disable-line no-unused-vars
 const util              = require('util'                       );
 
-module.exports = new class extends Command {
+module.exports = class extends Command {
     constructor(client) {
         super(client, new CommandInfo('eval', 'Evaluates arbitrary javascript.', 'eval [...code]'));
     }

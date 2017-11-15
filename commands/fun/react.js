@@ -74,7 +74,7 @@ const letters = {
     ' ': ['▪', '◾', '◼', '⬛', '⚫', '▫', '◽', '◻', '⬜', '⚪']
 };
 
-module.exports = new class extends Command {
+module.exports = class extends Command {
     constructor(client) {
         super(client, new CommandInfo('react', 'React with emoji to a message.', 'react [message id] [text]'));
     }
