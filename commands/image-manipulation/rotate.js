@@ -22,7 +22,7 @@ module.exports = class extends Command {
 
         const requestOptions = { images: [image], args: { amount }};
 
-        image = await this.client.utils.fetchFromApi('image-manipulation/rotate', requestOptions);
+        image = await this.client.utils.fetchImageFromApi('image-manipulation/rotate', requestOptions);
 
         message.channel.send({
             files: [

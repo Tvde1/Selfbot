@@ -22,7 +22,7 @@ module.exports = class extends Command {
 
         const requestOptions = { images: [image], args: { text } };        
 
-        image = await this.client.utils.fetchFromApi('image-manipulation/reminder', requestOptions);
+        image = await this.client.utils.fetchImageFromApi('image-manipulation/reminder', requestOptions);
 
         message.channel.send({
             files: [

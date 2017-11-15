@@ -22,7 +22,7 @@ module.exports = class extends Command {
 
         const requestOptions = { images: [image], args: { 'title': title } };        
         
-        image = await this.client.utils.fetchFromApi('image-manipulation/pornhub', requestOptions);
+        image = await this.client.utils.fetchImageFromApi('image-manipulation/pornhub', requestOptions);
                 
         message.channel.send({
             files: [

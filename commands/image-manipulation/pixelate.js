@@ -20,7 +20,7 @@ module.exports = class extends Command {
             requestOptions.args.size = args[0]; //TODO: Maybe check for int.
         }
 
-        image = await this.client.utils.fetchFromApi('image-manipulation/pixelate', requestOptions);
+        image = await this.client.utils.fetchImageFromApi('image-manipulation/pixelate', requestOptions);
 
         message.channel.send({
             files: [{

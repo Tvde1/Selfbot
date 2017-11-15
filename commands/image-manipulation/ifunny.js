@@ -15,7 +15,7 @@ module.exports = class extends Command {
             throw err;
         }
 
-        image = await this.client.utils.fetchFromApi('image-manipulation/ifunny', { images: [image] });
+        image = await this.client.utils.fetchImageFromApi('image-manipulation/ifunny', { images: [image] });
 
         message.channel.send({
             files: [{

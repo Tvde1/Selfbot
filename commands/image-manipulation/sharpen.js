@@ -20,7 +20,7 @@ module.exports = class extends Command {
             requestOptions.args.amount = args[0]; //TODO: Check int
         }
         
-        image = await this.client.utils.fetchFromApi('image-manipulation/sharpen', requestOptions);
+        image = await this.client.utils.fetchImageFromApi('image-manipulation/sharpen', requestOptions);
 
         message.channel.send({
             files: [{

@@ -20,7 +20,7 @@ module.exports = class extends Command {
             requestOptions.args.quality = args[0]; //TODO: Check for numbers
         }
 
-        image = await this.client.utils.fetchFromApi('image-manipulation/jpeg', requestOptions);
+        image = await this.client.utils.fetchImageFromApi('image-manipulation/jpeg', requestOptions);
 
         message.channel.send({
             files: [{

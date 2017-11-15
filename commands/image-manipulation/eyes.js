@@ -21,7 +21,7 @@ module.exports = class extends Command {
             requestOptions.args = { eye: args[0] };
         }
 
-        image = await this.client.utils.fetchFromApi('image-manipulation/eyes', requestOptions);
+        image = await this.client.utils.fetchImageFromApi('image-manipulation/eyes', requestOptions);
 
         message.channel.send({
             files: [{

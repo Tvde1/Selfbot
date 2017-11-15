@@ -15,7 +15,7 @@ module.exports = class extends Command {
             throw err;
         }
 
-        image = await this.client.utils.fetchFromApi('image-manipulation/dead', { images: [image]} );
+        image = await this.client.utils.fetchImageFromApi('image-manipulation/dead', { images: [image]} );
 
         message.channel.send({
             files: [{attachment: image, name: 'Minecraft.png'}]
