@@ -2,7 +2,7 @@ const exec = require('child_process').exec;
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class ExecCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('exec', 'Executes a console command.', 'exec [command]'));
@@ -16,6 +16,4 @@ class ExecCommand extends Command {
             message.edit(`${message.content}\n==========\n\`\`\`\n${err || result}\n\`\`\``);
         });
     }
-}
-
-module.exports = ExecCommand;
+};

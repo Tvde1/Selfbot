@@ -2,7 +2,7 @@ const table = require('markdown-table');
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class EmojisCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('emojis', 'Sends a list of all emojis with their name.', 'emojis'));
@@ -43,6 +43,4 @@ class EmojisCommand extends Command {
         
         message.channel.send(messageToSend, {split: true});
     }
-}
-
-module.exports = EmojisCommand;
+};

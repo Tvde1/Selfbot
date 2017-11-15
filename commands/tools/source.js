@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class SourceCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('source', 'Gets the markdown source of the specified message ID in the same channel.', 'source [message ID]'));
@@ -13,9 +13,7 @@ class SourceCommand extends Command {
                 message.edit(`${message.content}\n==========\nSource Code for MSG ID ${replyToMsg}:\n\`\`\`md\n${clean(replyToMsg.content)}\n\`\`\``);
             }).catch(console.error);
     }
-}
-
-module.exports = SourceCommand;
+};
 
 const clean = (text) => {
     if (typeof(text) === 'string') {
@@ -24,4 +22,4 @@ const clean = (text) => {
     else {
         return text;
     }
-}
+};

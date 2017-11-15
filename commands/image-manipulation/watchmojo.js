@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class WatchmojoCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('watchmojo', 'Takes the last image and adds this text in a watchmojo video.', 'watchmojo [text]'));
@@ -22,7 +22,7 @@ class WatchmojoCommand extends Command {
 
         const requestOptions = { images: [image], args: { 'title': title } };        
         
-        image = await this.client.utils.fetchImageEndpointFromApi('pornhub', requestOptions);
+        image = await this.client.utils.fetchFromApi('image-manipulation/pornhub', requestOptions);
                 
         message.channel.send({
             files: [
@@ -33,6 +33,4 @@ class WatchmojoCommand extends Command {
             ]
         });
     }
-}
-
-module.exports = WatchmojoCommand;
+};

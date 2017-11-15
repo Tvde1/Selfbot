@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class UberCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('uber', 'Where tf my uber driver takin me to?.', 'uber'));
@@ -15,7 +15,7 @@ class UberCommand extends Command {
             throw err;
         }
 
-        image = await this.client.utils.fetchImageEndpointFromApi('uber', { images: [image] });
+        image = await this.client.utils.fetchFromApi('image-manipulation/uber', { images: [image] });
 
         message.channel.send({
             files: [
@@ -26,6 +26,4 @@ class UberCommand extends Command {
             ]
         });
     }
-}
-
-module.exports = UberCommand;
+};

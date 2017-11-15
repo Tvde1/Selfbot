@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class DelCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('del', 'Deletes an amount of messages in the channel.', 'del [number]'));
@@ -15,6 +15,4 @@ class DelCommand extends Command {
 
         this.client.utils.deleteMyMessages(message.channel, number + 1);
     }
-}
-
-module.exports = DelCommand;
+};

@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class PixelateCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('pixelate', 'Pixelates an image.', 'pixelate <pixel size>'));
@@ -20,7 +20,7 @@ class PixelateCommand extends Command {
             requestOptions.args.size = args[0]; //TODO: Maybe check for int.
         }
 
-        image = await this.client.utils.fetchImageEndpointFromApi('pixelate', requestOptions);
+        image = await this.client.utils.fetchFromApi('image-manipulation/pixelate', requestOptions);
 
         message.channel.send({
             files: [{
@@ -29,6 +29,4 @@ class PixelateCommand extends Command {
             }]
         });
     }
-}
-
-module.exports = PixelateCommand;
+};

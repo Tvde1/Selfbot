@@ -2,7 +2,7 @@ const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 const request     = require('request');
 
-class AsciiCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('ascii', 'Edits the message with a code block with the text in ascii-art.', 'ascii [text]'));
@@ -15,6 +15,4 @@ class AsciiCommand extends Command {
             message.edit(body, { code: true });
         });
     }
-}
-
-module.exports = AsciiCommand;
+};

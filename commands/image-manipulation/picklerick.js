@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class PicklerickCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('picklerick', 'PICKLE RIIIICK.', 'picklerick'));
@@ -15,7 +15,7 @@ class PicklerickCommand extends Command {
             throw err;
         }
 
-        image = await this.client.utils.fetchImageEndpointFromApi('picklerick', { images: [image] });
+        image = await this.client.utils.fetchFromApi('image-manipulation/picklerick', { images: [image] });
 
         message.channel.send({
             files: [
@@ -26,6 +26,4 @@ class PicklerickCommand extends Command {
             ]
         });
     }
-}
-
-module.exports = PicklerickCommand;
+};

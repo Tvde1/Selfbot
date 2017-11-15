@@ -3,7 +3,7 @@ const discord = require('discord.js');
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class RedditCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('reddit', '[username]', 'Sends info about a reddit user.'));
@@ -32,6 +32,4 @@ class RedditCommand extends Command {
 
         message.edit(message.content, {embed});
     }
-}
-
-module.exports = RedditCommand;
+};

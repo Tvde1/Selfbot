@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class AbortCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('abort', 'Shuts down the bot.', 'abort'));
@@ -12,6 +12,4 @@ class AbortCommand extends Command {
         this.client.destroy();
         process.exit(1);
     }
-}
-
-module.exports = AbortCommand;
+};

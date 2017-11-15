@@ -2,7 +2,7 @@ const eyesList = ['big', 'blood', 'blue', 'googly', 'green', 'horror', 'illumina
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class EyesCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('eyes', 'Adds funny eyes to the last sent image.', `eyes [${eyesList.join(' | ')}]`));
@@ -21,7 +21,7 @@ class EyesCommand extends Command {
             requestOptions.args = { eye: args[0] };
         }
 
-        image = await this.client.utils.fetchImageEndpointFromApi('eyes', requestOptions);
+        image = await this.client.utils.fetchFromApi('image-manipulation/eyes', requestOptions);
 
         message.channel.send({
             files: [{
@@ -30,6 +30,4 @@ class EyesCommand extends Command {
             }]
         });
     }
-}
-
-module.exports = EyesCommand;
+};

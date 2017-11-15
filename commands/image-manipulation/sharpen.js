@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class SharpenCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('sharpen', 'Sharpens an image.', 'sharpen <amount 1-100>'));
@@ -20,7 +20,7 @@ class SharpenCommand extends Command {
             requestOptions.args.amount = args[0]; //TODO: Check int
         }
         
-        image = await this.client.utils.fetchImageEndpointFromApi('sharpen', requestOptions);
+        image = await this.client.utils.fetchFromApi('image-manipulation/sharpen', requestOptions);
 
         message.channel.send({
             files: [{
@@ -29,6 +29,4 @@ class SharpenCommand extends Command {
             }]
         });
     }
-}
-
-module.exports = SharpenCommand;
+};

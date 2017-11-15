@@ -2,7 +2,7 @@ const { GuildMember } = require('discord.js');
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class WhsayCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('whsay', 'Uses a webhook to impersonate a person', 'whsay [user | @user] [test...]'));
@@ -27,6 +27,4 @@ class WhsayCommand extends Command {
         await webhook.send(text.join(' '));
         webhook.delete();
     }
-}
-
-module.exports = WhsayCommand;
+};

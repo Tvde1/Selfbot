@@ -2,7 +2,7 @@ const discord = require('discord.js');
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class ChannelsCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('channels', 'Displays all types of channels for a guild.', 'channels [guild id]'));
@@ -36,6 +36,4 @@ class ChannelsCommand extends Command {
 
         message.edit(message.content, {embed: embed});
     }
-}
-
-module.exports = ChannelsCommand;
+};

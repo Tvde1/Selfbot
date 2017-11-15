@@ -2,7 +2,7 @@ const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 const rp          = require('request-promise');
 
-class AiCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('ai', 'Let the robot man talk.', 'ai'));
@@ -18,6 +18,4 @@ class AiCommand extends Command {
                 throw new Error('An error occured while getting the response.');
             });
     }
-}
-
-module.exports = AiCommand;
+};

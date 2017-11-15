@@ -2,7 +2,7 @@ const {js_beautify} = require('js-beautify');
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class BeautifyCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('beautify', 'Get the last JS code block and makes it *prettier*.', 'beautify'));
@@ -15,9 +15,7 @@ class BeautifyCommand extends Command {
         const betterCode = format(code);
         message.edit(message.content + '\n==========\n' + betterCode);
     }
-}
-
-module.exports = BeautifyCommand;
+};
 
 const reduceIndentation = (string) => {
     let whitespace = string.match(/^(\s+)/);

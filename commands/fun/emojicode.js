@@ -3,7 +3,7 @@ const emojify         = require('emojify');
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class EmojiCodeCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('emojicode', 'Get the last JS code block and makes it *readable*', 'emojicode'));
@@ -22,9 +22,7 @@ class EmojiCodeCommand extends Command {
 
         message.edit(message.content + '\n==========\n' + code);
     }
-}
-
-module.exports = EmojiCodeCommand;
+};
 
 const reduceIndentation = (string) => {
     let whitespace = string.match(/^(\s+)/);

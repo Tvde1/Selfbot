@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class RotateCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('rotate', 'Rotates an image', 'rotate <degrees>'));
@@ -22,7 +22,7 @@ class RotateCommand extends Command {
 
         const requestOptions = { images: [image], args: { amount }};
 
-        image = await this.client.utils.fetchImageEndpointFromApi('rotate', requestOptions);
+        image = await this.client.utils.fetchFromApi('image-manipulation/rotate', requestOptions);
 
         message.channel.send({
             files: [
@@ -33,6 +33,4 @@ class RotateCommand extends Command {
             ]
         });
     }
-}
-
-module.exports = RotateCommand;
+};

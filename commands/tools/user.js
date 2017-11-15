@@ -4,7 +4,7 @@ const moment = require('moment');
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class UserCommand extends Command {
+module.exports = new class extends Command {
     constructor(client) {
         super(client, new CommandInfo('user', 'Displays info about the user.', 'user [username|@mention]'));
     }
@@ -17,9 +17,7 @@ class UserCommand extends Command {
         if (user) showInfo(this.client, message, user);
         else throw new Error('Could not find user.');
     }
-}
-
-module.exports = UserCommand;
+};
 
 const showInfo = (client, message, user) => {
     if (user instanceof GuildMember) {

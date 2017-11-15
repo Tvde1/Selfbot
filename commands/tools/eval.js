@@ -5,7 +5,7 @@ const Command           = require('../../templates/command'    );
 const discord           = require('discord.js'                 ); //eslint-disable-line no-unused-vars
 const util              = require('util'                       );
 
-class EvalCommand extends Command {
+module.exports = new class extends Command {
     constructor(client) {
         super(client, new CommandInfo('eval', 'Evaluates arbitrary javascript.', 'eval [...code]'));
     }
@@ -66,6 +66,4 @@ class EvalCommand extends Command {
 
         await _message.edit(`**Eval:**\n**:speech_balloon: Input:**\n\`\`\`js\n${match}\n\`\`\`\n**:white_check_mark: ${isPromise ? 'Promise ' : ''}Output:**\n\`\`\`js\n${response}\n\`\`\`\n**Type:** \`${type}\` | **Time Taken:** \`${diff[0] * 1e9 + diff[1]}\` nanoseconds.`);
     }
-}
-
-module.exports = EvalCommand;
+};

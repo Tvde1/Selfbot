@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class EmojifaceCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('emojiface', 'Puts emojis over faces..', 'emojiface'));
@@ -15,7 +15,7 @@ class EmojifaceCommand extends Command {
             throw err;
         }
 
-        image = await this.client.utils.fetchImageEndpointFromApi('emojiface', { images: [image] });
+        image = await this.client.utils.fetchFromApi('image-manipulation/emojiface', { images: [image] });
 
         message.channel.send({
             files: [
@@ -26,6 +26,4 @@ class EmojifaceCommand extends Command {
             ]
         });
     }
-}
-
-module.exports = EmojifaceCommand;
+};

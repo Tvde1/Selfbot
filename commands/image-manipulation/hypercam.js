@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class HypercamCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('hypercam', 'Adds \'Unregistered Hypercam\' to the last image.', 'hypercam'));
@@ -15,7 +15,7 @@ class HypercamCommand extends Command {
             throw err;
         }
 
-        image = await this.client.utils.fetchImageEndpointFromApi('hypercam', { images: [image] });
+        image = await this.client.utils.fetchFromApi('image-manipulation/hypercam', { images: [image] });
 
         message.channel.send({
             files: [{
@@ -24,6 +24,4 @@ class HypercamCommand extends Command {
             }]
         });
     }
-}
-
-module.exports = HypercamCommand;
+};

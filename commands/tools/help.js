@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class HelpCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('help', 'Displays all the available commands for your permission level.', 'help [(category) | command [command)]'));
@@ -49,6 +49,4 @@ class HelpCommand extends Command {
             split: { prepend: '```asciidoc\n', append: '```' }
         });
     }
-}
-
-module.exports = HelpCommand;
+};

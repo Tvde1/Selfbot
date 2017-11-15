@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class ReminderCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('reminder', 'Takes the previous image and makes a reminder with the text.', 'reminder [text]'));
@@ -22,7 +22,7 @@ class ReminderCommand extends Command {
 
         const requestOptions = { images: [image], args: { text } };        
 
-        image = await this.client.utils.fetchImageEndpointFromApi('reminder', requestOptions);
+        image = await this.client.utils.fetchFromApi('image-manipulation/reminder', requestOptions);
 
         message.channel.send({
             files: [
@@ -33,6 +33,4 @@ class ReminderCommand extends Command {
             ]
         });
     }
-}
-
-module.exports = ReminderCommand;
+};

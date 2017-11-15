@@ -2,7 +2,7 @@ const discord = require('discord.js');
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class AvatarCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('avatar', 'Gets the avatar of a person.', 'avatar [name | @mention]'));
@@ -17,6 +17,4 @@ class AvatarCommand extends Command {
 
         message.channel.send(embed);
     }
-}
-
-module.exports = AvatarCommand;
+};

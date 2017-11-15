@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class BlurCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('blur', 'Blurs an image.', 'blur <no. pixels>'));
@@ -18,7 +18,7 @@ class BlurCommand extends Command {
             throw err;
         }
 
-        image = await this.client.utils.fetchImageEndpointFromApi('blur', { images: [image]} );
+        image = await this.client.utils.fetchFromApi('image-manipulation/blur', { images: [image], args: { amount: r }} );
 
         message.channel.send({
             files: [{
@@ -27,6 +27,4 @@ class BlurCommand extends Command {
             }]
         });
     }
-}
-
-module.exports = BlurCommand;
+};

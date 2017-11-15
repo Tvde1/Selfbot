@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class UglyCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('ugly', 'This ugly ... and basically.', 'ugly'));
@@ -15,7 +15,7 @@ class UglyCommand extends Command {
             throw err;
         }
 
-        image = await this.client.utils.fetchImageEndpointFromApi('ugly', { images: [image] });
+        image = await this.client.utils.fetchFromApi('image-manipulation/ugly', { images: [image] });
 
         message.channel.send({
             files: [{
@@ -24,6 +24,4 @@ class UglyCommand extends Command {
             }]
         });
     }
-}
-
-module.exports = UglyCommand;
+};

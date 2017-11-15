@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class BandicamCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('bandicam', 'Adds the bandicam watermark.', 'bandicam'));
@@ -15,7 +15,7 @@ class BandicamCommand extends Command {
             throw err;
         }
 
-        image = await this.client.utils.fetchImageEndpointFromApi('bandicam', { images: [image] });
+        image = await this.client.utils.fetchFromApi('image-manipulation/bandicam', { images: [image] });
         
         message.channel.send({
             files: [{
@@ -24,6 +24,4 @@ class BandicamCommand extends Command {
             }]
         });
     }
-}
-
-module.exports = BandicamCommand;
+};

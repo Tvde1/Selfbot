@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class SsCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('ss', 'Puts an image into a screenshot.', 'ss'));
@@ -15,7 +15,7 @@ class SsCommand extends Command {
             throw err;
         }
 
-        image = await this.client.utils.fetchImageEndpointFromApi('ss', { images: [image] });
+        image = await this.client.utils.fetchFromApi('image-manipulation/ss', { images: [image] });
 
         message.channel.send({
             files: [{
@@ -24,6 +24,4 @@ class SsCommand extends Command {
             }]
         });
     }
-}
-
-module.exports = SsCommand;
+};

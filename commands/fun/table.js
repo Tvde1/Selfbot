@@ -2,7 +2,7 @@ const wrap = require('wordwrap');
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class TableCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('table', 'Makes a table.', '[title]<|[text]<|[width]>>'));
@@ -27,12 +27,9 @@ class TableCommand extends Command {
         if (newArgs[1] !== undefined && newArgs[1] !== skipper) res.title = newArgs[1];
         if (newArgs[2] !== undefined && newArgs[2] !== skipper) res.width = parseInt(newArgs[2]);
 
-
         message.edit(`\`\`\`\n${prettyfy(res)}\`\`\``);
     }
-}
-
-module.exports = TableCommand;
+};
 
 // ReSharper disable once InconsistentNaming
 const _default = {
@@ -131,4 +128,4 @@ const prettyfy = (s) => {
 
     // End;
     return result;
-}
+};

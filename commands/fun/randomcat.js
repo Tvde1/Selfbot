@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class RandomcatCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('randomcat', 'Sends a random cat.', 'randomcat'));
@@ -15,6 +15,4 @@ class RandomcatCommand extends Command {
             }]
         });
     }
-}
-
-module.exports = RandomcatCommand;
+};

@@ -2,7 +2,7 @@ const discord = require('discord.js');
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class UneditCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('unedit', 'Displays all the edits for a certain message.', 'unedit <message id>'));
@@ -33,7 +33,6 @@ class UneditCommand extends Command {
             .setFooter(`By @${editedMessage.author.username}`)
             .setTimestamp(editedMessage.createdAt);
 
-
         edits = edits.splice(1);
         let i = 0;
         for (i = 0; i < message.edits.length; i++)
@@ -41,6 +40,4 @@ class UneditCommand extends Command {
 
         message.edit(message.content, {embed});
     }
-}
-
-module.exports = UneditCommand;
+};

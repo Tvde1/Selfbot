@@ -3,7 +3,7 @@ const Command     = require('../../templates/command');
 const Nraw        = require('nraw');
 const reddit      = new Nraw('Discord Selfbot by /u/Tvde1 (for emojipastas)');
 
-class EmojipastaCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('emojipasta', 'Sends an embed with emojipasta.', 'emojipasta'));
@@ -17,9 +17,7 @@ class EmojipastaCommand extends Command {
 
         message.EmbedEdit('Emojipasta', text);
     }
-}
-
-module.exports = EmojipastaCommand;
+};
 
 const getPost = async () => {
     return new Promise(resolve => {

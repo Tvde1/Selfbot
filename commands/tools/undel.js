@@ -2,7 +2,7 @@ const discord = require('discord.js');
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class UndelCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('undel', 'Sends the last deleted message from the channel/user.', 'undel <[channel id] | user [user id]>'));
@@ -53,6 +53,4 @@ class UndelCommand extends Command {
 
         message.edit(message.content, {embed});
     }
-}
-
-module.exports = UndelCommand;
+};

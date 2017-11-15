@@ -2,7 +2,7 @@ const discord = require('discord.js');
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class QuoteCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('quote', 'Sends a message as a quote.', 'quote [message id]'));
@@ -29,6 +29,4 @@ class QuoteCommand extends Command {
 
         message.edit({embed});
     }
-}
-
-module.exports = QuoteCommand;
+};

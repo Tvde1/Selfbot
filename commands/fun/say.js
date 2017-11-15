@@ -48,7 +48,7 @@ const letters = {
     ' ': '⬛'
 };
 
-class SayCommand extends Command {
+module.exports = new class extends Command {
     constructor(client) {
         super(client, new CommandInfo('say', 'Turns the text into emoji letters.', 'say [text]'));
     }
@@ -61,6 +61,4 @@ class SayCommand extends Command {
         const newText = args.join(' ').split('').map(x => letters[x.toLowerCase()] || x).join('');
         message.edit(newText);
     }
-}
-
-module.exports = SayCommand;
+};

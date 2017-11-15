@@ -5,7 +5,7 @@ require('moment-duration-format');
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class StatsCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('stats', 'Gives some useful bot statistics', 'stats'));
@@ -22,6 +22,4 @@ class StatsCommand extends Command {
 • Discord.js :: v${Discord.version}
 • Node       :: ${process.version}\`\`\``);
     }
-}
-
-module.exports = StatsCommand;
+};

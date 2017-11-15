@@ -2,7 +2,7 @@ const { MessageEmbed } = require('discord.js');
 const CommandInfo      = require('../../templates/commandInfo');
 const Command          = require('../../templates/command');
 
-class EmbedCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('embed', 'Embeds text.', 'embed [text]'));
@@ -16,6 +16,4 @@ class EmbedCommand extends Command {
 
         message.edit({ embed });
     }
-}
-
-module.exports = EmbedCommand;
+};

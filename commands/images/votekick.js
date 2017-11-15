@@ -2,7 +2,7 @@ const jimp = require('jimp');
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class VotekickCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('votekick', 'Start a votekick.', 'votekick [text]'));
@@ -30,6 +30,4 @@ class VotekickCommand extends Command {
             }]
         });
     }
-}
-
-module.exports = VotekickCommand;
+};

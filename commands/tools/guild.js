@@ -3,7 +3,7 @@ const Command     = require('../../templates/command'    );
 const discord     = require('discord.js'                 );
 const moment      = require('moment'                     );
 
-class GuildCommand extends Command {
+module.exports = new class extends Command {
     constructor(client) {
         super(client, new CommandInfo('guild', 'Displays all info about the guild.', 'guild <guild id>'));
     }
@@ -76,6 +76,4 @@ class GuildCommand extends Command {
 
         message.edit(message.content, { embed });
     }
-}
-
-module.exports = GuildCommand;
+};

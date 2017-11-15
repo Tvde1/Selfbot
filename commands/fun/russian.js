@@ -35,7 +35,7 @@ const russian = {
     }
 };
 
-class RussianCommand extends Command {
+module.exports = new class extends Command {
     constructor(client) {
         super(client, new CommandInfo('russian', 'Generates fake russian text.', 'russian [text]'));
     }
@@ -44,6 +44,4 @@ class RussianCommand extends Command {
         if (!args || args.length < 1) throw new Error('Give something to convert xd');
         message.edit(russian.generate(args.join(' ')));
     }
-}
-
-module.exports = RussianCommand;
+};

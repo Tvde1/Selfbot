@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class NinegagCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('9gag', 'Adds the 9gag watermark.', '9gag'));
@@ -15,7 +15,7 @@ class NinegagCommand extends Command {
             throw err;
         }
 
-        image = await this.client.utils.fetchImageEndpointFromApi('9gag', { images: [image] });
+        image = await this.client.utils.fetchFromApi('image-manipulation/9gag', { images: [image] });
 
         message.channel.send({
             files: [{
@@ -24,6 +24,4 @@ class NinegagCommand extends Command {
             }]
         });
     }
-}
-
-module.exports = NinegagCommand;
+};

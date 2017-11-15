@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class DesertCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('desert', 'Water? No!', 'desert'));
@@ -15,7 +15,7 @@ class DesertCommand extends Command {
             throw err;
         }
         
-        image = await this.client.utils.fetchImageEndpointFromApi('desert', { images: [image] });
+        image = await this.client.utils.fetchFromApi('image-manipulation/desert', { images: [image] });
 
         message.channel.send({
             files: [{
@@ -24,6 +24,4 @@ class DesertCommand extends Command {
             }]
         });
     }
-}
-
-module.exports = DesertCommand;
+};

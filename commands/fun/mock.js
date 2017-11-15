@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class MockCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('mock', 'Mocks an user\'s message.', 'mock [message id]'));
@@ -31,6 +31,4 @@ class MockCommand extends Command {
 
         message.edit(newMessage);
     }
-}
-
-module.exports = MockCommand;
+};

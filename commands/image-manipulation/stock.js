@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class StockCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('stock', 'Gives an image a stock image overlay.', 'stock'));
@@ -15,7 +15,7 @@ class StockCommand extends Command {
             throw err;
         }
 
-        image = await this.client.utils.fetchImageEndpointFromApi('stock', { images: [image] });
+        image = await this.client.utils.fetchFromApi('image-manipulation/stock', { images: [image] });
 
         message.channel.send({
             files:
@@ -25,6 +25,4 @@ class StockCommand extends Command {
             }]
         });
     }
-}
-
-module.exports = StockCommand;
+};

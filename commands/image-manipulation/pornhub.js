@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class PornhubCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('pornhub', 'Sets the last sent image in a pornhub video with the selected title.', 'pornhub [title]'));
@@ -20,7 +20,7 @@ class PornhubCommand extends Command {
 
         const requestOptions = { images: [image], args: { 'title': title } };        
 
-        image = await this.client.utils.fetchImageEndpointFromApi('pornhub', requestOptions);
+        image = await this.client.utils.fetchFromApi('image-manipulation/pornhub', requestOptions);
 
         message.channel.send({
             files: [
@@ -31,6 +31,4 @@ class PornhubCommand extends Command {
             ]
         });
     }
-}
-
-module.exports = PornhubCommand;
+};

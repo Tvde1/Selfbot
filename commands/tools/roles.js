@@ -2,7 +2,7 @@ const discord = require('discord.js');
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class RolesCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('roles', 'Sends a list of roles, color and users per role.', 'roles <guild id>'));
@@ -33,6 +33,4 @@ class RolesCommand extends Command {
         });
         message.edit(message.content, {embed});
     }
-}
-
-module.exports = RolesCommand;
+};

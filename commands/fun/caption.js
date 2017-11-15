@@ -2,7 +2,7 @@ const CommandInfo = require('../../templates/commandInfo');
 const captionbot  = require('../../helpers/captionbot');
 const Command     = require('../../templates/command');
 
-class CaptionCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('caption', 'Captions an image.', 'caption <image>'));
@@ -17,6 +17,4 @@ class CaptionCommand extends Command {
             message.EmbedEdit('🤖 Result:', this.client.utils.addDot(result));
         });
     }
-}
-
-module.exports = CaptionCommand;
+};

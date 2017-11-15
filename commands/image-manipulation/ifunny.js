@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class IfunnyCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('ifunny', 'Adds the ifunny logo to the last sent image.', 'ifunny'));
@@ -15,7 +15,7 @@ class IfunnyCommand extends Command {
             throw err;
         }
 
-        image = await this.client.utils.fetchImageEndpointFromApi('ifunny', { images: [image] });
+        image = await this.client.utils.fetchFromApi('image-manipulation/ifunny', { images: [image] });
 
         message.channel.send({
             files: [{
@@ -24,6 +24,4 @@ class IfunnyCommand extends Command {
             }]
         });
     }
-}
-
-module.exports = IfunnyCommand;
+};

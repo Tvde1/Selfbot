@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class BelikeCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('belike', 'Sends a belike meme with the name and gender.', 'belike [m/f] [name]'));
@@ -18,6 +18,4 @@ class BelikeCommand extends Command {
             ]
         });
     }
-}
-
-module.exports = BelikeCommand;
+};

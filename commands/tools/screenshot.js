@@ -1,51 +1,17 @@
 const CommandInfo = require('../../templates/commandInfo');
-const puppeteer   = require('puppeteer');
 const Command     = require('../../templates/command');
 
-const headers = new Map([
-    ['Accept-Language', 'en-US'],
-    ['Content-Language', 'en-US']
-]);
-
-
-class ScreenshotCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('screenshot', 'Make a screenshot of an url.', 'screenshot [url]'));
     }
 
     async run(message, args) {
-        const argsString = args.join(' ');
-        if (args === '') return new Error('You need to input an url.');
+        if (args.length === 0) return new Error('You need to input an url.');
+        const url = args.join(' ');
 
-        const url = /^https?:\/\//.test(argsString) ? argsString : `http://${argsString}`;
-
-        const browser = await puppeteer.launch({
-            args: ['--no-sandbox'],
-            ignoreHTTPSErrors: true,
-            slowMo: 250
-        });
-
-        setTimeout(() => {
-            browser.close();
-        }, 30000);
-
-        const page = await browser.newPage();
-
-        await page.setViewport({
-            width: 1366,
-            height: 768
-        });
-
-        await page.setJavaScriptEnabled(true);
-        page.setExtraHTTPHeaders(headers);
-
-        await page.goto(url, {
-            waitUntil: 'networkidle'
-        });
-        const result = await page.screenshot();
-
-        browser.close();
+        const result = await this.client.utils.fetchImageFromApi('other/screenshot', { args: { url } });
 
         message.channel.send({
             files: [{
@@ -54,6 +20,4 @@ class ScreenshotCommand extends Command {
             }]
         });
     }
-}
-
-module.exports = ScreenshotCommand;
+};

@@ -5,7 +5,7 @@ const Command     = require('../../templates/command');
  * @extends Command
  * @class
  */
-class AesCommand extends Command {
+module.exports = new class extends Command {
     constructor(client) {
         super(client, new CommandInfo('aes', 'Edits the message with ＡＥＳＴＨＥＴＩＣ text.', 'aes [text]'));
     }
@@ -22,6 +22,4 @@ class AesCommand extends Command {
 
         message.edit(phrase);
     }
-}
-
-module.exports = AesCommand;
+};

@@ -2,7 +2,7 @@ const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 const discord     = require('discord.js');
 
-class NitroCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('nitro', 'Sends a message only Nitro™ users can see.', 'nitro'));
@@ -16,6 +16,4 @@ class NitroCommand extends Command {
             .setThumbnail('https://cdn.Discordapp.com/attachments/194167041685454848/272617748876492800/be14b7a8e0090fbb48135450ff17a62f.png');
         message.edit({embed});
     }
-}
-
-module.exports = NitroCommand;
+};

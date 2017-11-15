@@ -1,7 +1,7 @@
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
-class JpegCommand extends Command {
+module.exports = new class extends Command {
 
     constructor(client) {
         super(client, new CommandInfo('jpeg', 'Needs more jpeg!', 'jpeg <% quality>'));
@@ -20,7 +20,7 @@ class JpegCommand extends Command {
             requestOptions.args.quality = args[0]; //TODO: Check for numbers
         }
 
-        image = await this.client.utils.fetchImageEndpointFromApi('jpeg', requestOptions);
+        image = await this.client.utils.fetchFromApi('image-manipulation/jpeg', requestOptions);
 
         message.channel.send({
             files: [{
@@ -29,6 +29,4 @@ class JpegCommand extends Command {
             }]
         });
     }
-}
-
-module.exports = JpegCommand;
+};

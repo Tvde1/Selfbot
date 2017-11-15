@@ -74,7 +74,7 @@ const letters = {
     ' ': ['▪', '◾', '◼', '⬛', '⚫', '▫', '◽', '◻', '⬜', '⚪']
 };
 
-class ReactCommand extends Command {
+module.exports = new class extends Command {
     constructor(client) {
         super(client, new CommandInfo('react', 'React with emoji to a message.', 'react [message id] [text]'));
     }
@@ -105,9 +105,7 @@ class ReactCommand extends Command {
         reactEmoji(emojiArray, reactMessage, 0);
         message.delete();
     }
-}
-
-module.exports = ReactCommand;
+};
 
 function reactEmoji(emojiArray, emojiMessage, index) {
     emojiMessage.react(emojiArray[index]).then(() => {
