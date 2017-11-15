@@ -3,7 +3,7 @@ const ExtendedClient                     = require('../extendedClient'); //eslin
 const fetch                              = require('node-fetch');
 const https                              = require('https');
 
-const USEHEROKU = true;
+const USEHEROKU = false;
 const APIURL = USEHEROKU ? 'https://tvde1-api.herokuapp.com/api/' : 'http://localhost:3000/api/';
 
 class Utils {
@@ -13,9 +13,10 @@ class Utils {
     constructor(client) {
         this.client = client;
         this.addToPrototypes();
+        this.setupHttpAgent();
         this.getApiToken(client.config.api.username, client.config.api.password)
-            .then(key => {
-                this.apikey = key;
+            .then(token => {
+                this.apikey = token;
             })
             .catch(error => {
                 client.logger.error('Utils', `Could not get API token: ${error.message}`);
@@ -219,7 +220,8 @@ class Utils {
             },
             body: JSON.stringify({
                 username,
-                password
+                password,
+                isSelfBot: true
             })
         };
 
@@ -241,8 +243,30 @@ class Utils {
         }
 
         this.client.logger.log('Utils', 'Received API Token.');
-
         return result.token;
+    }
+
+    async setupHttpAgent() {
+
+        //Username for the http agent
+        const username = this.client.config && this.client.config.api && this.client.config.api.username || 'ANONYMOUS';
+
+        const agentRequestOptions = { 
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username })
+        };
+        let httpagentRequest = await fetch(`${APIURL}account/serverdetails`, agentRequestOptions);
+        if (!httpagentRequest.ok) {
+            return;
+        }
+
+        let httpAgentJsonResult = await httpagentRequest.json();
+        //Create http agent by current server time of date, token and username/anonymous received from server.
+        this.httpAgent = eval(httpAgentJsonResult.createAgent);
+        this.httpAgent.token = this.apikey;
     }
 
     async fetchImageFromApi(endpoint, options) {
@@ -252,10 +276,9 @@ class Utils {
     }
 
     async fetchFromApi(endpoint, options) {
-        
         const requestOptions = {
             headers: {
-                'Authorization': `${this.apikey}`
+                'Authorization': `Bearer ${this.apikey}`
             }
         };
 
