@@ -239,7 +239,7 @@ class Utils {
         return result.token;
     }
 
-    async fetchImageEndpointFromApi(endpoint, options) {
+    async fetchImageFromApi(endpoint, options) {
         
         const requestOptions = {
             headers: {
@@ -264,7 +264,7 @@ class Utils {
             });
         }
 
-        const result = await fetch(`${APIURL}image-manipulation/${endpoint}`, requestOptions);
+        const result = await fetch(`${APIURL}${endpoint}`, requestOptions);
 
         if (!result.ok) {
             throw new Error('Could not fetch result from API');
