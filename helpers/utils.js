@@ -1,11 +1,15 @@
-const { Channel, Message, MessageEmbed } = require('discord.js'); //eslint-disable-line no-unused-vars
+const { Channel, Message, MessageEmbed } = require('discord.js');        //eslint-disable-line no-unused-vars
+const ExtendedClient                     = require('../extendedClient'); //eslint-disable-line no-unused-vars
 const fetch                              = require('node-fetch');
 const https                              = require('https');
 
 const USEHEROKU = true;
-const APIURL = USEHEROKU ? 'https://tvde1-api.herokuapp.com/api/' : 'http://localhost:3000/api/'; //eslint-disable-line no-constant-condition
+const APIURL = USEHEROKU ? 'https://tvde1-api.herokuapp.com/api/' : 'http://localhost:3000/api/';
 
 class Utils {
+    /**
+     * @param {ExtendedClient} client 
+     */
     constructor(client) {
         this.client = client;
         this.addToPrototypes();
@@ -236,12 +240,15 @@ class Utils {
             throw new Error(result.message);
         }
 
+        this.client.logger.log('Utils', 'Received API Token.');
+
         return result.token;
     }
 
     async fetchImageFromApi(endpoint, options) {
         const result = await this.fetchFromApi(endpoint, options);
-        return Buffer.from(result.image, 'base64');
+        if (!result.success) throw new Error(result.message);
+        return Buffer.from(result.result.image, 'base64');
     }
 
     async fetchFromApi(endpoint, options) {
@@ -257,7 +264,6 @@ class Utils {
                 rejectUnauthorized: false
             });
         }
-
 
         if (options) {
             requestOptions.method = 'POST';
