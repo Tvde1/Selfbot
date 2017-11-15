@@ -240,6 +240,11 @@ class Utils {
     }
 
     async fetchImageFromApi(endpoint, options) {
+        const result = await this.fetchFromApi(endpoint, options);
+        return Buffer.from(result.image, 'base64');
+    }
+
+    async fetchFromApi(endpoint, options) {
         
         const requestOptions = {
             headers: {
@@ -275,7 +280,7 @@ class Utils {
                 throw new Error(body.message);
             }
 
-            return Buffer.from(body.image, 'base64');
+            return body;
         }
     }
 }
