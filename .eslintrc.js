@@ -26,6 +26,14 @@ module.exports = {
             "error",
             "always"
         ],
-        "no-console": 0
+        "no-console": 0,
+        "no-multiple-empty-lines": [
+            "error",
+            {
+                "max": 1,
+                "maxEOF": 0,
+                "maxBOF": 0
+            }
+        ]
     }
 };
