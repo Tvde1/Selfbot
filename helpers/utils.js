@@ -3,7 +3,7 @@ const ExtendedClient                     = require('../extendedClient'); //eslin
 const fetch                              = require('node-fetch');
 const https                              = require('https');
 
-const USEHEROKU = false;
+const USEHEROKU = true;
 const APIURL = USEHEROKU ? 'https://tvde1-api.herokuapp.com/api/' : 'http://localhost:3000/api/';
 
 class Utils {
