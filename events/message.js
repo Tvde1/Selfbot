@@ -81,7 +81,7 @@ const sweepChannel = channel => {
 
     let amount = channel.messages.size - channel.cachedImages - 200;
 
-    for (const key in channel.messages.keyArray.reverse()) {
+    for (const key in channel.messages.keyArray().reverse()) {
         const message = channel.messages.get(key);
         if (message.attachments.size !== 0) {
             channel.cachedImages++;
