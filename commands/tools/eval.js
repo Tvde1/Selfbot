@@ -44,7 +44,7 @@ module.exports = class extends Command {
             try {
                 evaled = await evaled;
             } catch (err) {
-                _message.edit(`**Eval:**\n**:speech_balloon: Input:**\n\`\`\`js\n${match}\n\`\`\`\n**:white_check_mark: Promise Error:**\n\`\`\`xl\n${err}\n\`\`\`\n**Type:** \`${type}\` | **Time Taken:** \`${diff[0] * 1e9 + diff[1]}\` nanoseconds.`);
+                _message.edit(`**Eval:**\n**:speech_balloon: Input:**\n\`\`\`js\n${match}\n\`\`\`\n**:white_check_mark: Promise Error:**\n\`\`\`xl\n${err}\n\`\`\`\n**Time Taken:** \`${diff[0] * 1e9 + diff[1]}\` nanoseconds.`);
                 return;                
             }
         }
