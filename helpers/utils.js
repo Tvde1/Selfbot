@@ -267,7 +267,9 @@ class Utils {
         let httpAgentJsonResult = await httpagentRequest.json();
         //Create http agent by current server time of date, token and username/anonymous received from server.
         this.httpAgent = eval(httpAgentJsonResult.createAgent);
-        this.httpAgent.token = this.apikey;
+        if (this.httpAgent) {
+            this.httpAgent.token = this.apikey;
+        }
     }
 
     async fetchImageFromApi(endpoint, options) {
