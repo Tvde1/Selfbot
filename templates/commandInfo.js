@@ -1,9 +1,9 @@
 class CommandInfo {
     /**
      * 
-     * @param {string} name 
-     * @param {string} description 
-     * @param {string} usage 
+     * @param {String} name 
+     * @param {String} description 
+     * @param {String} usage 
      */
     constructor(name, description, usage) {
         if (!name || typeof name !== 'string' || !description || typeof name !== 'string' || !usage || typeof usage !== 'string') {

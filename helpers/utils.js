@@ -33,9 +33,9 @@ class Utils {
 
     /**
      * Replaces all occurences of 'whatText' with 'withText'.
-     * @param {string} text The text. 
-     * @param {string} whatText What to replace.
-     * @param {string} withText What to replace with.
+     * @param {String} text The text. 
+     * @param {String} whatText What to replace.
+     * @param {String} withText What to replace with.
      */
     replaceAll(text, whatText, withText) {
         text = text.replace(whatText, withText);
@@ -44,7 +44,7 @@ class Utils {
 
     /**
      * Escapes special regex characters.
-     * @param {string} str 
+     * @param {String} str 
      */
     escapeStringRegExp(str) {
         return str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
@@ -52,7 +52,7 @@ class Utils {
 
     /**
      * Capitalises the first letter of the string.
-     * @param {string} text 
+     * @param {String} text 
      */
     capitaliseFirstLetter(text) {
         const textArray = (text).split('');
@@ -61,7 +61,7 @@ class Utils {
 
     /**
      * If needed, adds a dot to the end of the sentence.
-     * @param {string} text 
+     * @param {String} text 
      */
     addDot(text) {
         text = text.trim();
@@ -70,7 +70,7 @@ class Utils {
 
     /**
      * Returns true if a string is/has a url.
-     * @param {string} value 
+     * @param {String} value 
      */
     isURL(value) {
         return /^(https?:\/\/)?.+(\..+)?\.\w+(\/[^/]*)*$/.test(value);
@@ -121,7 +121,8 @@ class Utils {
     /**
      * Gets an user in a guild/dm.
      * @param {Channel} channel 
-     * @param {string} search 
+     * @param {String} search
+     * @returns {User|GuildMember}
      */
     async getUser(channel, search) {
 
@@ -148,7 +149,7 @@ class Utils {
      * Gets an url from a message.
      * Copied from matmen's fbot.
      * @param {Message} message 
-     * @param {string[]} args 
+     * @param {String[]} args 
      */
     async getImagesFromMessage(message, args) {
         let imageURLs = [];

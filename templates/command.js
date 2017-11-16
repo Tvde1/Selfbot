@@ -26,7 +26,7 @@ class Command {
      * Runs the command.
      * @param {ExtendedClient} client The active client.
      * @param {Message} message The received message.
-     * @param {string[]} args The command's args.
+     * @param {String[]} args The command's args.
      */
     async run(message, args) { //eslint-disable-line no-unused-vars
         throw new Error('This command does not have a run function.');

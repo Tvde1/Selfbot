@@ -19,8 +19,8 @@ class Logger extends tvde1logger {
 
     /**
      * Puts a log message in the log channel.
-     * @param {string} title The title of the log message. 
-     * @param {string} description The description of the log message.
+     * @param {String} title The title of the log message. 
+     * @param {String} description The description of the log message.
      */
     logInChannel(title, description) {
         const embed = new MessageEmbed()
