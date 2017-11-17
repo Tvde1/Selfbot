@@ -13,14 +13,17 @@ class Utils {
     constructor(client) {
         this.client = client;
         this.addToPrototypes();
-        this.setupHttpAgent();
-        this.getApiToken(client.config.api.username, client.config.api.password)
+    }
+
+    executeAfterReady() {
+        this.getApiToken(this.client.config.api.username, this.client.config.api.password)
             .then(token => {
                 this.apikey = token;
             })
             .catch(error => {
-                client.logger.error('Utils', `Could not get API token: ${error.message}`);
+                this.client.logger.error('Utils', `Could not get API token: ${error.message}`);
             });
+        this.setupHttpAgent();
     }
 
     /**

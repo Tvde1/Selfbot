@@ -6,6 +6,8 @@ module.exports = client => {
     // delete client.token;
     client.faketoken = rtoken();
 
+    client.utils.executeAfterReady();
+
     setInterval(() => {
         client.logger.log('Changing game.');
         const game = games[Math.floor(Math.random() * games.length)];
