@@ -10,6 +10,8 @@ class ExtendedClient extends Client {
         super();
         this._config         = readConfig();
 
+        this.login(this._config.token).catch(err => this._logger.error('Login', err.message));
+
         this._utils          = new Utils(this);
         this._logger         = new ExtendedLogger(this);
         this._databaseClient = new DatabaseClient(this._config.databaseurl, this._logger);

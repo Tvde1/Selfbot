@@ -41,5 +41,3 @@ const client         = new ExtendedClient({
 });
 
 process.on('unhandledRejection', err => console.error(`Uncaught Promise Error: \n${err && err.stack || err}`));
-
-client.login(client.config.token).catch(err => client.logger.error('Login', err.message));
