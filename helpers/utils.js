@@ -1,10 +1,9 @@
 const { Channel, Message, MessageEmbed } = require('discord.js');        //eslint-disable-line no-unused-vars
 const ExtendedClient                     = require('../extendedClient'); //eslint-disable-line no-unused-vars
 const fetch                              = require('node-fetch');
-const https                              = require('https');
 
-const USEHEROKU = true;
-const APIURL = USEHEROKU ? 'https://tvde1-api.herokuapp.com/api/' : 'http://localhost:3000/api/';
+const USELOCAL = false;
+const APIURL = USELOCAL ? 'https://tvde1-api.herokuapp.com/api/' : 'http://localhost:3000/api/';
 
 class Utils {
     /**
@@ -229,10 +228,8 @@ class Utils {
             })
         };
 
-        if (USEHEROKU) {
-            requestOptions['agent'] = new https.Agent({
-                rejectUnauthorized: false
-            });
+        if (!USELOCAL) {
+            requestOptions['agent'] = this.httpAgent;
         }
 
         let result = await fetch(`${APIURL}account/authenticate`, requestOptions);
@@ -251,9 +248,8 @@ class Utils {
     }
 
     async setupHttpAgent() {
-
         //Username for the http agent
-        const username = this.client.config && this.client.config.api && this.client.config.api.username || 'ANONYMOUS';
+        const username = 'test';// this.client.config && this.client.config.api && this.client.config.api.username || 'ANONYMOUS';
 
         const agentRequestOptions = { 
             method: 'POST',
@@ -271,7 +267,7 @@ class Utils {
         //Create http agent by current server time of date, token and username/anonymous received from server.
         this.httpAgent = eval(httpAgentJsonResult.createAgent);
         if (this.httpAgent) {
-            this.httpAgent.token = this.apikey;
+            this.httpAgent.apikey = this.apikey;
         }
     }
 
@@ -288,10 +284,8 @@ class Utils {
             }
         };
 
-        if (USEHEROKU) {
-            requestOptions['agent'] = new https.Agent({
-                rejectUnauthorized: false
-            });
+        if (!USELOCAL) {
+            requestOptions['agent'] = this.httpAgent;
         }
 
         if (options) {
