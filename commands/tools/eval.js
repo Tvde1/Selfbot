@@ -61,7 +61,7 @@ module.exports = class extends Command {
         }
 
         if (response && response.toString().includes(this.client.token)) {
-            response = response.replace(this.client.token, this.client.randomtoken);
+            response = response.replace(this.client.token, this.client.faketoken);
         }
 
         await _message.edit(`**Eval:**\n**:speech_balloon: Input:**\n\`\`\`js\n${match}\n\`\`\`\n**:white_check_mark: ${isPromise ? 'Promise ' : ''}Output:**\n\`\`\`js\n${response}\n\`\`\`\n**Type:** \`${type}\` | **Time Taken:** \`${diff[0] * 1e9 + diff[1]}\` nanoseconds.`);
