@@ -14,8 +14,8 @@ class Utils {
         this.addToPrototypes();
     }
 
-    executeAfterReady() {
-        this.getApiToken(this.client.config.api.username, this.client.config.api.password)
+    async executeAfterReady() {
+        await this.getApiToken(this.client.config.api.username, this.client.config.api.password)
             .then(token => {
                 this.apikey = token;
             })
