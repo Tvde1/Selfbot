@@ -23,6 +23,7 @@ class Utils {
                 this.client.logger.error('Utils', `Could not get API token: ${error.message}`);
             });
         this.setupHttpAgent();
+        setInterval(sweepOldMessages, 1000 * 60);
     }
 
     /**
@@ -313,5 +314,39 @@ class Utils {
         }
     }
 }
+
+const sweepOldMessages = (client) => {
+    const lifetimeMs = 1000 * (1000 * 60 * 60);
+    const now = Date.now();
+
+    for (const channel of client.channels.values()) {
+        if (!channel.messages) continue;
+  
+        let amount = channel.messages.size - channel.cachedImages - 200;
+ 
+        if (!channel.cachedImages) {
+            channel.cachedImages = 0;
+        }
+
+        for (const message of Array.from(channel.messages.values()).reverse()) {
+            if (message.attachments.size !== 0) {
+                channel.cachedImages++;
+                continue;
+            }
+
+            if (now - (message.editedTimestamp || message.createdTimestamp) > lifetimeMs) {
+                channel.messages.delete(message.id);
+                amount++;
+            } else {
+                if (amount > 0) {
+                    channel.messages.delete(message.id);
+                    amount++;
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+};
 
 module.exports = Utils;

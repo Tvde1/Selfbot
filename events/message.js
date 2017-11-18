@@ -17,9 +17,6 @@ const keys = [
  * @param {Message} message
  */
 module.exports = async (client, message) => {
-
-    sweepChannel(message.channel);
-
     if (message.mentions.has(client.user)) {
         if (!message.content) {
             client.logger.logMention(message);
@@ -63,34 +60,5 @@ const editEmoji = (client, message) => {
             message.channel.send({files:[emoji]});
             client.logger.log('MessageEvent', 'Swapped emoji for image.');
         });
-    }
-};
-
-/**
- * 
- * @param {DMChannel|TextChannel} channel 
- */
-const sweepChannel = channel => {
-    if (!channel.cachedImages) {
-        channel.cachedImages = 0;
-    }
-    
-    let amount = channel.messages.size - channel.cachedImages - 200;
-    if (amount <= 0) {
-        return;
-    }
-
-    for (const key of channel.messages.keyArray().reverse()) {
-        const message = channel.messages.get(key);
-        if (message.attachments.size !== 0) {
-            channel.cachedImages++;
-            continue;
-        }
-        message.channel.delete(key);
-        amount--;
-
-        if (amount === 0) {
-            return;
-        }
     }
 };
