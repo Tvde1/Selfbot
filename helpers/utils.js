@@ -3,7 +3,7 @@ const ExtendedClient                     = require('../extendedClient'); //eslin
 const fetch                              = require('node-fetch');
 
 const USELOCAL = false;
-const APIURL = USELOCAL ? 'https://tvde1-api.herokuapp.com/api/' : 'http://localhost:3000/api/';
+const APIURL = USELOCAL ? 'http://localhost:3000/api/' : 'https://tvde1-api.herokuapp.com/api/';
 
 class Utils {
     /**
