@@ -23,7 +23,7 @@ class Utils {
                 this.client.logger.error('Utils', `Could not get API token: ${error.message}`);
             });
         this.setupHttpAgent();
-        setInterval(sweepOldMessages, 1000 * 60);
+        setInterval(() => sweepOldMessages(this.client), 1000 * 60);
     }
 
     /**
