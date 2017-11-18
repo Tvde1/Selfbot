@@ -17,7 +17,11 @@ module.exports = class extends Command {
 
         const requestOptions = { images: [image] };
         if (args[0]) {
-            requestOptions.args.quality = args[0]; //TODO: Check for numbers
+            const quality = parseInt(args[0]);
+            if (!quality) {
+                throw new Error('Your quality argument is not a number.');
+            }
+            requestOptions.args = { quality };
         }
 
         image = await this.client.utils.fetchImageFromApi('image-manipulation/jpeg', requestOptions);

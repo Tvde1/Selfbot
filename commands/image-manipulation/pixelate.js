@@ -17,7 +17,11 @@ module.exports = class extends Command {
 
         const requestOptions = { images: [image] };
         if (args[0]) {
-            requestOptions.args.size = args[0]; //TODO: Maybe check for int.
+            const size = parseInt(args[0]);
+            if (!size) {
+                throw new Error('Your quality argument is not a number.');
+            }
+            requestOptions.args = { size };
         }
 
         image = await this.client.utils.fetchImageFromApi('image-manipulation/pixelate', requestOptions);

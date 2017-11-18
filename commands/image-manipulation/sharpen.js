@@ -17,7 +17,11 @@ module.exports = class extends Command {
 
         const requestOptions = { images: [image] };
         if (args[0]) {
-            requestOptions.args.amount = args[0]; //TODO: Check int
+            const amount = parseInt(args[0]);
+            if (!amount) {
+                throw new Error('Your amount argument is not a number');
+            }
+            requestOptions.args = { amount };
         }
         
         image = await this.client.utils.fetchImageFromApi('image-manipulation/sharpen', requestOptions);
