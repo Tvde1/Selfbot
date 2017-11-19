@@ -17,6 +17,7 @@ class Utils {
     async executeAfterReady() {
         await this.getApiToken(this.client.config.api.username, this.client.config.api.password)
             .then(token => {
+                this.client.logger.log('Utils', 'Received API Token.');
                 this.apikey = token;
             })
             .catch(error => {
@@ -244,7 +245,6 @@ class Utils {
             throw new Error(result.message);
         }
 
-        this.client.logger.log('Utils', 'Received API Token.');
         return result.result.token;
     }
 
