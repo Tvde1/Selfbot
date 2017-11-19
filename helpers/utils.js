@@ -245,7 +245,7 @@ class Utils {
         }
 
         this.client.logger.log('Utils', 'Received API Token.');
-        return result.token;
+        return result.result.token;
     }
 
     async setupHttpAgent() {
