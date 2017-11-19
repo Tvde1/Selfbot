@@ -18,7 +18,7 @@ const keys = [
  */
 module.exports = async (client, message) => {
     if (message.mentions.has(client.user)) {
-        if (!message.content === '') {
+        if (message.content !== '' && !message.content) {
             client.logger.logMention(message);
         }
     }
