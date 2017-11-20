@@ -24,7 +24,7 @@ module.exports = class extends Command {
             requestOptions.args = { size };
         }
 
-        image = await this.client.utils.fetchImageFromApi('image-manipulation/pixelate', requestOptions);
+        image = await this.client.apiClient.fetchImageFromApi('image-manipulation/pixelate', requestOptions);
 
         message.channel.send({
             files: [{

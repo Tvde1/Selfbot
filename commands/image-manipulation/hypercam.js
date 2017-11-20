@@ -15,7 +15,7 @@ module.exports = class extends Command {
             throw err;
         }
 
-        image = await this.client.utils.fetchImageFromApi('image-manipulation/hypercam', { images: [image] });
+        image = await this.client.apiClient.fetchImageFromApi('image-manipulation/hypercam', { images: [image] });
 
         message.channel.send({
             files: [{

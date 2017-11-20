@@ -12,7 +12,7 @@ module.exports = class extends Command {
         if (!image) throw new Error('Could not find an image in the last 100 messages.');
 
         try {
-            const result = await this.client.utils.fetchFromApi('other/captionbot', { images: [image] });
+            const result = await this.client.apiClient.fetchFromApi('other/captionbot', { images: [image] });
             message.EmbedEdit('🤖 Result:', this.client.utils.addDot(result.result));
         } catch (err) {
             message.fail();

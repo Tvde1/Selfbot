@@ -7,6 +7,7 @@ module.exports = client => {
     client.faketoken = rtoken();
 
     client.utils.executeAfterReady();
+    client.apiClient.executeAfterReady();
 
     setInterval(() => {
         client.logger.log('Changing game.');

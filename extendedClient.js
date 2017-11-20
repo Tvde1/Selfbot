@@ -2,6 +2,7 @@ const CommandHandler = require('./helpers/commandHandler.js');
 const ExtendedLogger = require('./helpers/extendedLogger');
 const EventHandler   = require('./helpers/eventHandler');
 const { Client }     = require('discord.js');
+const ApiClient      = require('./helpers/apiClient');
 const Utils          = require('./helpers/utils');
 
 class ExtendedClient extends Client {
@@ -13,6 +14,7 @@ class ExtendedClient extends Client {
 
         this._utils          = new Utils(this);
         this._logger         = new ExtendedLogger(this);
+        this._apiClient      = new ApiClient(this);
         const eventLoader    = new EventHandler(this);
         this._commandHandler = new CommandHandler(this);
 
@@ -46,6 +48,13 @@ class ExtendedClient extends Client {
      */
     get commandHandler() {
         return this._commandHandler;
+    }
+
+    /**
+     * @returns {ApiClient}
+     */
+    get apiClient() {
+        return this._apiClient;
     }
 }
 

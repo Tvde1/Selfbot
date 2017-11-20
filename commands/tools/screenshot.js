@@ -11,7 +11,7 @@ module.exports = class extends Command {
         if (args.length === 0) return new Error('You need to input an url.');
         const url = args.join(' ');
 
-        const result = await this.client.utils.fetchImageFromApi('other/screenshot', { args: { url } });
+        const result = await this.client.apiClient.fetchImageFromApi('other/screenshot', { args: { url } });
 
         message.channel.send({
             files: [{

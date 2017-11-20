@@ -15,6 +15,7 @@
     },
     "api": {
         "username": "",
-        "password": ""
+        "password": "",
+        "url": "https://tvde1-api.herokuapp.com/api/"
     }
 }

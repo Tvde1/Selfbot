@@ -24,7 +24,7 @@ module.exports = class extends Command {
             requestOptions.args = { amount };
         }
         
-        image = await this.client.utils.fetchImageFromApi('image-manipulation/sharpen', requestOptions);
+        image = await this.client.apiClient.fetchImageFromApi('image-manipulation/sharpen', requestOptions);
 
         message.channel.send({
             files: [{
