@@ -9,6 +9,13 @@ module.exports = class extends Command {
     }
 
     async run(message, args) {
+
+        throw new Error('Not implemented yet.');
+
+        //I once started this and never finished it.
+
+        /* eslint-disable no-unreachable*/ 
+
         const user = message.author.username;
 
         const title = args.join(' ');
@@ -16,7 +23,7 @@ module.exports = class extends Command {
 
         let image = await jimp.read('./files/votekick/votekick.png');
         const verdana = await jimp.loadFont('./files/votekick/Verdana.fnt');
-        const tf2secondary = await jimp.loadFont('./files/votekick/TF2secondary.fnt');
+        const tf2secondary = await jimp.loadFont('./files/votekick/TF2secondary.fnt'); //eslint-disable-line no-unused-vars
 
         console.log('test');
         image.print(verdana, 10, 5, `${user} wants to call a vote:`, 1000, 1000);
