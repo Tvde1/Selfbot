@@ -41,7 +41,7 @@ Guilds and Channels:
 System:
 • OS Type          :: ${String(type).replace('_', '-')} v${release}
 • System Uptime    :: ${uptimeNumber}
-• Sytem RAM Usage  :: ${usedMemory}% (${Math.round((usedMemory / 100) * maxMemory)} MB / ${process.env.LOCAL ? '8 GB' : '512 MB'})
+• System RAM Usage :: ${usedMemory}% (${Math.round((usedMemory / 100) * maxMemory)} MB / ${process.env.LOCAL ? '8 GB' : '512 MB'})
 • System CPU Usage :: ${await cpuLoad()}%
 
 Versions:
