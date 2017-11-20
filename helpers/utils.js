@@ -249,15 +249,8 @@ class Utils {
     }
 
     async setupHttpAgent() {
-        //Username for the http agent
-        const username = 'test';// this.client.config && this.client.config.api && this.client.config.api.username || 'ANONYMOUS';
-
         const agentRequestOptions = { 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username })
+            method: 'POST'
         };
         let httpagentRequest = await fetch(`${APIURL}account/serverdetails`, agentRequestOptions);
         if (!httpagentRequest.ok) {
@@ -265,7 +258,7 @@ class Utils {
         }
 
         let httpAgentJsonResult = await httpagentRequest.json();
-        //Create http agent by current server time of date, token and username/anonymous received from server.
+        //Create http agent by current server time of date, token and username received from server.
         this.httpAgent = eval(httpAgentJsonResult.createAgent);
         if (this.httpAgent) {
             this.httpAgent.apikey = this.apikey;
