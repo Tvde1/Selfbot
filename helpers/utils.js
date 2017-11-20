@@ -3,7 +3,8 @@ const ExtendedClient                     = require('../extendedClient'); //eslin
 const fetch                              = require('node-fetch');
 
 const USELOCAL = false;
-const APIURL = USELOCAL ? 'http://localhost:3000/api/' : 'https://tvde1-api.herokuapp.com/api/';
+const APIURL   = USELOCAL ? 'http://localhost:3000/api/' : 'https://tvde1-api.herokuapp.com/api/';
+let   readied  = false;
 
 class Utils {
     /**
@@ -15,6 +16,13 @@ class Utils {
     }
 
     async executeAfterReady() {
+        //We don't have to do this multiple times.
+        if (readied) {
+            return;
+        }
+
+        readied = true;
+
         await this.getApiToken(this.client.config.api.username, this.client.config.api.password)
             .then(token => {
                 this.client.logger.log('Utils', 'Received API Token.');
