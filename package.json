@@ -31,6 +31,8 @@
     "node-fetch": "^1.7.3",
     "nraw": "^0.2.5",
     "object-autocorrect": "^1.0.2",
+    "os": "^0.1.1",
+    "os-toolbox": "^0.2.9",
     "request-promise": "^4.2.2",
     "tvde1logger": "^1.0.7",
     "url-exists": "^1.0.3",
