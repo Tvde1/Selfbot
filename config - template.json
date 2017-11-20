@@ -3,7 +3,6 @@
     "password": "",
     "prefix": "",
     "imageurl": "",
-    "databaseurl": "",
     "webhooks": {
         "mentions": {
             "id": "",

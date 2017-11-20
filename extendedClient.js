@@ -1,6 +1,5 @@
 const CommandHandler = require('./helpers/commandHandler.js');
 const ExtendedLogger = require('./helpers/extendedLogger');
-const DatabaseClient = require('./helpers/databaseClient');
 const EventHandler   = require('./helpers/eventHandler');
 const { Client }     = require('discord.js');
 const Utils          = require('./helpers/utils');
@@ -14,7 +13,6 @@ class ExtendedClient extends Client {
 
         this._utils          = new Utils(this);
         this._logger         = new ExtendedLogger(this);
-        this._databaseClient = new DatabaseClient(this._config.databaseurl, this._logger);
         const eventLoader    = new EventHandler(this);
         this._commandHandler = new CommandHandler(this);
 
@@ -48,13 +46,6 @@ class ExtendedClient extends Client {
      */
     get commandHandler() {
         return this._commandHandler;
-    }
-
-    /**
-     * @returns {DatabaseClient}
-     */
-    get databaseClient() {
-        return this._databaseClient;
     }
 }
 

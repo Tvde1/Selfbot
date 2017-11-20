@@ -1,6 +1,5 @@
 const ObjectAutocorrect = require('object-autocorrect'         );
 const CommandInfo       = require('../../templates/commandInfo');
-const mongoose          = require('mongoose'                   ); //eslint-disable-line no-unused-vars
 const Command           = require('../../templates/command'    );
 const discord           = require('discord.js'                 ); //eslint-disable-line no-unused-vars
 const util              = require('util'                       );
