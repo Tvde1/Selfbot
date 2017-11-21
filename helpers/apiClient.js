@@ -20,11 +20,11 @@ class ApiClient {
 
         await this.getApiToken(this.client.config.api.username, this.client.config.api.password)
             .then(token => {
-                this.client.logger.log('Utils', 'Received API Token.');
+                this.client.logger.log('ApiClient', 'Received API Token.');
                 this.apikey = token;
             })
             .catch(error => {
-                this.client.logger.error('Utils', `Could not get API token: ${error.message}`);
+                this.client.logger.error('ApiClient', `Could not get API token: ${error.message}`);
             });
         this.setupHttpAgent();
     }
