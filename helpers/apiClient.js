@@ -5,7 +5,7 @@ let readied = false;
 class ApiClient {
     constructor(client) {
         //Comment/Uncomment the next line:
-        client.config.api.url = client.config.api.localurl;
+        // client.config.api.url = client.config.api.localurl;
         
         this.client = client;
     }
