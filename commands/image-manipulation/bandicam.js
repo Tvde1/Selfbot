@@ -20,7 +20,7 @@ module.exports = class extends Command {
         message.channel.send({
             files: [{
                 attachment: image,
-                name: '9gag.png'
+                name: 'bandicam.png'
             }]
         });
     }
