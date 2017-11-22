@@ -1,38 +1,38 @@
 module.exports = {
-    "env": {
-        "es6": true,
-        "node": true
+    'env': {
+        'es6': true,
+        'node': true
     },
-    "extends": "eslint:recommended",
-    "parserOptions": {
-        "sourceType": "module",
-        "ecmaVersion": 2017
+    'extends': 'eslint:recommended',
+    'parserOptions': {
+        'sourceType': 'module',
+        'ecmaVersion': 2017
     },
-    "rules": {
-        "indent": [
-            "error",
+    'rules': {
+        'indent': [
+            'error',
             4,
-            { "SwitchCase": 1 }
+            { 'SwitchCase': 1 }
         ],
-        "linebreak-style": [
-            "error",
-            "windows"
+        'linebreak-style': [
+            'error',
+            'windows'
         ],
-        "quotes": [
-            "error",
-            "single"
+        'quotes': [
+            'error',
+            'single'
         ],
-        "semi": [
-            "error",
-            "always"
+        'semi': [
+            'error',
+            'always'
         ],
-        "no-console": 0,
-        "no-multiple-empty-lines": [
-            "error",
+        'no-console': 0,
+        'no-multiple-empty-lines': [
+            'error',
             {
-                "max": 1,
-                "maxEOF": 0,
-                "maxBOF": 0
+                'max': 1,
+                'maxEOF': 0,
+                'maxBOF': 0
             }
         ]
     }
