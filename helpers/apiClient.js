@@ -72,7 +72,7 @@ class ApiClient {
             let httpAgentJsonResult = await httpagentRequest.json();
             
             //Create http agent by current server time of date, token and username received from server.
-            this.httpAgent = eval(httpAgentJsonResult.createAgent);
+            this.httpAgent = eval(httpAgentJsonResult.createAgent); //NOSONAR
             if (this.httpAgent) {
                 this.httpAgent.apikey = this.apikey;
             }

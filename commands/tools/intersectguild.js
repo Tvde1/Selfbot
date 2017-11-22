@@ -12,7 +12,7 @@ module.exports = class extends Command {
         let guild1;
         let guild2;
 
-        if (args.length < 1) throw new Error('Please input a guild ID.');
+        if (args.length === 0) throw new Error('Please input a guild ID.');
 
         if (args.length === 1) {
             guild1 = this.client.guilds.get(args[0]);
@@ -27,7 +27,7 @@ module.exports = class extends Command {
             if (!guild2) throw new Error('Your Guild 2 ID is not correct.');
         }
 
-        await guild1.members.fetch();
+        await guild1.members.fetch(); //NOSONAR
         await guild2.members.fetch();
         let guild1Ids = guild1.members.map(x => x.user.id);
         let guild2Ids = guild2.members.map(x => x.user.id);

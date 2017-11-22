@@ -16,10 +16,14 @@ module.exports = class extends Command {
 
         /* eslint-disable no-unreachable*/ 
 
+        //CHECKSTYLE:OFF
+
         const user = message.author.username;
 
+        //CHECKSTYLE:ON
+
         const title = args.join(' ');
-        if (title === '') throw new Error('Give it a title!');
+        if (title === '') throw new Error('Give it a title!'); //NOSONAR
 
         let image = await jimp.read('./files/votekick/votekick.png');
         const verdana = await jimp.loadFont('./files/votekick/Verdana.fnt');

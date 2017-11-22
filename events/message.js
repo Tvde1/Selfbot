@@ -54,7 +54,7 @@ const editEmoji = (client, message) => {
     const extentionarray = ['.png', '.gif', '.jpg', '.jpeg'];
     for (const index of extentionarray) {
         const emoji = client.config.imageUrl + solution[1] + index;
-        urlExists(emoji, (err, exists) => {
+        urlExists(emoji, (err, exists) => { //NOSONAR
             if (!exists) return;
             message.delete();
             message.channel.send({files:[emoji]});

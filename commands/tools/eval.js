@@ -18,12 +18,12 @@ module.exports = class extends Command {
             match = `(async()=>{${args.join(' ')}})()`;
         }
 
-        const message = new ObjectAutocorrect(_message   ); //eslint-disable-line no-unused-vars
-        const client  = new ObjectAutocorrect(this.client); //eslint-disable-line no-unused-vars
+        const message = new ObjectAutocorrect(_message   ); //eslint-disable-line no-unused-vars //NOSONAR
+        const client  = new ObjectAutocorrect(this.client); //eslint-disable-line no-unused-vars //NOSONAR
 
         let evaled, diff, start;
         try {
-            evaled = eval(match);
+            evaled = eval(match); //NOSONAR
             diff = process.hrtime(start);
         } catch (error) {
             diff = process.hrtime(start);
