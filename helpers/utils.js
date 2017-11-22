@@ -95,7 +95,7 @@ class Utils {
      * The selected color for embeds.
      */
     get embedColor() {
-        return 'RANDOM';
+        return 'BLURPLE';
     }
     
     /**
