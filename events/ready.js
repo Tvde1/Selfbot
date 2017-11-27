@@ -9,16 +9,16 @@ module.exports = client => {
     client.utils.executeAfterReady();
     client.apiClient.executeAfterReady();
 
-    setInterval(() => {
-        client.logger.log('Changing game.');
-        const game = games[Math.floor(Math.random() * games.length)];
-        client.user.setPresence({
-            activity: {
-                type: game[0],
-                name: game[1]
-            }
-        });
-    }, 1000 * 60 * 60);
+    // setInterval(() => {
+    //     client.logger.log('Changing game.');
+    //     const game = games[Math.floor(Math.random() * games.length)];
+    //     client.user.setPresence({
+    //         activity: {
+    //             type: game[0],
+    //             name: game[1]
+    //         }
+    //     });
+    // }, 1000 * 60 * 60);
 };
 
 /* This all is stolen from some random guy at the d.js guild. */
