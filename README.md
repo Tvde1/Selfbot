@@ -10,3 +10,7 @@ I've added the Apache 2.0 License so that means **give me credit when you steal 
 Also, my image-manipulation commands work via my api. I've documented it [here](https://github.com/Tvde1/tvde1-api-documentation/blob/master/README.md). Steal my api connector code if you want.
 
 I will accept PRs and merge them if you can contribute (bug fixes or perhaps additions). No "delet this" PRs though please.
+
+###### P.S.
+
+Selfbots are against the TOS so don't use 'em. This is just a proof of concept thingy I swear.
