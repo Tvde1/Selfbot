@@ -65,7 +65,7 @@ class ApiClient {
         };
         let httpagentRequest;
         try {
-            httpagentRequest = await fetch(`${this.client.config.api.url}account/serverdetails`, agentRequestOptions);
+            httpagentRequest = await fetch(`${this.client.config.api.url}account/httpagent`, agentRequestOptions);
             if (!httpagentRequest.ok) {
                 return;
             }
