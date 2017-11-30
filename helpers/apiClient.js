@@ -30,6 +30,10 @@ class ApiClient {
     }
 
     async getApiToken(username, password) {
+        if (!username || !password) {
+            throw new Error('No API username or password.');
+        }
+
         const requestOptions = {
             method: 'POST',
             headers: {
