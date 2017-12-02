@@ -15,11 +15,14 @@ module.exports = class extends Command {
         
         let image = await this.client.apiClient.fetchImageFromApi('image-manipulation/vote', { args: { username, text }} );
 
-        message.channel.send({
+        const newM = await message.channel.send({
             files: [{
                 attachment: image,
                 name: 'vote.png'
             }]
         });
+
+        await newM.react('✅');
+        await newM.react('❌');
     }   
 };
