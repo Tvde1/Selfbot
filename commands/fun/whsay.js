@@ -9,12 +9,16 @@ module.exports = class extends Command {
     }
 
     async run(message, args) {
-        if (!message.channel.permissionsFor(this.client.user).has('MANAGE_WEBHOOKS')) throw new Error('Missing Permissions');
+        if (!message.channel.permissionsFor(this.client.user).has('MANAGE_WEBHOOKS')) {
+            throw new Error('Missing Permissions');
+        }
 
         const [name, ...text] = args;
 
-        let user = message.mentions.members.first() || await this.client.utils.getUser(message.channel, name);
-        if (!user) throw new Error('User not found.');
+        const user = message.mentions.members.first() || await this.client.utils.getUser(message.channel, name);
+        if (!user) {
+            throw new Error('User not found.');
+        }
 
         let webhook;
 

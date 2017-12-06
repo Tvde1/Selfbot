@@ -18,19 +18,17 @@ module.exports = class extends Command {
         if (args.length === 0) {
             throw new Error('Missing text arguments.');
         }
-        let text = args.join(' ');
+        const text = args.join(' ');
 
         const requestOptions = { images: [image], args: { text } };        
 
         image = await this.client.apiClient.fetchImageFromApi('image-manipulation/reminder', requestOptions);
 
         message.channel.send({
-            files: [
-                {
-                    attachment: image,
-                    name: 'reminder.png'
-                }
-            ]
+            files: [{
+                attachment: image,
+                name: 'reminder.png'
+            }]
         });
     }
 };

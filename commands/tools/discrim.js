@@ -8,14 +8,13 @@ module.exports = class extends Command {
     }
 
     async run(message, args) {
-        let discrim = this.client.user.discriminator;
-        if (args.length > 0) discrim = args[0];
+        const discrim = args[0] || this.client.user.discriminator;
 
-        let users = [];
+        const users = [];
         for (const user of this.client.users.values())
-            if (user.discriminator === discrim && !users.includes(user.tag)) users.push(user.tag);
+        {if (user.discriminator === discrim && !users.includes(user.tag)) {users.push(user.tag);}}
 
-        if (users.length === 0) return message.EmbedEdit('Found no users.', `Are you sure ${discrim} is a valid discriminator?\nFound 0 users.`);
+        if (users.length === 0) {return message.EmbedEdit('Found no users.', `Are you sure ${discrim} is a valid discriminator?\nFound 0 users.`);}
         message.EmbedEdit(`Found ${users.length} users with the discriminator ${discrim}.`, `They are:\n\n${users.join('\n')}`);
     }
 };

@@ -9,7 +9,9 @@ module.exports = class extends Command {
 
     async run(message, args) {
         const title = args.join(' ');
-        if (title === '') throw new Error('You need to give it a title.');
+        if (title === '') {
+            throw new Error('You need to give it a title.');
+        }
 
         let image;
         try {
@@ -23,12 +25,10 @@ module.exports = class extends Command {
         image = await this.client.apiClient.fetchImageFromApi('image-manipulation/pornhub', requestOptions);
 
         message.channel.send({
-            files: [
-                {
-                    attachment: image,
-                    name: 'pornhub.png'
-                }
-            ]
+            files: [{
+                attachment: image,
+                name: 'pornhub.png'
+            }]
         });
     }
 };

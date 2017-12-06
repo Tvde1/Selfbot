@@ -80,17 +80,23 @@ module.exports = class extends Command {
     }
 
     async run(message, args) {
-        if (args.length < 2) throw new Error(`The syntax is like this: \`${this._client.config.prefix}react [message id] [react text]\`.`);
+        if (args.length < 2) {
+            throw new Error(`The syntax is like this: \`${this._client.config.prefix}react [message id] [react text]\`.`);
+        }
         
-        let reactMessage = await message.channel.messages.fetch(args[0]);
-        if (!reactMessage) throw new Error('Could not find the message specified.');
+        const reactMessage = await message.channel.messages.fetch(args[0]);
+        if (!reactMessage) {
+            throw new Error('Could not find the message specified.');
+        }
         
         let text = args.splice(1).join(' ');
-        let emojiArray = [];
+        const emojiArray = [];
         
         while (text.length > 0) {
-            for (let letter in letters) {
-                if (!letters.hasOwnProperty(letter)) continue;
+            for (const letter in letters) {
+                if (!letters.hasOwnProperty(letter)) {
+                    continue;
+                }
                 if (text.startsWith(letter)) {
                     for (let j = 0; j < letters[letter].length; j++) {
                         if (!emojiArray.includes(letters[letter][j])) {
@@ -109,7 +115,9 @@ module.exports = class extends Command {
 
 function reactEmoji(emojiArray, emojiMessage, index) {
     emojiMessage.react(emojiArray[index]).then(() => {
-        if (index !== emojiArray.length - 1) reactEmoji(emojiArray, emojiMessage, index + 1);
+        if (index !== emojiArray.length - 1) {
+            reactEmoji(emojiArray, emojiMessage, index + 1);
+        }
     }).catch(() => {
         console.log(emojiArray);
     });

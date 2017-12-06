@@ -9,7 +9,9 @@ module.exports = class extends Command {
 
     async run(message, args) {
         let username = this.client.utils.CapitaliseFirstLetter(args.join(' '));
-        if (message.mentions.users.size > 0) username = message.mentions.users.first().username;
-        message.EmbedEdit('ℹ IP Finder.', `${username}'s IP is: **${Math.floor((Math.random() * 126) + 1)}.${Math.floor((Math.random() * 255) + 1)}.${+Math.floor((Math.random() * 255) + 1)}.${+Math.floor((Math.random() * 255) + 1)}**.`);
+        if (message.mentions.users.size > 0) {
+            username = message.mentions.users.first().username;
+        }
+        message.EmbedEdit('ℹ IP Finder.', `${username}'s IP is: **${Math.floor(Math.random() * 126 + 1)}.${Math.floor(Math.random() * 255 + 1)}.${+Math.floor(Math.random() * 255 + 1)}.${+Math.floor(Math.random() * 255 + 1)}**.`);
     }
 };

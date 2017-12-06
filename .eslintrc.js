@@ -34,6 +34,19 @@ module.exports = {
                 'maxEOF': 0,
                 'maxBOF': 0
             }
+        ],
+        'prefer-const': [
+            'error'
+        ],
+        'no-extra-parens': [
+            'error'
+        ],
+        'arrow-parens': [
+            'error',
+            'as-needed'
+        ],
+        'curly': [
+            'error'
         ]
     }
 };

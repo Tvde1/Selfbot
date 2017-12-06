@@ -46,7 +46,7 @@ class Utils {
      * @param {String} text 
      */
     capitaliseFirstLetter(text) {
-        const textArray = (text).split('');
+        const textArray = text.split('');
         return textArray.shift().toUpperCase() + textArray.join('');
     }
 
@@ -124,13 +124,21 @@ class Utils {
                 return channel.guild.members.find(x => x.displayName.toLowerCase().includes(search) || x.user.username.toLowerCase().includes(search));
             }
             case 'dm': {
-                if (channel.recipient.username.toLowerCase().includes(search)) return channel.recipient;
-                else if (this.client.user.username.toLowerCase().includes(search)) return this.client.user;
+                if (channel.recipient.username.toLowerCase().includes(search)) {
+                    return channel.recipient;
+                }
+                else if (this.client.user.username.toLowerCase().includes(search)) {
+                    return this.client.user;
+                }
                 return null;
             }
             case 'group': {
-                if (channel.recipients.toLowerCase().includes(search)) return channel.recipients.find(x => x.username.toLowerCase().includes(search));
-                else if (this.client.user.username.toLowerCase().includes(search)) return this.client.user;
+                if (channel.recipients.toLowerCase().includes(search)) {
+                    return channel.recipients.find(x => x.username.toLowerCase().includes(search));
+                }
+                else if (this.client.user.username.toLowerCase().includes(search)) {
+                    return this.client.user;
+                }
                 return null;
             }
         }
@@ -145,10 +153,10 @@ class Utils {
     async getImagesFromMessage(message, args) {
         let imageURLs = [];
     
-        for (const attachment of message.attachments.values()) imageURLs.push(attachment.url);
-        if (args[0] !== '^')
+        for (const attachment of message.attachments.values()) {imageURLs.push(attachment.url);}
+        if (args[0] !== '^') {
             for (const value of args) {
-                if (this.isURL(value)) imageURLs.push(value);
+                if (this.isURL(value)) {imageURLs.push(value);}
     
                 if (/^<:.+:\d+>$/.test(value)) {
                     imageURLs.push(`https://cdn.discordapp.com/emojis/${value.match(/^<:.+:(\d+)>$/)[1]}.png`);
@@ -158,6 +166,7 @@ class Utils {
                     imageURLs.push(`https://cdn.discordapp.com/emojis/${value.match(/^:(.+):$/)[1]}.png`);
                 }
             }
+        }
     
         if (imageURLs.length === 0) {
             const messages = await message.channel.messages.fetch({
@@ -168,15 +177,19 @@ class Utils {
             const messageEmbeds = messages.filter(m => m.embeds.length > 0 && m.embeds[0].type === 'image');
             let images = [];
     
-            for (const messageAttachment of messageAttachments.array()) images.push({
-                url: messageAttachment.attachments.first().url,
-                createdTimestamp: messageAttachment.createdTimestamp
-            });
+            for (const messageAttachment of messageAttachments.array()) {
+                images.push({
+                    url: messageAttachment.attachments.first().url,
+                    createdTimestamp: messageAttachment.createdTimestamp
+                });
+            }
     
-            for (const messageEmbed of messageEmbeds.array()) images.push({
-                url: messageEmbed.embeds[0].url,
-                createdTimestamp: messageEmbed.createdTimestamp
-            });
+            for (const messageEmbed of messageEmbeds.array()) {
+                images.push({
+                    url: messageEmbed.embeds[0].url,
+                    createdTimestamp: messageEmbed.createdTimestamp
+                });
+            }
     
             images = images.sort((m1, m2) => m2.createdTimestamp - m1.createdTimestamp);
     
@@ -205,12 +218,14 @@ class Utils {
     }
 }
 
-const sweepOldMessages = (client) => {
+const sweepOldMessages = client => {
     const lifetimeMs = 1000 * (1000 * 60 * 60);
     const now = Date.now();
 
     for (const channel of client.channels.values()) {
-        if (!channel.messages) continue;
+        if (!channel.messages) {
+            continue;
+        }
   
         let amount = channel.messages.size - channel.cachedImages - 200;
  

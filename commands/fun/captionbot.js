@@ -8,8 +8,10 @@ module.exports = class extends Command {
     }
 
     async run(message, args) {
-        let image = await this.client.utils.getImagesFromMessage(message, args);
-        if (!image) throw new Error('Could not find an image in the last 100 messages.');
+        const image = await this.client.utils.getImagesFromMessage(message, args);
+        if (!image) {
+            throw new Error('Could not find an image in the last 100 messages.');
+        }
 
         try {
             const result = await this.client.apiClient.fetchFromApi('other/captionbot', { images: [image] });

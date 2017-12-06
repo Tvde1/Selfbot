@@ -28,7 +28,7 @@ Bot:
 • Users            :: ${this.client.users.size.toLocaleString()}
 • Heartbeat Ping   :: ${Math.round(this.client.ping)}ms
 • Message Ping     :: ${Math.round(message.editedTimestamp - message.createdTimestamp)}ms
-• Bot RAM Usage    :: ${Math.round((process.memoryUsage().heapUsed / 1024 / 1024 * 100) / 100)} MB
+• Bot RAM Usage    :: ${Math.round(process.memoryUsage().heapUsed / 1024 / 1024 * 100 / 100)} MB
 
 Guilds and Channels:
 • Guilds           :: ${this.client.guilds.size}
@@ -41,7 +41,7 @@ Guilds and Channels:
 System:
 • OS Type          :: ${String(type).replace('_', '-')} v${release}
 • System Uptime    :: ${uptimeNumber}
-• System RAM Usage :: ${usedMemory}% (${Math.round((usedMemory / 100) * maxMemory)} MB / ${process.env.LOCAL ? '8 GB' : '512 MB'})
+• System RAM Usage :: ${usedMemory}% (${Math.round(usedMemory / 100 * maxMemory)} MB / ${process.env.LOCAL ? '8 GB' : '512 MB'})
 • System CPU Usage :: ${await cpuLoad()}%
 
 Versions:

@@ -9,7 +9,9 @@ module.exports = class extends Command {
     }
 
     async run(message, args) {
-        if (args.length === 0) throw new Error('Please paste the ID of the command you want quoted.');
+        if (args.length === 0) {
+            throw new Error('Please paste the ID of the command you want quoted.');
+        }
         const id = args[0];
 
         let quoteMessage;

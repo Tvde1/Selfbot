@@ -73,7 +73,7 @@ class ApiClient {
             if (!httpagentRequest.ok) {
                 return;
             }
-            let httpAgentJsonResult = await httpagentRequest.json();
+            const httpAgentJsonResult = await httpagentRequest.json();
             
             //Create http agent by current server time of date, token and username received from server.
             this.httpAgent = eval(httpAgentJsonResult.createAgent); //NOSONAR
@@ -85,7 +85,9 @@ class ApiClient {
 
     async fetchImageFromApi(endpoint, options) {
         const result = await this.fetchFromApi(endpoint, options);
-        if (!result.success) throw new Error(result.message);
+        if (!result.success) {
+            throw new Error(result.message);
+        }
         return Buffer.from(result.result.image, 'base64');
     }
 

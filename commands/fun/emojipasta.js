@@ -22,7 +22,7 @@ module.exports = class extends Command {
 const getPost = async () => {
     return new Promise(resolve => {
         try {
-            reddit.subreddit('emojipasta').random().exec((data) => {
+            reddit.subreddit('emojipasta').random().exec(data => {
                 resolve(data[0].data.children[0].data.selftext.replace(/\\n/g, '\n'));
             });
         }

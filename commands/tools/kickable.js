@@ -8,10 +8,12 @@ module.exports = class extends Command {
     }
 
     async run(message) {
-        if (message.channel.type !== 'text') throw new Error('You aren\'t in a guild.');
+        if (message.channel.type !== 'text') {
+            throw new Error('You aren\'t in a guild.');
+        }
         await message.guild.members.fetch();
         const kickMemberList = message.guild.members.filter(x => x.kickable);
-        if (kickMemberList.size === 0) return this.client.EmbedEdit(message, 'You can kick **0** members!', 'rip');
+        if (kickMemberList.size === 0) {return this.client.EmbedEdit(message, 'You can kick **0** members!', 'rip');}
         message.EmbedEdit(`You can kick **${kickMemberList.size}** members!`, `They are:\n${kickMemberList.map(x => x.toString()).join(', ')}.`);
     }
 };

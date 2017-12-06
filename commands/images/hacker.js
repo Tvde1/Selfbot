@@ -28,8 +28,10 @@ module.exports = class extends Command {
         const text = stuff.substring(0, 32 * 15).replace(/(^\s+|\s+$)/g, '');
 
         text.match(/.{1,32}/g).forEach((part, ln) => {
-            if (ln > 15) return;
-            image.print(font, 220, (260 + 12 * ln), part.replace(/^[^\S\x0a\x0d]+/, ''));
+            if (ln > 15) {
+                return;
+            }
+            image.print(font, 220, 260 + 12 * ln, part.replace(/^[^\S\x0a\x0d]+/, ''));
         });
 
         image = await this.client.utils.getBufferFromJimp(image);

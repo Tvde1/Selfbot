@@ -26,7 +26,7 @@ const rndID = () => {
     return ((Date.now() - 1420070400000) * 4194304).toFixed();
 };
 
-const btoa = (str) => {
+const btoa = str => {
     return new Buffer(str).toString('base64');
 };
 
@@ -40,7 +40,7 @@ const rtoken = () => {
         if (i === 0) {
             current += Math.round(Math.random() * 9);
         } else {
-            current += (Math.random() > 0.4) ? a[Math.round(Math.random() * 25)].toUpperCase() : (Math.random() > 0.9) ? b[Math.round(Math.random())] : a[Math.round(Math.random() * 25)];
+            current += Math.random() > 0.4 ? a[Math.round(Math.random() * 25)].toUpperCase() : Math.random() > 0.9 ? b[Math.round(Math.random())] : a[Math.round(Math.random() * 25)];
         }
     }
     current += '.';

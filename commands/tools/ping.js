@@ -8,7 +8,7 @@ module.exports = class extends Command {
     }
 
     async run(message) {
-        let msg = await message.channel.send('Ping?');
+        const msg = await message.channel.send('Ping?');
         msg.EmbedEdit('Pong!', `Latency is ${message.createdTimestamp - msg.createdTimestamp}ms. API Latency is ${Math.round(this.client.ping)}ms`);
     }
 };

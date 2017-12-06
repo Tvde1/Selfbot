@@ -1,4 +1,4 @@
-const discord = require('discord.js');
+const Discord = require('discord.js');
 const CommandInfo = require('../../templates/commandInfo');
 const Command     = require('../../templates/command');
 
@@ -12,10 +12,12 @@ module.exports = class extends Command {
         let guild = message.guild;
         if (args[0]) {
             guild = this.client.guilds.get(args[0]);
-            if (!guild) throw new Error('Your guild id is incorrect.');
+            if (!guild) {
+                throw new Error('Your guild id is incorrect.');
+            }
         }
 
-        let embed = new discord.MessageEmbed()
+        const embed = new Discord.MessageEmbed()
             .setTitle(`All channels in guild ${guild.name}.`)
             .setColor(this.client.utils.embedColor);
 
@@ -27,8 +29,11 @@ module.exports = class extends Command {
             (x.permissionsFor(message.member).has('VIEW_CHANNEL') ? '' : ' (hidden)') +
             '\r\n';
 
-            if (x.type === 'text') textChannels += text;
-            else voiceChannels += text;
+            if (x.type === 'text') {
+                textChannels += text;
+            } else {
+                voiceChannels += text;
+            }
         });
 
         embed.addField('Text Channels:', textChannels || 'none', true)

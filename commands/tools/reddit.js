@@ -10,7 +10,9 @@ module.exports = class extends Command {
     }
 
     async run(message, args) {
-        if (args.length < 1) throw new Error('Specify a username.');
+        if (args.length < 1) {
+            throw new Error('Specify a username.');
+        }
 
         let body;
         try {

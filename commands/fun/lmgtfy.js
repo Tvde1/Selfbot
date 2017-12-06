@@ -8,7 +8,9 @@ module.exports = class extends Command {
     }
 
     async run(message, args) {
-        if (args.length === 0) args = ['how', 'to', 'add', 'arguments'];
+        if (args.length === 0) {
+            args = ['how', 'to', 'add', 'arguments'];
+        }
         message.edit(`<http://lmgtfy.com/?q=${args.join('+')}>`);
     }
 };

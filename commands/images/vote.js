@@ -10,10 +10,12 @@ module.exports = class extends Command {
     async run(message, args) {
         const username = message.author.username;
 
-        if (args.length === 0) throw new Error('No text found.');
+        if (args.length === 0) {
+            throw new Error('No text found.');
+        }
         const text = args.join(' ');
         
-        let image = await this.client.apiClient.fetchImageFromApi('other/vote', { args: { username, text }} );
+        const image = await this.client.apiClient.fetchImageFromApi('other/vote', { args: { username, text }} );
 
         const newM = await message.channel.send({
             files: [{

@@ -11,16 +11,22 @@ module.exports = class extends Command {
     async run(message, args) {
         let serverId = args[0];
         if (serverId) {
-            if (serverId === ' ' || isNaN(serverId)) throw new Error('Your server ID is not a number,');
+            if (serverId === ' ' || isNaN(serverId)) {
+                throw new Error('Your server ID is not a number,');
+            }
         } else {
             serverId = message.guild.id;
-            if (!message.guild) throw new Error('You have to be in a server, or put a server ID.');
+            if (!message.guild) {
+                throw new Error('You have to be in a server, or put a server ID.');
+            }
         }
 
         const guild = this.client.guilds.get(serverId);
-        if (!guild) throw new Error('Your GuildID is invalid. Are you sure you\'re in it?');
+        if (!guild) {
+            throw new Error('Your GuildID is invalid. Are you sure you\'re in it?');
+        }
 
-        let embed = new discord.MessageEmbed()
+        const embed = new discord.MessageEmbed()
             .setColor(this.client.utils.embedColor)
             .setTitle(`Role Distribution in ${guild.name}.`)
             .setDescription('Here\'s all the roles with the amount of members that have said role.');

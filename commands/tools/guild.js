@@ -11,9 +11,13 @@ module.exports = class extends Command {
     async run(message, args) {
         let guild = args[0];
 
-        if (!guild) guild = message.guild;
+        if (!guild) {
+            guild = message.guild;
+        }
 
-        if (!guild) throw new Error('You are not in a guild and you didn\'t supply an id.');
+        if (!guild) {
+            throw new Error('You are not in a guild and you didn\'t supply an id.');
+        }
 
         guild = guild.id;
 
@@ -25,29 +29,30 @@ module.exports = class extends Command {
             throw new Error(`Could not fetch this guild:\n${err}\n\nThe guild was: ${guild}`);
         }
 
-        let members = guild.members;
+        const members = guild.members;
 
-        let onlineMembers = members.filter(x => x.presence.status === 'online').size;
-        let idleMembers = members.filter(x => x.presence.status === 'idle').size;
-        let dndMembers = members.filter(x => x.presence.status === 'dnd').size;
-        let offlineMembers = members.filter(x => x.presence.status === 'offline').size;
+        const onlineMembers = members.filter(x => x.presence.status === 'online').size;
+        const idleMembers = members.filter(x => x.presence.status === 'idle').size;
+        const dndMembers = members.filter(x => x.presence.status === 'dnd').size;
+        const offlineMembers = members.filter(x => x.presence.status === 'offline').size;
 
-        let channels = guild.channels;
-        let textChannels = channels.filter(x => x.type === 'text').size;
-        let voiceChannels = channels.filter(x => x.type === 'voice').size;
+        const channels = guild.channels;
+        const textChannels = channels.filter(x => x.type === 'text').size;
+        const voiceChannels = channels.filter(x => x.type === 'voice').size;
 
-        let roles = guild.roles;
-        let colorRoles = roles.filter(x => x.color !== 0).size;
-        let normalRoles = roles.size - colorRoles;
+        const roles = guild.roles;
+        const colorRoles = roles.filter(x => x.color !== 0).size;
+        const normalRoles = roles.size - colorRoles;
 
-        let emojisArr = guild.emojis;
-        let bigEmojiArray = [''];
+        const emojisArr = guild.emojis;
+        const bigEmojiArray = [''];
+
         emojisArr.forEach(emoji => {
-            if (bigEmojiArray[bigEmojiArray.length - 1].length + emoji.toString().length >= 1000) bigEmojiArray.push(emoji);
-            else bigEmojiArray[bigEmojiArray.length - 1] += emoji.toString();
+            if (bigEmojiArray[bigEmojiArray.length - 1].length + emoji.toString().length >= 1000) {bigEmojiArray.push(emoji);}
+            else {bigEmojiArray[bigEmojiArray.length - 1] += emoji.toString();}
         });
 
-        let embed = new discord.MessageEmbed()
+        const embed = new discord.MessageEmbed()
             .setColor(this.client.utils.embedColor)
             .setThumbnail(guild.iconURL, true)
             .addField('ℹ Name:', guild.name, true)
@@ -67,8 +72,9 @@ module.exports = class extends Command {
                 bigEmojiArray.forEach((tempEmojiString, index) => {
                     embed.addField('🤔 Custom Emojis no. ' + (index + 1) + ':', tempEmojiString, false);
                 });
+            } else {
+                embed.addField('🤔 Custom Emojis:', bigEmojiArray[0], false);
             }
-            else embed.addField('🤔 Custom Emojis:', bigEmojiArray[0], false);
         }
 
         embed.addField('❗ Verfication Level:', guild.verificationLevel, true)

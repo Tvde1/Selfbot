@@ -9,8 +9,10 @@ module.exports = class extends Command {
     }
 
     async run(message, args) {
-        if (args.length === 0) throw new Error('You need to input something...');
-        let command = args.join(' ');
+        if (args.length === 0) {
+            throw new Error('You need to input something...');
+        }
+        const command = args.join(' ');
 
         exec(command, (err, result) => {
             message.edit(`${message.content}\n==========\n\`\`\`\n${err || result}\n\`\`\``);

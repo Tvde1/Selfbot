@@ -15,7 +15,9 @@ class EventLoader {
      */
     load() {
         fs.readdir('./events/', (err, files) => {
-            if (err) return this._client.logger.error('EventHandler', err);
+            if (err) {
+                return this._client.logger.error('EventHandler', err);
+            }
             files.forEach(file => {
                 const eventName = file.split('.')[0];
                 this._client.logger.log('EventLoader', `Loading event ${eventName}.`);

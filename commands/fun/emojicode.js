@@ -12,7 +12,9 @@ module.exports = class extends Command {
     async run(message) {
         await message.channel.messages.fetch({limit:100});
         let code = await this.client.utils.getCode(message.channel.messages.array());
-        if (!code) throw new Error('No Javascript codeblock found.');
+        if (!code) {
+            throw new Error('No Javascript codeblock found.');
+        }
 
         code = emojify.minify(code, {fromString: true}).code;
         code = format(code);
@@ -24,15 +26,17 @@ module.exports = class extends Command {
     }
 };
 
-const reduceIndentation = (string) => {
+const reduceIndentation = string => {
     let whitespace = string.match(/^(\s+)/);
-    if (!whitespace) return string;
+    if (!whitespace) {
+        return string;
+    }
 
     whitespace = whitespace[0].replace('\n', '');
     return string.split('\n').map(line => line.replace(whitespace, '')).join('\n');
 };
 
-const format = (code) => {
+const format = code => {
     const beautifiedCode = js_beautify(code, {indent_size: 4, brace_style: 'collapse', jslint_happy: true});
     let str = reduceIndentation(beautifiedCode);
 
@@ -42,5 +46,5 @@ const format = (code) => {
 
     str = str.replace(/^(\s*\r?\n){2,}/, '\n');
 
-    return (`${'```js'}\n${str}\n${'```'}`);
+    return `${'```js'}\n${str}\n${'```'}`;
 };

@@ -10,7 +10,9 @@ module.exports = class extends Command {
     }
 
     async run(_message, args) {
-        if (args.length < 1) throw new Error('Eval something lol');
+        if (args.length < 1) {
+            throw new Error('Eval something lol');
+        }
         let match = args.join(' ');
 
         if (args[0] === 'async') {
@@ -18,8 +20,8 @@ module.exports = class extends Command {
             match = `(async()=>{${args.join(' ')}})()`;
         }
 
-        const message = new ObjectAutocorrect(_message   ); //eslint-disable-line no-unused-vars //NOSONAR
-        const client  = new ObjectAutocorrect(this.client); //eslint-disable-line no-unused-vars //NOSONAR
+        const message = new ObjectAutocorrect(_message   ); //eslint-disable-line no-unused-vars 
+        const client  = new ObjectAutocorrect(this.client); //eslint-disable-line no-unused-vars 
 
         let evaled, diff, start;
         try {
@@ -48,7 +50,7 @@ module.exports = class extends Command {
             }
         }
     
-        const type = typeof(evaled);
+        const type = typeof evaled;
         let response = evaled;
         if (type === 'object') {
             try {

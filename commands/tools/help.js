@@ -38,7 +38,7 @@ module.exports = class extends Command {
         }
         
         const categories = [];
-        for (let comm of this.client.commandHandler.commands.values()) {
+        for (const comm of this.client.commandHandler.commands.values()) {
             if (!categories.includes(comm.info.category)) {
                 categories.push(comm.info.category);
             }

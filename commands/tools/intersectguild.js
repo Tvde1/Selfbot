@@ -12,28 +12,38 @@ module.exports = class extends Command {
         let guild1;
         let guild2;
 
-        if (args.length === 0) throw new Error('Please input a guild ID.');
+        if (args.length === 0) {
+            throw new Error('Please input a guild ID.');
+        }
 
         if (args.length === 1) {
             guild1 = this.client.guilds.get(args[0]);
-            if (!guild1) throw new Error('Your Guild ID is not correct.');
+            if (!guild1) {
+                throw new Error('Your Guild ID is not correct.');
+            }
             guild2 = message.guild;
-            if (!guild2) throw new Error('You are not in a guild. Please input a 2nd id.');
+            if (!guild2) {
+                throw new Error('You are not in a guild. Please input a 2nd id.');
+            }
         }
-        else if (args.length === 2) {
+        else if (args.length >= 2) {
             guild1 = this.client.guilds.get(args[0]);
-            if (!guild1) throw new Error('Your Guild 1 ID is not correct.');
+            if (!guild1) {
+                throw new Error('Your Guild 1 ID is not correct.');
+            }
             guild2 = this.client.guilds.get(args[1]);
-            if (!guild2) throw new Error('Your Guild 2 ID is not correct.');
+            if (!guild2) {
+                throw new Error('Your Guild 2 ID is not correct.');
+            }
         }
 
-        await guild1.members.fetch(); //NOSONAR
+        await guild1.members.fetch();
         await guild2.members.fetch();
-        let guild1Ids = guild1.members.map(x => x.user.id);
-        let guild2Ids = guild2.members.map(x => x.user.id);
+        const guild1Ids = guild1.members.map(x => x.user.id);
+        const guild2Ids = guild2.members.map(x => x.user.id);
 
-        let intersectedList = guild1Ids.filter(n => guild2Ids.includes(n));
-        let memberList = intersectedList.map(x => guild2.members.get(x).user.username);
+        const intersectedList = guild1Ids.filter(n => guild2Ids.includes(n));
+        const memberList = intersectedList.map(x => guild2.members.get(x).user.username);
 
         const embed = new discord.MessageEmbed()
             .setTitle('Intersect Guilds')
