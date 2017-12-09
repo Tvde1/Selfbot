@@ -116,7 +116,6 @@ class Utils {
      * @returns {User|GuildMember}
      */
     async getUser(channel, search) {
-
         search = search.toLowerCase();
         switch (channel.type) {
             case 'text': {
@@ -196,6 +195,10 @@ class Utils {
             imageURLs = images.map(i => i.url);
         }
     
+        if (imageURLs.length === 0) {
+            throw new Error('No images found.');
+        }
+
         return imageURLs[0];
     }
     
