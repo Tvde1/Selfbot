@@ -98,7 +98,7 @@ class ApiClient {
             }
         };
 
-        if (this.client.api.url.includes('https')) {
+        if (this.client.config.api.url.includes('https')) {
             requestOptions['agent'] = this.httpAgent;
         }
 
