@@ -4,7 +4,7 @@ const Command     = require('../../templates/command');
 module.exports = class extends Command {
 
     constructor(client) {
-        super(client, new CommandInfo('hale', 'SaxtonHhale approves!', 'hale'));
+        super(client, new CommandInfo('hale', 'Saxton Hhale approves!', 'hale'));
     }
 
     async run(message, args) {
