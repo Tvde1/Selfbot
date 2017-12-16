@@ -8,7 +8,7 @@ module.exports = class extends Command {
     }
 
     async run(message, args) {
-        let username = this.client.utils.CapitaliseFirstLetter(args.join(' '));
+        let username = this.client.utils.capitaliseFirstLetter(args.join(' '));
         if (message.mentions.users.size > 0) {
             username = message.mentions.users.first().username;
         }
