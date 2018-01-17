@@ -2,7 +2,6 @@ const CommandInfo    = require('../../templates/commandInfo');
 const Command        = require('../../templates/command');
 
 module.exports = class extends Command {
-
     constructor(client) {
         super(client, new CommandInfo('glitchgif', 'Glitches a gif.', 'glitchgif'));
     }
@@ -15,9 +14,9 @@ module.exports = class extends Command {
             throw err;
         }
 
-        image = await this.client.apiClient.fetchImageFromApi('other/datamosh', { args: { gif: image } });
+        image = await this.client.apiClient.fetchFromApi('other/datamosh', { args: { gif: image } });
 
-        const text = this.client.config.api.url + '/temp/gif/' + image;
+        const text = this.client.config.api.url + '/temp/gif/' + image.result.file;
 
         message.channel.send(text).catch(e => {
             console.log(e); 
