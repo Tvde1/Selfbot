@@ -46,5 +46,5 @@ module.exports = class extends Command {
 };
 
 /* 
- * This was made by @matmen#6666 for fbot.
+ * This was made by https://gitlab.com/matmen for fbot.
  */
